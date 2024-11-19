@@ -30,7 +30,6 @@ body, html {
   height: 100%;
   aspect-ratio: 1920 / 1024; /* 비율 고정 */
   background: white;
-  border-radius: 15px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* 그림자 */
   overflow: hidden;
   position: absolute; /* 화면의 중앙에 위치 */
@@ -42,15 +41,14 @@ body, html {
 /* 왼쪽 사이드바 */
 .sidebar-container {
   flex: 0 0 11.41%; /* 219/1920 */
-  height: 91.41%; /* 936/1024 */
-  background: white;
-  border-right: 1px solid #ddd;
+  height: 100%; /* 936/1024 */
 }
+
 
 /* 오른쪽 콘텐츠 */
 .content-container {
   flex: 0 0 82.4%; /* 1581/1920 */
-  height: 91.41%; /* 936/1024 */
+  height: 100%; /* 936/1024 */
   background: white;
   overflow-y: auto;
   padding: 20px;

@@ -7,6 +7,7 @@ const Sidebar = ({ currentTab, setActiveTab }) => {
 
   return (
     <div className="sidebar">
+       <img src="/logo.png" alt="Web Logo" />
       {tabs.map((tab, index) => (
         <div
           key={index}

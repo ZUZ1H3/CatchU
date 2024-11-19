@@ -1,19 +1,28 @@
 .sidebar {
   display: flex;
   flex-direction: column;
-  padding: 20px;
+  align-items: center; /* 수평 중앙 정렬 */
+  justify-content: flex-start; /* 수직으로 위에서부터 차례대로 정렬 */
+  padding: 30px;
   height: 100%;
-  background: #f8f9fa;
-  border-right: 1px solid #ddd;
+  background: #F8F7FD;
+}
+
+/* 로고 */
+.sidebar img {
+  width: 80%; /* 사이드바 너비의 80% 크기 */
+  max-width: 150px; /* 최대 너비 150px로 설정 */
+  height: auto; /* 비율에 맞춰 높이 자동 조정 */
+  margin-bottom: 170px; /* 로고와 아래 탭들 사이에 여백 추가 */
 }
 
 .tab {
-  padding: 12px 20px;
-  margin-bottom: 8px;
-  font-size: 16px;
+  padding: 9px 40px;
+  margin-bottom: 36px;
+  font-size: 20px;
   color: #555;
   cursor: pointer;
-  border-radius: 8px;
+  border-radius: 11px;
   transition: all 0.2s ease;
 }
 
@@ -22,7 +31,7 @@
 }
 
 .tab.active {
-  background: #5a5af3;
+  background: #666EFF;
   color: white;
   font-weight: bold;
 }
