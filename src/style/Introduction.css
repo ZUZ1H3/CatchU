@@ -1,0 +1,14 @@
+.container {
+    display: flex;
+    justify-content: center; /* 가로 중앙 정렬 */
+    align-items: center; /* 세로 중앙 정렬 */
+  }
+  
+  .intro-image {
+    width: 90%; /* 이미지가 컨테이너의 가로 길이에 맞춰서 늘어남 */
+    height: 90%;
+    margin-top: 3em;
+    margin-bottom: 10em; /* 이미지 아래에 여백을 추가 */
+
+  }
+  
