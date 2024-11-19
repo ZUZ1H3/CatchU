@@ -1,13 +1,22 @@
+/* 폰트 정의 */
+@font-face {
+  font-family: 'PaperlogyMedium'; /* 폰트 이름 */
+  src: url('/public/fonts/paperlogy_medium.TTF') format('truetype'); /* 폰트 경로 */
+  font-weight: normal;
+  font-style: normal;
+}
+
 /* 전체 배경 */
 body, html {
   margin: 0;
   padding: 0;
   width: 100%;
   height: 100%;
-  font-family: 'Arial', sans-serif;
+
   background: linear-gradient(to bottom right, #666EFF, #CAA3FD, #E5D1FF); /* 그라데이션 */
   display: flex;
   justify-content: center;
+  font-family: 'PaperlogyMedium', sans-serif; /* Paperlogy 폰트 사용 */
   align-items: center;
 }
 
@@ -51,7 +60,7 @@ body, html {
   height: 100%; /* 936/1024 */
   background: white;
   overflow-y: auto;
-  padding: 20px;
+  padding: 40px;
 }
 
 /* 반응형 */
