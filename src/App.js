@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import './style/App.css';
+import React, { useState } from "react";
+import Sidebar from "./components/Sidebar";
+import TabContent from "./components/TabContent";
 
-function App() {
+const App = () => {   // 초기 탭은 대시보드~
+  const [currentTab, setCurrentTab] = useState("대시보드");
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="app">
+      <div className="sidebar-container">
+        <Sidebar currentTab={currentTab} setActiveTab={setCurrentTab} />
+      </div>
+      <div className="content-container">
+        <TabContent currentTab={currentTab} />
+      </div>
     </div>
   );
-}
+};
 
 export default App;
