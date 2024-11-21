@@ -1,0 +1,37 @@
+/* src/style/Dashboard.css */
+
+.dashboard-container {
+  width: 100%; /* 가로 전체 크기 */
+}
+
+.dashboard-header {
+  display: flex; /* Flexbox로 가로 정렬 */
+  background-color: #758bfa; /* 헤더 배경색 (이미지와 동일한 색상) */
+  justify-content: space-between; /* 양쪽 끝으로 배치 */
+  padding: 4px 20px; /* 내부 여백 */
+  border-radius: 10px; /* 모서리를 둥글게 */
+  align-items: center; /* 수직 중앙 정렬 */
+  box-sizing: border-box; /* 패딩 포함 크기 계산 */
+  color: white; /* 글씨 색상을 흰색으로 */
+  margin-bottom: 1em;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+}
+
+.dashboard-header h2 {
+  font-size: 1.1rem; /* 제목 크기 */
+  font-weight: normal; /* 글씨 두께 */
+  text-align: left; /* 제목 왼쪽 정렬 */
+}
+
+.header .date {
+  font-size: 0.8rem; /* 날짜 크기 */
+  text-align: right; /* 날짜 오른쪽 정렬 */
+}
+
+.dashboard-body{
+  border-radius: 1rem;
+  padding: 1.5rem;
+  background: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}

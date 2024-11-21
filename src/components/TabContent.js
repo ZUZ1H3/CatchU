@@ -4,7 +4,6 @@ import Dashboard from '../pages/Dashboard';  // 대시보드 컴포넌트
 import Introduction from '../pages/Introduction';  // 서비스소개 컴포넌트
 import Practice from '../pages/Practice';  // 면접연습 컴포넌트
 import AIInterview from '../pages/AIInterview.js';  // 모의면접 컴포넌트
-import MyPage from '../pages/MyPage';  // 마이페이지 컴포넌트
 import FAQ from '../pages/FAQ'; //FAQ 컴포넌트
 import AptitudeTest from '../pages/AptitudeTest.js'; // 적성검사 페이지 컴포넌트 가져오기
 
