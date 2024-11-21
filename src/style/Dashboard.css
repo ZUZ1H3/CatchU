@@ -2,13 +2,6 @@
 .dashboard-container {
     display: flex;
     width: 100%;
-    height: 600px;
-    background-color: white;
-    border-radius: 20px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    margin: 0 auto;
-    background: linear-gradient(to bottom right, #a18cd1, #fbc2eb);
   }
   
   /* 왼쪽 섹션 */
@@ -24,7 +17,7 @@
   
   /* 오른쪽 섹션 */
   .right-section {
-    flex: 2;
+    flex: 3;
     background-color: #f4f4f4;
     display: flex;
     flex-direction: column;

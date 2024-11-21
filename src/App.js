@@ -20,15 +20,18 @@ const App = () => {
 const MainContent = () => {
   const location = useLocation();
 
-  // 대시보드와 적성검사에서만 배경색 변경
-  const isBlueBackground = location.pathname === '/' || location.pathname === '/aptitude-test';
+  // 대시보드 페이지인지 확인
+  const isDashboard = location.pathname === '/';
+
+  // 대시보드 또는 적성검사에서 배경색 변경
+  const isGrayBackground = location.pathname === '/' || location.pathname === '/aptitude-test';
 
   return (
-    <div className={`app ${isBlueBackground ? 'blue-background' : ''}`}>
+    <div className="app">
       <div className="sidebar-container">
         <Sidebar />
       </div>
-      <div className="content-container">
+      <div className={`content-container ${isGrayBackground ? 'gray-background' : ''}`}>
         <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/introduction" element={<Introduction />} />
