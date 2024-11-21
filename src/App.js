@@ -6,7 +6,6 @@ import Dashboard from "./pages/Dashboard";
 import Introduction from "./pages/Introduction";
 import Practice from "./pages/Practice";
 import AIInterview from "./pages/AIInterview";
-import MyPage from "./pages/MyPage";
 import AptitudeTest from "./pages/AptitudeTest.js";
 import FAQ from "./pages/FAQ";
 
@@ -23,8 +22,7 @@ const App = () => {
             <Route path="/introduction" element={<Introduction />} />
             <Route path="/practice" element={<Practice />} />
             <Route path="/AI-interview" element={<AIInterview />} />
-            <Route path="/aptitude-test" element={<AptitudeTest />} /> {/* 여기 경로 확인 */}
-            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/aptitude-test" element={<AptitudeTest />} />
             <Route path="/faq" element={<FAQ />} />
           </Routes>
         </div>

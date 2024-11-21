@@ -20,8 +20,6 @@ const TabContent = ({ currentTab }) => {
       return <AIInterview />;
     case "적성검사":
       return <AptitudeTest />;
-    case "마이페이지":
-      return <MyPage />;
     case "FAQ":
         return <FAQ />;
     default:
