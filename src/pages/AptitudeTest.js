@@ -1,7 +1,7 @@
 import React from 'react';
 
 const AptitudeTest = () => {
-  return <div>면접연습 화면</div>;
+  return <div>적성검사 화면</div>;
 };
 
 export default AptitudeTest;

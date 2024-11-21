@@ -22,8 +22,8 @@ const App = () => {
             <Route path="/" element={<Dashboard />} />
             <Route path="/introduction" element={<Introduction />} />
             <Route path="/practice" element={<Practice />} />
-            <Route path="/AIInterview" element={<AIInterview />} />
-            <Route path="/AptitudeTest" element={<AptitudeTest />} />
+            <Route path="/AI-interview" element={<AIInterview />} />
+            <Route path="/aptitude-test" element={<AptitudeTest />} /> {/* 여기 경로 확인 */}
             <Route path="/mypage" element={<MyPage />} />
             <Route path="/faq" element={<FAQ />} />
           </Routes>

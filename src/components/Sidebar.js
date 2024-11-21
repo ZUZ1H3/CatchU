@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, useLocation } from "react-router-dom"; // Router 관련 모듈 추가
+import { Link, useLocation } from "react-router-dom";
 import "../style/Sidebar.css";
 
 const Sidebar = () => {
