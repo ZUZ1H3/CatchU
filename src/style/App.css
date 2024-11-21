@@ -62,7 +62,7 @@ body, html {
   height: 100%; /* 936/1024 */
   background: transparent;
   overflow-y: auto;
-  padding: 40px;
+  /*padding: 40px;*/
 }
 
 /* 반응형 */
