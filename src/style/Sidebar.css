@@ -27,6 +27,8 @@
   cursor: pointer;
   border-radius: 8px; /* 둥근 모서리 */
   transition: background 0.2s ease, color 0.2s ease;
+  text-align: center; /* 가운데 정렬 */
+  text-decoration: none; /* Link에서 밑줄 제거 */
 }
 
 /* 탭 호버 상태 */

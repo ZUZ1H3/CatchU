@@ -1,21 +1,30 @@
-// src/components/Sidebar.js
-import React from 'react';
-import '../style/Sidebar.css';
+import React from "react";
+import { Link, useLocation } from "react-router-dom"; // Router 관련 모듈 추가
+import "../style/Sidebar.css";
 
-const Sidebar = ({ currentTab, setActiveTab }) => {
-  const tabs = ["대시보드", "서비스소개", "면접연습", "모의면접", "마이페이지", "FAQ"];
+const Sidebar = () => {
+  const location = useLocation(); // 현재 URL 경로 가져오기
+  const tabs = [
+    { name: "대시보드", path: "/" },
+    { name: "서비스소개", path: "/introduction" },
+    { name: "모의면접", path: "/AI-interview" },
+    { name: "면접연습", path: "/practice" },
+    { name: "적성검사", path: "/aptitude-test" },
+    { name: "마이페이지", path: "/mypage" },
+    { name: "FAQ", path: "/FAQ" },
+  ];
 
   return (
     <div className="sidebar">
-       <img src="/logo.png" alt="Web Logo" />
+      <img src="/logo.png" alt="Web Logo" />
       {tabs.map((tab, index) => (
-        <div
+        <Link
           key={index}
-          className={`tab ${currentTab === tab ? "active" : ""}`}
-          onClick={() => setActiveTab(tab)}
+          to={tab.path} // 경로 설정
+          className={`tab ${location.pathname === tab.path ? "active" : ""}`} // 현재 경로와 비교해 active 클래스 추가
         >
-          {tab}
-        </div>
+          {tab.name}
+        </Link>
       ))}
     </div>
   );

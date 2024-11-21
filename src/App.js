@@ -1,21 +1,35 @@
-// src/App.js
 import './style/App.css';
-import React, { useState } from "react";
+import React from "react";
 import Sidebar from "./components/Sidebar";
-import TabContent from "./components/TabContent";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Dashboard from "./pages/Dashboard";
+import Introduction from "./pages/Introduction";
+import Practice from "./pages/Practice";
+import AIInterview from "./pages/AIInterview";
+import MyPage from "./pages/MyPage";
+import AptitudeTest from "./pages/AptitudeTest.js";
+import FAQ from "./pages/FAQ";
 
-const App = () => {   // 초기 탭은 대시보드~
-  const [currentTab, setCurrentTab] = useState("대시보드");
-
+const App = () => {
   return (
-    <div className="app">
-      <div className="sidebar-container">
-        <Sidebar currentTab={currentTab} setActiveTab={setCurrentTab} />
+    <Router>
+      <div className="app">
+        <div className="sidebar-container">
+          <Sidebar />
+        </div>
+        <div className="content-container">
+          <Routes>
+            <Route path="/" element={<Dashboard />} />
+            <Route path="/introduction" element={<Introduction />} />
+            <Route path="/practice" element={<Practice />} />
+            <Route path="/AIInterview" element={<AIInterview />} />
+            <Route path="/AptitudeTest" element={<AptitudeTest />} />
+            <Route path="/mypage" element={<MyPage />} />
+            <Route path="/faq" element={<FAQ />} />
+          </Routes>
+        </div>
       </div>
-      <div className="content-container">
-        <TabContent currentTab={currentTab} />
-      </div>
-    </div>
+    </Router>
   );
 };
 

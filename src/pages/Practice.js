@@ -1,8 +1,8 @@
 // src/pages/InterviewPractice.js
 import React from 'react';
 
-const InterviewPractice = () => {
+const Practice = () => {
   return <div>면접연습 화면</div>;
 };
 
-export default InterviewPractice;
+export default Practice;
