@@ -1,5 +1,5 @@
 // AptitudeTest.js
-import React from 'react';
+import React, { useEffect } from 'react';
 import '../style/AptitudeTest.css';
 
 const AptitudeTest = () => {
@@ -19,15 +19,21 @@ const AptitudeTest = () => {
       <div className="assessment-options">
         <div className="assessment-row">
           <div className="assessment-item">
-            가치
+            <div className='value-box'>
+              가치
+            </div>
             <h3 className="assessment-title">직업가치관검사</h3>
             <p className="assessment-description">
             직업선택 시 중요하게 생각하는 자신의 직업가치관이 무엇인지 확인하고 그에 적합한 직업분야에 대해 알아볼 수 있습니다.
             </p>
-            대학생
-            성인
-            검사 안내
-            <button className="assessment-button">검사 실시</button>
+            <div>
+            <div className='target-box'>대학생</div>
+            <div className='target-box'>성인</div>
+            </div>
+            <div className="button-box">
+              <button className='description-button'>검사 안내</button>
+              <button className="assessment-button">검사 실시</button>
+            </div>
           </div>
           <div className="assessment-item">
             <h3 className="assessment-title">직업적성검사</h3>

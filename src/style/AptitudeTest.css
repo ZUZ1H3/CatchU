@@ -1,11 +1,12 @@
 /* AptitudeTest.css */
+
 .container {
-  max-width: fit-content;
+  max-width: max-content;
   margin: 0 auto;
   margin-top: 20px;
   margin-bottom: 100px;
-  margin-left: 50px;
-  margin-right: 50px;
+  margin-left: 100px;
+  margin-right: 100px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -23,7 +24,7 @@
 }
 
 .description-box {
-  background-color: transparent;
+  background-color: #ffffff;
   border: 2px solid #D9D9D9;
   border-radius: 1rem;
   padding-left: 50px;
@@ -49,7 +50,7 @@
 }
 
 .assessment-item {
-  background-color: #f8f8f8;
+  background-color: #ffffff;
   border-radius: 1rem;
   padding: 1.5rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -82,6 +83,60 @@
   transition: background-color 0.3s ease;
 }
 
+.description-button {
+  background-color: #F5F5F5;
+  color: #000000;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  align-self: flex-end;
+  transition: background-color 0.3s ease;
+}
+
 .assessment-button:hover {
   background-color: #0056b3;
+}
+
+.value-box {
+  background-color: #ffffff;
+  border: 1px solid #D57E07;
+  border-radius: 25px;
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 13px;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+  color: #D57E07;
+}
+
+.value-box {
+  background-color: #ffffff;
+  border: 1px solid #D57E07;
+  border-radius: 25px;
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 13px;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+  color: #D57E07;
+}
+
+.target-box {
+  background-color: #F5F5F5;
+  border-radius: 8px;
+  display: inline-block;
+  padding: 5px 10px;
+  font-size: 13px;
+  text-align: center;
+  white-space: nowrap;
+  width: fit-content;
+  color: #464646;
+}
+
+.button-box {
+  text-align: right;
 }
