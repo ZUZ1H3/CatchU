@@ -53,8 +53,8 @@ body, html {
 .content-container.gray-background {
   background: #F8F7FD
 }
-.app.dashboard .content-container {
-  flex: 0 0 50%; /* 가로 폭 조정 */
+.content-container.dashboard-width {
+  flex: 0 0 64%;
 }
 /* 오른쪽 콘텐츠 */
 .content-container {
