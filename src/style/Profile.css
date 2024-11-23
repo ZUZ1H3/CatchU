@@ -37,8 +37,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 38px;
-    height: 50px;
+    width: 1.8em;
+    height: 2.2em;
     background: black;
     color: white;
     font-size: 24px;
@@ -87,32 +87,7 @@
     margin: 5px;
 }
 
-/* 모달 배경 (오버레이) */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    /* 어두운 배경 */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 999;
-}
 
-/* 모달 콘텐츠 */
-.modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    width: 300px;
-    text-align: center;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-    animation: fadeIn 0.3s ease-in-out;
-    /* 모달 등장 애니메이션 */
-}
 
 @keyframes fadeIn {
     from {
@@ -124,39 +99,6 @@
         opacity: 1;
         transform: scale(1);
     }
-}
-
-/* 모달 제목 */
-.modal-content h3 {
-    font-size: 18px;
-    margin-bottom: 10px;
-    color: #333;
-}
-
-/* 모달 입력 필드 */
-.modal-input {
-    width: 80%;
-    padding: 10px;
-    margin-bottom: 20px;
-    font-size: 16px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
-
-/* 모달 저장 버튼 */
-.modal-save-button {
-    background: black;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    font-size: 14px;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background 0.3s ease;
-}
-
-.modal-save-button:hover {
-    background: #333;
 }
 
 .profile-background {
