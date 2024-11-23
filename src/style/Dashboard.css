@@ -1,0 +1,35 @@
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 0.7em;
+    padding: 1.5em;
+    box-sizing: border-box;
+  }
+  .dashboard-title{
+    font-size: 22px;
+    font-weight: bold;
+    padding-bottom: 0.5em;
+  }
+
+  .top-section {
+    display: flex;
+    flex: 1;
+    gap: 0.7em;
+  }
+
+  .bottom-section {
+    display: flex;
+    flex: 1;
+    gap: 0.7em;
+  }
+  
+
+  .box {
+    flex: 1; 
+    background-color: #ffffff;
+    border-radius: 10px;
+    display: flex;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
+  }
+  
