@@ -1,0 +1,37 @@
+/* 컨테이너 전체 스타일 */
+.activity {
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.activity-header {
+    background-color: #666eff;
+    color: #fff;
+    border-radius: 10px 10px 0 0;
+    margin-bottom: 1em;
+    padding: 1.2em;
+}
+
+.activity-title {
+    font-size: 1em;
+    font-family: 'Paperlogy6', sans-serif;
+    margin-bottom: 0.3em;
+}
+
+.activity-chart {
+    width: 100%; /* 차트 컨테이너의 기본 너비 */
+    overflow-x: auto; /* 가로 스크롤 활성화 */
+    overflow-y: hidden; /* 세로 스크롤 비활성화 */
+  }
+  
+  .chart-wrapper {
+    min-width: 100%; /* 기본 너비 */
+    height: 100%; /* 차트 높이 제한 */
+    max-height: 100; /* 최대 높이 설정 */
+  }
+  
