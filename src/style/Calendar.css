@@ -4,7 +4,6 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    margin: 1em;
 }
 
 .calendar-grid {
@@ -15,17 +14,10 @@
 
 .calendar-header {
     font-family: 'Paperlogy4', sans-serif;
-    margin-left: 0.3em;
     display: flex;
-    /* 플렉스박스 활성화 */
     flex-direction: row;
-    /* 수평 방향 배치 */
     align-items: center;
-    /* 수직 중앙 정렬 */
     justify-content: space-between;
-    /* 양 끝으로 배치 (날짜 왼쪽, 버튼 오른쪽) */
-    gap: 1em;
-    /* 날짜와 버튼 사이의 간격 */
 }
 
 .calendar-day {
@@ -78,7 +70,6 @@
     color: rgb(160, 160, 160);
     background: none;
     border: none;
-    padding-top: 0.7em;
     font-size: 12px;
     font-family: 'Paperlogy4', sans-serif;
     cursor: pointer;
@@ -97,7 +88,7 @@
 
 
 .memo-section {
-    margin-top: 1em;
+    margin-top: 0.7em;
     border-top: 1px solid rgb(227, 227, 227);
     height: 100%;
     overflow-y: auto;
@@ -108,7 +99,7 @@
     padding: 0;
     margin: 0;
     overflow-y: auto;
-    padding: 0.5em;
+    padding: 0.4em;
 }
 
 .memo-item {

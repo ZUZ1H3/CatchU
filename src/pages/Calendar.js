@@ -58,26 +58,31 @@ const MyCalendar = () => {
 
             {/* 캘린더 본체 */}
             <div className="calendar-grid">
-                {weekDates.map((date) => (
-                    <div
-                        key={date.toDateString()}
-                        className={`calendar-day ${selectedDate === date.toDateString() ? "selected" : ""
-                            } ${date.toDateString() === today.toDateString() ? "today" : ""
-                            }`}
-                        onClick={() => handleDateClick(date)}
-                    >
-                        <span className="day-label">
-                            {["일", "월", "화", "수", "목", "금", "토"][date.getDay()]}
-                        </span>
-                        <span
-                            className={`day-number ${date.getDay() === 0 ? "sunday" : date.getDay() === 6 ? "saturday" : ""
-                                }`}
-                        >
-                            {date.getDate()}
-                        </span>
-                    </div>
-                ))}
+                {weekDates.map((date) => {
+                    const isSunday = date.getDay() === 0; // 일요일 여부
+                    const isSaturday = date.getDay() === 6; // 토요일 여부
+                    const isToday = date.toDateString() === today.toDateString(); // 오늘 날짜 여부
+                    const isSelected = selectedDate === date.toDateString(); // 선택된 날짜 여부
+
+                    return (
+                        <div
+                            key={date.toDateString()}
+                            className={`calendar-day ${isSelected ? "selected" : ""} ${isToday ? "today" : ""}`}
+                            onClick={() => handleDateClick(date)}>
+                            {/* 요일 텍스트 */}
+                            <span className={`day-label ${isSunday ? "sunday" : isSaturday ? "saturday" : ""}`}>
+                                {["일", "월", "화", "수", "목", "금", "토"][date.getDay()]}
+                            </span>
+
+                            {/* 날짜 */}
+                            <span className={`day-number ${isSunday ? "sunday" : isSaturday ? "saturday" : ""}`}>
+                                {date.getDate()}
+                            </span>
+                        </div>
+                    );
+                })}
             </div>
+
 
             {/* 메모 섹션 */}
             <div className="memo-section">
