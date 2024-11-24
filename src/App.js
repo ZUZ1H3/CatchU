@@ -1,6 +1,7 @@
 import './style/App.css';
 import React from "react";
 import Sidebar from "./components/Sidebar";
+import Profile from "./components/Profile";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Introduction from "./pages/Introduction";
@@ -31,8 +32,9 @@ const MainContent = () => {
       <div className="sidebar-container">
         <Sidebar />
       </div>
-      <div className={`content-container ${isGrayBackground ? 'gray-background' : ''}`}>
-        <Routes>
+      <div className={`content-container ${isGrayBackground ? 'gray-background' : ''} ${isDashboard ? 'dashboard-width' : ''
+          }`}>
+          <Routes>
           <Route path="/" element={<Dashboard />} />
           <Route path="/introduction" element={<Introduction />} />
           <Route path="/practice" element={<Practice />} />
@@ -41,6 +43,8 @@ const MainContent = () => {
           <Route path="/faq" element={<FAQ />} />
         </Routes>
       </div>
+
+      {isDashboard && <Profile />}
     </div>
   );
 };

@@ -1,0 +1,195 @@
+.custom-calendar {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    justify-items: center;
+}
+
+.calendar-header {
+    font-family: 'Paperlogy4', sans-serif;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.calendar-day {
+    cursor: pointer;
+    font-family: 'Paperlogy4', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.calendar-day:hover {
+    background-color: #f0f0f0;
+}
+
+.day-label {
+    text-align: center;
+    font-size: 80%;
+    display: block;
+    margin-bottom: 1em;
+}
+
+.sunday {
+    color: rgb(210, 76, 76);
+}
+
+.saturday {
+    color: rgb(49, 44, 194);
+}
+
+.day-number {
+    font-size: 80%;
+    display: inline-block;
+    width: 2em;
+    height: 2em;
+    line-height: 2em;
+    border-radius: 50%;
+    font-family: 'Paperlogy6', sans-serif;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.today .day-number {
+    border: 1px solid rgb(102, 110, 255);
+}
+
+.selected .day-number {
+    background-color: rgb(102, 110, 255);
+    color: white;
+}
+
+.expand-button {
+    color: rgb(160, 160, 160);
+    background: none;
+    border: none;
+    font-size: 12px;
+    font-family: 'Paperlogy4', sans-serif;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.expand-button:hover {
+    color: rgb(102, 110, 255);
+    transform: scale(1.05);
+}
+
+.expand-button:active {
+    color: rgb(49, 44, 194);
+    transform: scale(0.95);
+}
+
+
+.memo-section {
+    margin-top: 0.7em;
+    border-top: 1px solid rgb(227, 227, 227);
+    height: 100%;
+    overflow-y: auto;
+}
+
+.memo-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    overflow-y: auto;
+    padding: 0.4em;
+}
+
+.memo-item {
+    display: flex;
+    align-items: center;
+    margin: 0.5em 0;
+    font-size: 80%;
+    font-family: 'Paperlogy4', sans-serif;
+}
+
+.dot {
+    width: 0.5em;
+    height: 0.5em;
+    background-color: rgb(227, 227, 227);
+    border-radius: 50%;
+    margin-right: 0.5em;
+}
+
+.memo-input {
+    margin-top: 0.5em;
+    display: flex;
+}
+
+.memo-input input {
+    flex: 1;
+    padding: 0.5em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Paperlogy4', sans-serif;
+    font-size: 70%;
+}
+
+.add-memo-button {
+    background-color: #666eff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.add-memo-button:hover {
+    background-color: #4d4eb3;
+}
+
+/* 모달 배경 */
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+/* 모달 컨텐츠 */
+.modal-content {
+    background-color: #fff;
+    padding: 1.5em;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 500px;
+}
+
+.modal-memo-input input {
+    width: 100%;
+    padding: 0.5em;
+    margin-top: 0.5em;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: 'Paperlogy4', sans-serif;
+    font-size: 1rem;
+}
+
+.close-button {
+    margin-top: 1em;
+    background-color: #666eff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5em 1em;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.close-button:hover {
+    background-color: #4d4eb3;
+}
