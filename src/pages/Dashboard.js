@@ -1,5 +1,6 @@
 import React from 'react';
 import '../style/Dashboard.css';
+import MyCalendar from "./Calendar.js"; // 캘린더 컴포넌트 import
 
 const Dashboard = () => {
   return (
@@ -8,7 +9,9 @@ const Dashboard = () => {
       <div className="top-section">
         <div className="box">활동</div>
         <div className="box">나의 면접 스킬</div>
-        <div className="box">달력</div>
+        <div className="box">
+        <MyCalendar />
+        </div>
       </div>
       <div className="bottom-section">
         <div className="box">모의 면접</div>
