@@ -23,16 +23,12 @@
     flex: 1;
     gap: 0.7em;
   }
-  
 
   .box {
-    overflow: hidden; /* 자식 요소가 넘칠 경우 숨김 */
-    display: flex;
+    overflow: hidden;
     flex: 1; 
     background-color: #ffffff;
     border-radius: 10px;
     display: flex;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.1);
   }
-  
-  
