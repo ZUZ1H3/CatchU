@@ -1,0 +1,170 @@
+/* Popup Overlay */
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+  }
+  
+  /* Popup Container */
+  .popup-container {
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 50px;
+    width: fit-content;
+    max-width: 90%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    position: relative;
+  }
+  
+  /* Close Button */
+  .popup-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  
+  /* Popup Title */
+  .popup-container h2 {
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  /* Popup Description */
+  .popup-container p {
+    font-size: 16px;
+    margin-bottom: 20px;
+  }
+  
+  /* Popup Table */
+  .popup-table {
+    margin-top: 30px;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 16px;
+    color: #333;
+    margin-bottom: 30px;
+  }
+  
+  .popup-table th,
+  .popup-table td {
+    background-color: #ffffff;
+    color: #767676;
+    text-align: left;
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .popup-table th {
+    text-align: center;
+    background-color: #f5f5f5;
+    font-weight: bold;
+    color: #333;
+  }
+
+    /* value Table */
+    .value-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 16px;
+        color: #333;
+        margin-bottom: 20px;
+      }
+      
+      .value-table th,
+      .value-table td {
+        color: #767676;
+        background-color: #ffffff;
+        text-align: left;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+      }
+      
+      .value-table th {
+        text-align: center;
+        background-color: #f5f5f5;
+        font-weight: bold;
+        color: #333;
+      }
+  
+  /* Popup Buttons */
+  .popup-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+
+  .popup-buttons button {
+    font-family: inherit;
+  }
+  
+  .popup-cancel {
+    background-color: #f5f5f5;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+  
+  .popup-start {
+    background-color: #666eff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 14px;
+  }
+
+  .popup-start:hover {
+    background-color: #4A4FAB;
+  }
+  
+  .popup-cancel:hover {
+    background-color: #DDDDDD;
+  }
+
+  .popup-description {
+    color: #464646;
+  }
+
+  /* 스타일 파일 (예: AptitudeTest.css) */
+.custom-value-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0; /* 테이블 외부 여백 */
+}
+
+.custom-value-table th,
+.custom-value-table td {
+  color: #767676;
+  padding: 12px; /* 내부 여백 추가 */
+  padding-left: 50px;
+  padding-right: 50px;
+  text-align: center; /* 텍스트 정렬 */
+}
+
+.custom-value-table th {
+  background-color: #f5f5f5; /* 헤더 배경색 */
+  font-weight: bold;
+  color: #333;
+}
+
+.custom-value-table td {
+  background-color: #fff;
+}
+
+  

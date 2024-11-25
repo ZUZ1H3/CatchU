@@ -1,34 +1,58 @@
 /* AptitudeTest.css */
+.test-options {
+  display: flex;
+  flex-direction: column; /* 행을 세로로 배치 */
+  gap: 20px; /* 행 간 간격 */
+}
 
-.container {
-  max-width: max-content;
+.test-row {
+  display: flex;
+  justify-content: space-between; /* 각 항목 양쪽으로 배치 */
+  gap: 20px; /* 항목 간 간격 */
+}
+
+.test-item {
+  flex: 0 1 calc(50% - 10px); /* 50% 너비에서 여백 보정 */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+}
+
+.AptitudeTest-container {
+  max-width: fit-content;
   margin: 0 auto;
-  margin-top: 20px;
+  margin-top: 80px;
   margin-bottom: 100px;
   margin-left: 100px;
   margin-right: 100px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
 }
 
-.header {
+.AptitudeTest-header {
+  width: 100%;
   text-align: left;
-  margin-bottom: 60px;
+  margin-bottom: 100px;
 }
 
-.title {
+.AptitudeTest-title {
   font-size: 28px;
   font-weight: bold;
   margin-bottom: 20px;
 }
 
 .description-box {
+  display: flex;
   background-color: #ffffff;
   border: 2px solid #D9D9D9;
   border-radius: 1rem;
   padding-left: 50px;
-  padding-right: 50px;
+  width: 95%;
 }
 
 .description {
@@ -36,43 +60,43 @@
   color: #939393;
 }
 
-.assessment-options {
+.test-options {
   display: flex;
   flex-direction: column;
   gap: 2rem;
   width: 100%;
 }
 
-.assessment-row {
+.test-row {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 2rem;
 }
 
-.assessment-item {
+.test-item {
   background-color: #ffffff;
   border-radius: 1rem;
-  padding: 1.5rem;
+  padding: 2rem;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 
-.assessment-title {
-  font-size: 1.5rem;
+.test-title {
+  font-size: 24px;
   font-weight: bold;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0px;
 }
 
-.assessment-description {
-  font-size: 1rem;
+.test-description {
+  font-size: 16px;
   color: #555;
   margin-bottom: 1.5rem;
 }
 
-.assessment-button {
-  background-color: #007bff;
+.test-button {
+  background-color: #666EFF;
   color: #fff;
   border: none;
   border-radius: 0.5rem;
@@ -84,7 +108,7 @@
 }
 
 .description-button {
-  background-color: #F5F5F5;
+  background-color: #f5f5f5;
   color: #000000;
   border: none;
   border-radius: 0.5rem;
@@ -95,8 +119,12 @@
   transition: background-color 0.3s ease;
 }
 
-.assessment-button:hover {
-  background-color: #0056b3;
+.test-button:hover {
+  background-color: #4A4FAB;
+}
+
+.description-button:hover {
+  background-color: #DDDDDD;
 }
 
 .value-box {
@@ -135,8 +163,14 @@
   white-space: nowrap;
   width: fit-content;
   color: #464646;
+  margin-right: 5px;
 }
 
 .button-box {
   text-align: right;
+}
+
+.button-box button {
+  font-family: inherit;
+  margin-right: 10px;
 }
