@@ -5,6 +5,7 @@ const AIInterview = () => {
   const [selectedIndustry, setSelectedIndustry] = useState(""); // 선택된 산업군
   const [jobs, setJobs] = useState([]); // 선택된 직무 리스트
   const [selectedJob, setSelectedJob] = useState(""); // 선택된 직무
+  const [showConfirmation, setShowConfirmation] = useState(false); // 화면 전환 상태
 
   const industryJobs = {
     "IT / 데이터": ["소프트웨어 / 웹 / 앱", "빅데이터", "인공지능", "정보보안", "네트워크 / 서버"],
@@ -25,6 +26,33 @@ const AIInterview = () => {
   const handleJobClick = (job) => {
     setSelectedJob(job); // 선택된 직무 업데이트
   };
+
+  const handleConfirmClick = () => {
+    if (selectedIndustry && selectedJob) {
+      setShowConfirmation(true); // 화면 전환
+    } else {
+      alert("산업군과 직무를 모두 선택해주세요!");
+    }
+  };
+
+  const handleGoBack = () => {
+    setShowConfirmation(false); // 이전 화면으로 돌아가기
+  };
+
+  if (showConfirmation) {
+    return (
+      <div className="confirmation-screen">
+        <label htmlFor="confirmation" className="confirmation-label">
+          <span className="highlight-text">{selectedIndustry}</span> 산업군의{" "}
+          <span className="highlight-text">{selectedJob}</span> 직무로 AI 모의면접을 시작하겠습니까?
+        </label>
+        <div className="button-container2">
+          <button className="back-button" onClick={handleGoBack}>이전으로</button>
+          <button className="start-button">시작하기</button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -81,7 +109,7 @@ const AIInterview = () => {
 
       {/* 확인 버튼 */}
       <div className="button-container">
-        <button className="confirm-button" type="button">
+        <button className="confirm-button" onClick={handleConfirmClick}>
           확인
         </button>
       </div>

@@ -1,17 +1,14 @@
 /* AIInterview.css */
-
 /* 전체 컨테이너 스타일 */
 .ai-interview-container {
   width: 70%;
   margin-top: 40px;
   margin-left: 145px;
 }
-
 /* 검색 영역 */
 .search-container {
   margin-bottom: 15px;
 }
-
 .search-label {
   display: block;
   font-size: 20px;
@@ -20,7 +17,6 @@
   margin-bottom: 20px;
   color: #000000;
 }
-
 .search-input {
   width: 90%;
   height: 45px;
@@ -30,11 +26,10 @@
   border-radius: 30px;
   font-size: 16px;
   box-sizing: border-box;
-  font-family: 'PaperlogyMedium', sans-serif;
+  font-family: 'Paperlogy5', sans-serif;
   background-color: #F4F4F4;
   color: #000000;
 }
-
 /* 테이블 래퍼 */
 .table-wrapper {
   display: flex;
@@ -43,7 +38,6 @@
   border: 1px solid #cccccc;
   border-radius: 0px;
 }
-
 /* 열 사이 구분선 */
 .table-divider {
   width: 1px;
@@ -53,16 +47,13 @@
   bottom: 0;
   left: 30%;
 }
-
 /* 테이블 열 스타일 */
 .industry-column {
   width: 30%;
 }
-
 .job-column {
   width: 70%;
 }
-
 /* 테이블 헤더 스타일 */
 .table-header {
   font-size: 18px;
@@ -70,60 +61,52 @@
   padding: 12px 0;
   border-bottom: 1px solid #cccccc;
 }
-
 /* 테이블 셀 스타일 */
 .table-cell {
   padding: 16px;
   background-color: white;
-  margin-bottom: 1px;
+  margin-bottom: 2px;
   font-size: 16px;
   text-align: center;
   cursor: pointer;
 }
-
 /* 직무 셀 스타일 */
 .job-column .table-cell {
   background-color: white;
   text-align: left;
 }
-
 .confirm-button:hover {
   background-color: #F0EDFF;
+  color: #393991;
 }
-
 /* 직무 셀 hover */
 .job-column .table-cell:hover {
   background-color: #F0EDFF;
   transition: background-color 0.1s ease;
   color: #393991;
 }
-
 /* 직무 셀 선택시 */
 .job-column .table-cell.selected {
   background-color: #F0EDFF;
   color: #393991;
 }
-
 /* 산업군 셀 hover */
 .industry-column .table-cell:hover {
   background-color: #F0EDFF;
   transition: background-color 0.1s ease;
   color: #393991;
 }
-
 /* 산업군 셀 선택시 */
 .industry-column .table-cell.selected {
   background-color: #F0EDFF;
   color: #393991;
 }
-
 /* 확인 버튼 컨테이너 */
 .button-container {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
-
 /* 확인 버튼 스타일 */
 .confirm-button {
   width: 95px;
@@ -136,12 +119,72 @@
   border-radius: 12px;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  font-family: 'PaperlogyMedium', sans-serif;
+  font-family: 'Paperlogy5', sans-serif;
 }
-
 .confirm-button:hover {
   background-color: #F0EDFF;
 }
+/* 확인 화면 텍스트 컨테이너 */
+.confirmation-screen {
+  width: 70%;
+  position: absolute;
+  top: 53%;
+  left: 55%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+/* 확인 화면 문구*/
+.confirmation-label {
+  font-size: 45px;
+  line-height: 150%;
+}
+.highlight-text {
+  color: #393991;
+}
+/* 이전/시작 버튼 */
+.button-container2 {
+  width: 50%;
+  margin-top: 45px;
+  margin-left: 200px;
+}
+/* 이전 버튼 스타일 */
+.back-button {
+  width: 130px;
+  height: 45px;
+  font-size: 25px;
+  color: white;
+  background-color: #9C9EEB;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-family: 'Paperlogy5', sans-serif;
+}
+/* 시작 버튼 스타일 */
+.start-button {
+  width: 130px;
+  height: 45px;
+  margin-left: 70px;
+  font-size: 25px;
+  color: white;
+  background-color: #9C9EEB;
+  border: none;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  font-family: 'Paperlogy5', sans-serif;
+}
+/* 이전 버튼 hover */
+.back-button:hover {
+  background-color: #F0EDFF;
+  color: #393991;
+}
+/* 시작 버튼 hover */
+.start-button:hover {
+  background-color: #F0EDFF;
+  color: #393991;
+}
+
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
@@ -149,15 +192,12 @@
     width: 90%;
     padding: 15px;
   }
-
   .table-wrapper {
     flex-direction: column;
   }
-
   .table-column {
     width: 100%;
   }
-
   .confirm-button {
     font-size: 14px;
     padding: 8px;

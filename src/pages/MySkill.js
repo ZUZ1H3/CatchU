@@ -14,7 +14,7 @@ import {
 // 필요한 구성 요소 등록
 ChartJS.register(RadialLinearScale, PointElement, LineElement, Filler, Tooltip, Legend);
 
-const RadarChart = () => {
+const MySkill = () => {
     const data = {
         labels: ["적극성", "태도", "유창성", "표현력", "전공"],
         datasets: [
@@ -60,4 +60,4 @@ const RadarChart = () => {
     );
 };
 
-export default RadarChart;
+export default MySkill;

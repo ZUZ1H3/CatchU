@@ -59,11 +59,7 @@ const Profile = () => {
                 ))}
             </div>
 
-            <img
-                src="/profile_background.png"
-                alt="배경 이미지"
-                className="profile-background"
-            />
+            <img src="/profile_background.png" alt="배경 이미지" className="profile-background"/>
 
             <Modal
                 isOpen={isModalOpen}
