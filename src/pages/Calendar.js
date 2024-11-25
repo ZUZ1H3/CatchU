@@ -7,6 +7,7 @@ const MyCalendar = () => {
     const [isModalOpen, setIsModalOpen] = useState(false); // 모달 창 상태
 
     const today = new Date();
+    today.setHours(0, 0, 0, 0);
 
     // 현재 주의 시작 날짜 계산
     const startOfWeek = new Date(
@@ -47,7 +48,7 @@ const MyCalendar = () => {
             {/* 캘린더 헤더 */}
             <div className="calendar-header">
                 <h4>
-                    {`${startOfWeek.getMonth() + 1}.${startOfWeek.getDate()}`}
+                    {`${startOfWeek.getMonth() + 1}.${startOfWeek.getDate() + 1}`}
                 </h4>
                 <button
                     className="expand-button"

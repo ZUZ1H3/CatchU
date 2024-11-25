@@ -106,6 +106,10 @@ const Practice = () => {
       alert("질문을 선택해주세요.");
       return;
     }
+    if (mode === "create" && (!customQuestion || customQuestion.trim() === "")) {
+      alert("사용자 질문을 입력해주세요.");
+      return;
+    }
     const questionToPass = mode === "create" ? customQuestion : selectedQuestion; // 선택된 질문 또는 사용자 입력 질문
     navigate("/practicing", { state: { question: questionToPass } });
   };
@@ -208,7 +212,7 @@ const Practice = () => {
           </tbody>
         </table>
       </div>
-      <button className="confirm-button" onClick={handleConfirm}>확인</button>
+      <button id='check-button' onClick={handleConfirm}>확인</button>
     </div>
   );
 };

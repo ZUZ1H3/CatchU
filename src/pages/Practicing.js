@@ -96,13 +96,13 @@ const Practicing = () => {
         <p>{question ? question : "질문이 없습니다. 돌아가서 선택해주세요."}</p>
         <div className="video-container">
           <video ref={videoRef} className="video" autoPlay muted />
-          <div className="timer-button-container">
+          <div className="timer-container">
             <div className="timer">
               {`${String(Math.floor(timer / 60)).padStart(2, "0")}:${String(
                 timer % 60
               ).padStart(2, "0")}`}
             </div>
-            <button className="submit-button" onClick={handleNextQuestion}>
+            <button id="submit-button" onClick={handleNextQuestion}>
               답변 제출하기
             </button>
             <div className="recorder">

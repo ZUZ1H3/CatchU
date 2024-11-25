@@ -1,104 +1,109 @@
-/* 전체 스타일 */
 .practice-container {
   display: flex;
-  flex-direction: column; 
-  align-items: flex-start; 
-  justify-content: flex-start;
-  padding: 40px;
+  flex-direction: column;
+  justify-content: flex-start; 
+  align-items: center; 
+  width: 100%;
 }
 
 /* 제목 스타일 */
 .heading {
-  font-size: 16px;
-  font-weight: 600; 
-  margin-top: 1em;
-  margin-bottom: 3em;
-  text-align: left; 
+  align-self: flex-start;
+  font-size: clamp(0.8rem, 1rem, 1.2rem);  /* 화면 크기에 따라 조정 */
+  font-weight: 600;
+  margin-top: 4em;
+  margin-bottom: 2em;
+  text-align: left;
+  margin-left: 2em;
 }
 
-/* 첫번째 이미지 스타일 */
-.image-first {
-  width: 11%;
-  height: 11%;
-  margin-bottom: 2em;
-  margin-left: 7em; 
-  cursor: pointer;
+/* 이미지 그룹 */
+.image-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 1em;
+  gap: 5em; /* 이미지 간 간격 */
 }
-/* 일반 이미지 스타일 */
+
+/* 이미지 스타일 */
 .image {
-  width: 11%;
-  height: 11%;
-  margin-left: 6em;
+  width: 12%;
+  height: auto;
   cursor: pointer;
 }
+/* 선택된 이미지 스타일 */
 .image.selected {
-  border: 2px solid #666EFF;
+  border: 2px solid #666eff;
   border-radius: 16px;
 }
-/* 이미지 배치 스타일 */
-.image-container {
-    display: flex;
-    flex-direction: row;
-    align-items: flex-start;
-    justify-content: flex-start; 
+
+/* 테이블 컨테이너 */
+.table-container {
+  width: 90%;
+  max-width: 90%;
+  justify-content: center;
+  border: 1px solid #d2d2d2;
+  display: table;
+  border-collapse: collapse;
+  overflow: hidden;
+  margin: 0 auto; /* 가로 방향 가운데 정렬 */
 }
 
-/* 전체 표의 크기 설정 */
-.table-container {
-  width: 1050px; /* 표 너비 고정 */
-  border: 1px solid #D2D2D2;
-  display: table;
-  border-collapse: collapse; /* 테두리 겹침 방지 */
-  overflow: hidden; /* 표 크기를 넘지 않게 설정 */
-}
+/* 테이블 */
 .table {
+  justify-content: center;
   width: 100%;
   border-collapse: collapse;
 }
 .table td {
+  font-size: clamp(0.7rem, 0.9rem, 1.2rem); /* 화면 크기에 따라 조정 */
   border: 1px solid #d2d2d2;
   text-align: left;
   vertical-align: top;
 }
 
-/* 열 너비 설정 */
+/* 테이블 열 너비 */
 .table td:first-child {
-  width: 20%; /* 첫 번째 열 너비를 20%로 설정 */
-  vertical-align: top; /* 위쪽 정렬 */
+  width: 20%; /* 첫번째 열은 20% 비율 */
+  vertical-align: top;
 }
+
 .table td:nth-child(2) {
-  width: 25%; /* 두 번째 열 너비를 20%로 설정 */
-  vertical-align: top; 
+  width: 25%; /* 두번째 열은 25% 비율 */
+  vertical-align: top;
 }
+
 .table td:nth-child(3) {
-  width: 55%; /* 너비를 55%로 설정 */
+  width: 55%; /* 마지막은 55% 비율 */
   vertical-align: top;
 }
 
 .mode-option {
-  font-size: 14px;
+  font-size: clamp(0.7rem, 0.9rem, 1.2rem); /* 화면 크기에 따라 조정 */
   font-weight: 400;
   padding: 0.5em;
   cursor: pointer;
 }
+
 .mode-option.selected {
   color: #393991;
   background-color: #e8e8ff;
   font-weight: 500;
 }
 
+/* 카테고리 및 질문 목록 */
 .questions-container {
   text-align: left;
 }
-.category {
-  margin-bottom: 10px;
-}
+
 .category-name {
-  font-size: 14px;
+  font-size: clamp(0.7rem, 0.9rem, 1.2rem);   /* 화면 크기에 따라 조정 */
   font-weight: 400;
   padding: 0.5em;
   cursor: pointer;
 }
+
 .category-name.selected {
   font-weight: 500;
   color: #393991;
@@ -108,41 +113,93 @@
 .questions-list {
   max-height: 250px;
   overflow-y: auto;
-  overflow-x: hidden; 
-}
-.question {
-  font-size: 14px;
-  font-weight: 400;
-  padding: 0.5em;
-  cursor: pointer;
+  overflow-x: hidden;
 }
 
 .input-area {
-  max-height: 125px; 
-  overflow-y: auto; 
+  max-height: 125px;
+  overflow-y: auto;
   overflow-x: hidden;
-  width: 316%;
+  width: 100%;
   height: 125px;
   padding: 0.5em;
-  font-size: 14px;
+  font-size: 0.9rem;
   font-weight: 500;
   border: 1px solid #d2d2d2;
   resize: none;
 }
 
-/* 확인 버튼 스타일 */
-.confirm-button {
-  margin-top: 2em;
-  margin-left: 53em !important;
-  font-size: 16px;
+/* 확인 버튼 */
+#check-button {
+  margin-top: 1.5em;
+  margin-bottom: 0.5em;
+  font-size: clamp(0.9rem, 1.2rem, 1.4rem); /* 화면 크기에 따라 조정 */
   font-weight: 600;
-  background-color: #666EFF;
+  background-color: #9C9EEB;
   color: white;
   border: none;
   border-radius: 15px;
   cursor: pointer;
+  padding: 0.4em 1.8em;
+  align-self: flex-end;
+  margin-right: 4em;
+  transition: background 0.3s ease, color 0.3s ease; /* 부드러운 전환 */
 }
-  
-.confirm-button:hover {
-  background-color: #393991; /* 버튼 hover 효과 */
+
+#check-button:hover {
+  background-color: #393991;
+  color: white;
+}
+
+/* 반응형 디자인 */
+@media (max-width: 1024px) {
+  .image {
+    width: 10%;
+    margin-top: 1em;
+    margin-left: 1em;
+  }
+
+  .table-container {
+    max-width: 70%;
+    margin: 0 auto;
+  }
+
+  .confirm-button {
+    align-self: flex-end;
+  }
+}
+
+@media (max-width: 768px) {
+  .image-container {
+    justify-content: center;
+    gap: 0.5em;
+  }
+
+  .table-container {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+
+  .image {
+    width: 30%;
+  }
+
+  .heading {
+    margin-bottom: 1em;
+  }
+
+  .confirm-button {
+    margin-left: 0;
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .image {
+    width: 30%;
+  }
+
+  .confirm-button {
+    padding: 0.5em 1em;
+  }
 }
