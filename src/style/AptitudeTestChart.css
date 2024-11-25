@@ -1,0 +1,65 @@
+.chart-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 30px;
+    margin-bottom: 30px;
+  }
+  
+  .chart-table th,
+  .chart-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+  }
+  
+  .chart-table th {
+    text-align: center;
+    background-color: #f5f5f5;
+    position: relative;
+  }
+  
+  /* 헤더의 눈금선 */
+  .chart-grid-header {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 5px;
+    font-size: 12px;
+    color: #777;
+  }
+  
+  /* 차트 영역 */
+  .chart-bar {
+    position: relative;
+    height: 20px;
+    background-color: #f1f1f1;
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  
+  /* 눈금선 */
+  .chart-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: space-between;
+  }
+  
+  .chart-grid-line {
+    position: relative;
+    width: 1px;
+    background-color: #ccc;
+    height: 100%;
+  }
+  
+  /* 막대그래프 채우기 */
+  .chart-bar-fill {
+    position: relative;
+    height: 100%;
+    background-color: orange;
+    transition: width 0.3s ease;
+    border-radius: 4px;
+  }
+  

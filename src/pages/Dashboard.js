@@ -1,16 +1,15 @@
 import React from 'react';
 import '../style/Dashboard.css';
-import MyCalendar from "./Calendar.js"; // 캘린더 컴포넌트 import
-import MySkill from "./MySkill.js"; // 캘린더 컴포넌트 import
-import Activity from "./Activity.js"; // 캘린더 컴포넌트 import
+import MyCalendar from "./Calendar.js";
+import MySkill from "./MySkill.js";
+import FeedbackList from "./FeedbackList.js";
 
-const Dashboard = () => {
+const Dashboard = ({ profileData }) => {
   return (
     <div className="dashboard-container">
-      <div className="dashboard-title">안녕하세요, 김신입씨! 👋</div>
+      <div className="dashboard-title">안녕하세요, {profileData.name}님! 👋</div>
       <div className="top-section">
         <div className="box">
-          <Activity averageScore={76} />
         </div>
         <div className="box">
           <MySkill />
@@ -20,8 +19,10 @@ const Dashboard = () => {
         </div>
       </div>
       <div className="bottom-section">
-        <div className="box">모의 면접</div>
-        <div className="box">면접 연습</div>
+        <div className="box">
+        <FeedbackList />
+        </div>
+        <div className="box">적성 검사</div>
       </div>
     </div>
   );
