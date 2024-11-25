@@ -6,8 +6,8 @@ import '../style/Introduction.css'; // 스타일을 별도의 CSS 파일에서 �
 const Introduction = () => {
   return (
     <div className="container">
-    <img src="/introduction.png" alt="서비스 소개 이미지" className="intro-image" />
-  </div>
+      <img src="/introduction.png" alt="서비스 소개 이미지" className="intro-image" />
+    </div>
   )
 };
 

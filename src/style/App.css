@@ -29,6 +29,9 @@ body, html {
   font-family: 'Paperlogy5', sans-serif;
   align-items: center;
 }
+body.practicing-mode {
+  background: #1A182F;
+}
 
 #root {
   width: 100%;
@@ -67,6 +70,9 @@ body, html {
 }
 .content-container.dashboard-width {
   flex: 0 0 64%;
+}
+.content-container.practicing {
+  background: #1A182F;
 }
 /* 오른쪽 콘텐츠 */
 .content-container {
