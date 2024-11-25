@@ -1,17 +1,10 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
-
 import "../style/Profile.css";
-const Profile = () => {
+
+const Profile = ({ profileData, onUpdate }) => {
     const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 관리
-    const [profileData, setProfileData] = useState({
-        dDay: "D-15",
-        name: "김신입",
-        email: "zuzihe@hansung.ac.kr",
-        department: "컴퓨터공학과",
-        tags: "프론트엔드, 웹, AI",
-        photo: "/profile_image.png",
-    });
+
     const openModal = () => {
         setIsModalOpen(true);
     };
@@ -21,8 +14,11 @@ const Profile = () => {
     };
 
     const saveProfileData = (newData) => {
-        setProfileData(newData);
-    };
+        if (onUpdate) {
+          onUpdate(newData); // App.js의 상태를 업데이트
+        }
+        setIsModalOpen(false);
+      };
 
     return (
         <div className="profile-container">
@@ -40,9 +36,8 @@ const Profile = () => {
                 ))}
             </div>
 
-
             <div className="profile-image-container">
-                <img src="/profile_image.png" alt="프로필" className="profile-image" />
+                <img src={profileData.photo} alt="프로필" className="profile-image" />
             </div>
 
             <h2 className="profile-name">{profileData.name}</h2>
@@ -59,7 +54,7 @@ const Profile = () => {
                 ))}
             </div>
 
-            <img src="/profile_background.png" alt="배경 이미지" className="profile-background"/>
+            <img src="/profile_background.png" alt="배경 이미지" className="profile-background" />
 
             <Modal
                 isOpen={isModalOpen}

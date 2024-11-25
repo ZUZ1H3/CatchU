@@ -1,8 +1,18 @@
 // src/pages/Feedback.js
 import React from 'react';
+import { useParams } from "react-router-dom";
 import '../style/Feedback.css';
+import { feedbackData } from "../data/FeedbackData.js";
 
 const Feedback = () => {
+  const { id } = useParams(); // URL에서 레이블(ID)을 가져옴
+  // 피드백 데이터 (데모용 더미 데이터)
+  const feedback = feedbackData[id]; // 피드백 데이터 가져오기
+
+  if (!feedback) {
+    return <p>피드백을 찾을 수 없습니다.</p>; // 데이터가 없을 때 처리
+  }
+  
   return (
     <div className="feedback-container">
       <div className="feedback-header">
@@ -18,9 +28,15 @@ const Feedback = () => {
           <p className="score-subtext">전체 응시자 기준 상위 20%에 속합니다.</p>
         </div>
 
-      </div> 
+      </div>
+
+      <div className="feedback-container">
+        <h2>피드백 상세 ({id})</h2>
+        <p>점수: {feedback?.score}</p>
+        <p>코멘트: {feedback?.comment}</p>
+      </div>
     </div>//컨테이디
-    
+
 
 
   );

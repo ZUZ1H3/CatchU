@@ -1,6 +1,8 @@
 import "../style/FeedbackList.css";
 import React, { useState, useEffect, useRef } from "react";
 import { Bar } from "react-chartjs-2";
+import { useNavigate } from "react-router-dom"; // React Router for navigation
+
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -16,6 +18,7 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend);
 const FeedbackList = () => {
     const [activeTab, setActiveTab] = useState("mockInterview"); // 현재 활성화된 탭
     const chartContainerRef = useRef(null); // 차트 컨테이너 참조
+    const navigate = useNavigate(); // React Router navigate function
 
     // 차트 데이터
     const mockInterviewData = {
@@ -63,6 +66,13 @@ const FeedbackList = () => {
                 ticks: { display: false }, // Y축 레이블 숨김
                 grid: { display: false }, // Y축 가로 줄 표시
             },
+        },
+        onClick: (event, elements) => {
+            if (elements.length > 0) {
+                const index = elements[0].index; // 클릭한 막대의 인덱스
+                const label = data.labels[index]; // 클릭한 막대의 레이블
+                navigate(`/feedback/${label}`); // 해당 레이블로 피드백 페이지로 이동
+            }
         },
         
     };
