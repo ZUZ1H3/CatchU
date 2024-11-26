@@ -1,5 +1,6 @@
 export const feedbackData = {
     "10일": {
+        dateTime: { date: "241110", time: "1420" }, // 날짜와 시간 숫자 형식
         summary: {
             totalQuestions: 4,
             totalTime: "7분 50초",
@@ -44,6 +45,7 @@ export const feedbackData = {
         ],
     },
     "12일": {
+        dateTime: { date: "241112", time: "1450" }, // 날짜와 시간 숫자 형식
         summary: {
             totalQuestions: 5,
             totalTime: "9분 10초",

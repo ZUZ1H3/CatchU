@@ -3,21 +3,20 @@
 .feedback-container {
   width: 100%;
   /* 가로 전체 크기 */
+  background: #F8F7FD;
+  padding-top: 2em;
 }
 
 .feedback-header {
   display: flex;
-  /* Flexbox로 가로 정렬 */
   background-color: #758bfa;
   justify-content: space-between;
   /* 양쪽 끝으로 배치 */
   border-radius: 10px;
-  /* 모서리를 둥글게 */
   align-items: center;
-  /* 수직 중앙 정렬 */
   color: white;
-  /* 글씨 색상을 흰색으로 */
-  margin: 2em;
+  margin-left: 2em;
+  margin-right: 2em;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding-left: 1em;
   padding-right: 1em;
@@ -113,7 +112,6 @@
   gap: 0.1em;
   margin-bottom: 0.8em;
   font-size: 1em;
-  color: #333;
 }
 
 .feedback-label {
@@ -128,9 +126,27 @@
 
 /*자료별 해석======================================================*/
 
+.feedback-details-header {
+  display: flex;
+  background-color: #E6E6F9;
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  margin-left: 2em;
+  margin-right: 2em;
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding-left: 1em;
+  font-size: 1em;
+  font-family: 'Paperlogy5', sans-serif;
+}
+
 .feedback-details {
   margin: 2em;
-  padding: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 2em;
+  padding-bottom: 0.5em;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
@@ -142,7 +158,6 @@
   margin-bottom: 1em;
   justify-content: space-between;
   border-bottom: 1px solid rgb(194, 194, 194);
-
 }
 
 .feedback-detail-text {
@@ -157,7 +172,7 @@
 }
 
 .feedback-detail-title {
-  font-family: 'Paperlogy5', sans-serif;
+  font-family: 'Paperlogy6', sans-serif;
   font-size: 1em;
   margin-bottom: 2em;
 }
@@ -172,10 +187,11 @@
   font-family: 'Paperlogy4', sans-serif;
   font-size: 0.9em;
   flex: 1;
-  color: #666666;
   display: flex;
   align-items: center;
-  line-height: 1.8; /* 기본 값은 1.5, 숫자가 클수록 간격 증가 */
+  margin-bottom: 1.2em;
+  line-height: 1.8;
+  /* 기본 값은 1.5, 숫자가 클수록 간격 증가 */
 }
 
 .feedback-bar-chart {
@@ -192,7 +208,30 @@
   max-width: 60%;
   max-height: 6em;
 }
+
 .score-low {
   color: red;
   font-weight: bold;
+}
+
+.export-button {
+  background-color: #758bfa;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Paperlogy4', sans-serif;
+  font-size: 0.5em;
+}
+
+.export-button:hover {
+  background-color: #4850de;
+}
+
+.print-button-container {
+  text-align: end;
+  margin-top: 1em;
+  margin-right: 2.3em;
+
 }
