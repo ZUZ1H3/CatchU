@@ -23,7 +23,7 @@ const Practicing = () => {
         }
         setIsRecording(true); // 자동으로 녹화 시작
       } catch (error) {
-        console.error("Error accessing webcam:", error);
+        console.error("카메라 접근 오류", error);
       }
     };
 
@@ -35,7 +35,7 @@ const Practicing = () => {
         mediaStream.getTracks().forEach((track) => track.stop());
       }
     };
-  }, []); // 한 번만 실행되도록 빈 의존성 배열 사용
+  }, []); // 한 번만 실행되도록
 
   // 타이머 관리
   useEffect(() => {
@@ -74,7 +74,11 @@ const Practicing = () => {
   };
 
   const finish = () => {
-    window.history.back();
+    if (mediaStream) {
+      // 미디어 스트림 중지
+      mediaStream.getTracks().forEach((track) => track.stop());
+    }
+    window.history.back(); // 이전 페이지로 이동
   };
 
   const handleNextQuestion = () => {
@@ -83,12 +87,13 @@ const Practicing = () => {
     setIsRecording(false); // 녹화 상태 초기화
   };
 
+
   return (
     <div className="practicing-container">
-      <div className="header-container">
+      <div id="header-container">
         <img src="/logo2.png" className="logo" alt="Logo" />
         <img src="/progress2.png" className="step" alt="Progress" />
-        <button className="finish-button" onClick={finish}>
+        <button id="finish-button" onClick={finish}>
           끝내기
         </button>
       </div>
@@ -96,6 +101,12 @@ const Practicing = () => {
         <p>{question ? question : "질문이 없습니다. 돌아가서 선택해주세요."}</p>
         <div className="video-container">
           <video ref={videoRef} className="video" autoPlay muted />
+          <div className="rec-indicator">
+                <div className="red-circle"></div>
+                <button className="rec-button" onClick={toggleRecording}>
+                  {isRecording ? "STOP" : "REC"}
+                </button>
+            </div>
           <div className="timer-container">
             <div className="timer">
               {`${String(Math.floor(timer / 60)).padStart(2, "0")}:${String(
@@ -105,14 +116,6 @@ const Practicing = () => {
             <button id="submit-button" onClick={handleNextQuestion}>
               답변 제출하기
             </button>
-            <div className="recorder">
-              <div className="rec-indicator">
-                <div className="red-circle"></div>
-                <button className="rec-button" onClick={toggleRecording}>
-                  {isRecording ? "STOP" : "REC"}
-                </button>
-              </div>
-            </div>
           </div>
         </div>
       </div>

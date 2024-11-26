@@ -48,7 +48,7 @@ const MyCalendar = () => {
             {/* 캘린더 헤더 */}
             <div className="calendar-header">
                 <h4>
-                    {`${startOfWeek.getMonth() + 1}.${startOfWeek.getDate() + 1}`}
+                    {`${today.getMonth() + 1}.${today.getDate() }`}
                 </h4>
                 <button
                     className="expand-button"

@@ -7,79 +7,88 @@
   color: white;
   font-size: 20px;
   font-weight: 600;
-  padding-bottom: 0;
-  position: relative; /* 자식 요소의 상대적 위치를 위한 설정 */
+  position: relative; 
 }
 
-.header-container {
-  display: flex; /* 수평 정렬 */
+#header-container {
+  display: flex;
   position: fixed; /* 고정 위치 */
-  top: 1em;
+  top: 0.4em;
   z-index: 100; /* 다른 요소보다 위에 표시 */
-  align-items: center; /* 수직 중앙 정렬 */
-  justify-content: space-between; /* 두 요소 간의 공간을 자동으로 분배 */
+  align-items: center;
+  justify-content: space-between;
   width: 90%;
+  height: 20%;
 }
-
+.logo {
+  width: 8%;
+}
 .step {
   width: 45%;
-  height: auto;
-  margin-top: 1em;
 }
-
-.finish-button {
-  position: relative;
+#finish-button {
   background: #393E68;
   border: none;
   border-radius: 20px;
-  padding: 0.5em 1.6em;
+  padding: clamp(0.2em, 1vw, 0.4em) clamp(1.2em, 2vw, 2em);
   color: white;
-  font-size: 16px;
+  font-size: clamp(1rem, 1.2vw, 1.5rem);
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }
-
+#finish-button:hover {
+  color:#393E68;
+  background:white;
+}
 .question-box {
   background-color: #393E68; /* 질문 박스 배경색 */
   border-radius: 30px 30px 0px 0px;
   text-align: center;
   width: 90%;
-  height: 35em;
+  height: 80%;
   position: fixed; /* 화면 바닥에 고정 */
   bottom: 0; /* 화면 바닥과의 간격 0 */
   z-index: 10; /* 헤더보다 낮은 레이어로 설정 */
 }
-
+.question-box p {
+  margin-top: 8%;
+  font-size: clamp(1.2rem, 1.6vw, 3rem);
+  max-width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+  word-wrap: break-word;
+}
 .video-container {
+  position: relative;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  margin-left: 5em;
-  gap: 15em; /* 카메라와 타이머 간 간격 */
+  margin-top : 3%;
+  margin-left: 4%;
 }
 /* 타이머와 버튼 수직 정렬 */
 .timer-container {
   display: flex; /* 수직 정렬 */
+  margin-left: 20%;
   flex-direction: column; /* 세로 방향 정렬 */
 }
 .video {
-  width: 24em;
-  height: 18em;
-  margin-top: 5em;
+  width: 44%;
+  aspect-ratio: 4 / 3; /* 비율 고정 */
   background: #1A182F; /* 비디오가 로드되지 않았을 때 색상 */
   position: relative; /* 동영상 안에 요소 배치를 위한 기준 */
 }
 .rec-indicator {
   position: absolute; /* 동영상 위에 배치 */
-  top: 9em;
-  left: 6em;
+  top: 6%;
+  left: 2%;
   display: flex;
   align-items: center;
   background-color: #3F3A3E; 
   border-radius: 10px;
-  padding: 0.2em 0.3em;
+  padding: clamp(0.1em, 1vw, 0.3em) clamp(0.4em, 1vw, 0.8em);
   z-index: 10; /* 동영상 위에 보이도록 설정 */
 }
 .red-circle {
@@ -92,13 +101,12 @@
   background: transparent;
   border: none;
   color: white;
-  font-size: 14px;
-  font-weight: bold;
+  font-size: clamp(1rem, 1vw, 1.5rem);
+  font-weight: 600;
 }
 .timer {
-  font-size: 50px;
+  font-size: clamp(4rem, 5vw, 5rem);
   font-weight: 700;
-  margin-top: 1em;
   letter-spacing: 0.15em;
   transition: all 0.2s ease-in-out;
 }
@@ -110,10 +118,10 @@
     padding: 0.8em 1.4em;
     margin-top: 4em;
     color: black;
-    font-size: 16px;
+    font-size: clamp(1rem, 1.2vw, 1.6rem);
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease-in-out; /* 부드러운 전환 효과 */
+    transition: all 0.2s ease-in-out; 
 }
 #submit-button:hover {
   background: #1A182F;
@@ -122,81 +130,49 @@
 
 /* 반응형 디자인 */
 @media (max-width: 1024px) {
-  .step {
+  .finish-button {
+    font-size: 1.2rem; 
+    padding: 1em 1.6em;
+  }
+  .video {
     width: 50%;
+    aspect-ratio: 4 / 3; 
+    top: 7%;
+    left: 5%;
+  }
+  .timer {
+    font-size: clamp(3.5rem, 1vw, 4.5rem);
+  }
+}
+
+@media (max-width: 768px) {
+  .finish-button {
+    font-size: 1.1rem; 
+    padding: 0.5em 1.6em;
   }
   .video-container {
-    flex-direction: column; /* 세로 배치 */
-    align-items: center; /* 가운데 정렬 */
-    justify-content: center;
-    margin-left: 0;
-    gap: 2em; /* 간격 조정 */
-  }
-  .video {
-    width: 20em;
-    height: 15em;
-    margin-top: 2em;
-  }
-  .question-box {
-    height: 25em; /* 높이 줄이기 */
-  }
-  .submit-button {
-    padding: 0.6em 1em; /* 버튼 크기 조정 */
-  }
-}
-
-/* 모바일 (768px 이하) */
-@media (max-width: 768px) {
-  .practicing-container {
-    padding: 1em; /* 여백 조정 */
-  }
-  .step {
-    width: 60%;
-  }
-  .video {
-    width: 18em;
-    height: 14em;
-  }
-  .rec-indicator {
-    top: 14em;
-    left: 3em;
-  }
-  .finish-button {
-    font-size: 14px;
-    padding: 0.4em 1.2em;
-  }
-  .question-box {
-    height: 20em;
-    padding-top: 1em;
+    margin-top: 3em;
+    margin-left: 2em;
+    gap: 1em;
   }
   .timer {
-    font-size: 40px;
-  }
-  .submit-button {
-    font-size: 14px;
-    padding: 0.5em 0.8em;
+    font-size: clamp(3rem, 1vw, 4rem);
   }
 }
 
-/* 작은 모바일 (480px 이하) */
 @media (max-width: 480px) {
-  .step {
-    width: 70%;
+  .finish-button {
+   font-size: 1.1rem; 
+    padding: 0.5em 1.6em;
   }
-  .video {
-    width: 100%;
-    height: auto;
-    margin-top: 1em;
+  .video-container {
+    gap : 4em;
   }
   .rec-indicator {
-    top: 12em;
-    left: 2em;
+    top: 8em;
+    left: 1em;
   }
   .timer {
-    font-size: 30px;
-  }
-  .submit-button {
-    font-size: 12px;
-    padding: 0.4em 0.6em;
+    font-size: clamp(2.4rem, 1vw, 3rem);
   }
 }
