@@ -1,37 +1,198 @@
 /* src/style/feedback.css */
 
 .feedback-container {
-    width: 100%; /* 가로 전체 크기 */
-  }
-  
-  .feedback-header {
-    display: flex; /* Flexbox로 가로 정렬 */
-    background-color: #758bfa; /* 헤더 배경색 (이미지와 동일한 색상) */
-    justify-content: space-between; /* 양쪽 끝으로 배치 */
-    padding: 4px 20px; /* 내부 여백 */
-    border-radius: 10px; /* 모서리를 둥글게 */
-    align-items: center; /* 수직 중앙 정렬 */
-    box-sizing: border-box; /* 패딩 포함 크기 계산 */
-    color: white; /* 글씨 색상을 흰색으로 */
-    margin-bottom: 1em;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  
-  }
-  
-  .feedback-header h2 {
-    font-size: 1.1rem; /* 제목 크기 */
-    font-weight: normal; /* 글씨 두께 */
-    text-align: left; /* 제목 왼쪽 정렬 */
-  }
-  
-  .header .date {
-    font-size: 0.8rem; /* 날짜 크기 */
-    text-align: right; /* 날짜 오른쪽 정렬 */
-  }
-  
-  .feedback-body{
-    border-radius: 1rem;
-    padding: 1.5rem;
-    background: #ffffff;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  }
+  width: 100%;
+  /* 가로 전체 크기 */
+}
+
+.feedback-header {
+  display: flex;
+  /* Flexbox로 가로 정렬 */
+  background-color: #758bfa;
+  justify-content: space-between;
+  /* 양쪽 끝으로 배치 */
+  border-radius: 10px;
+  /* 모서리를 둥글게 */
+  align-items: center;
+  /* 수직 중앙 정렬 */
+  color: white;
+  /* 글씨 색상을 흰색으로 */
+  margin: 2em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding-left: 1em;
+  padding-right: 1em;
+  font-size: 1.1em;
+  /* 제목 크기 */
+  font-family: 'Paperlogy5', sans-serif;
+}
+
+/*종합 결과======================================================*/
+.feedback-date {
+  font-size: 0.9rem;
+  /* 날짜 크기 */
+}
+
+.feedback-main {
+  display: flex;
+  /* Flexbox로 가로 배치 */
+  align-items: center;
+  /* 수직 정렬 */
+  background: #ffffff;
+  border-radius: 10px;
+  /* 모서리를 둥글게 */
+  padding: 1em;
+  margin: 2em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+
+}
+
+.feedback-summary {
+  display: flex;
+}
+
+.total-score,
+.overview,
+.average-time {
+  padding-top: 2em;
+  padding-bottom: 2em;
+  padding-left: 2em;
+  padding-right: 2em;
+  border-right: 1px solid rgb(194, 194, 194);
+}
+
+
+.radar-chart {
+  padding-left: 1em;
+  width: 14em;
+  height: 13em;
+}
+
+#score {
+  font-size: 2.6em;
+  color: #666eff;
+  font-family: 'Paperlogy6', sans-serif;
+  margin-bottom: 0.4em;
+}
+
+.feedback-title {
+  font-family: 'Paperlogy5', sans-serif;
+  font-size: 1em;
+  margin-bottom: 1.8em;
+
+}
+
+.feedback-body {
+  font-family: 'Paperlogy4', sans-serif;
+  font-size: 0.9em;
+  margin-bottom: 1em;
+}
+
+#sec {
+  text-align: right
+}
+
+/* Feedback.css */
+#progress-bar {
+  width: 100%;
+  height: 9%;
+  background-color: #e3e3e3;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.progress-bar-fill {
+  height: 100%;
+  background-color: #666eff;
+  transition: width 0.3s ease;
+  border-radius: 5px;
+}
+
+.feedback-item {
+  display: grid;
+  grid-template-columns: 5.5em auto;
+  gap: 0.1em;
+  margin-bottom: 0.8em;
+  font-size: 1em;
+  color: #333;
+}
+
+.feedback-label {
+  font-family: 'Paperlogy4', sans-serif;
+}
+
+.feedback-value {
+  text-align: left;
+  font-family: 'Paperlogy5', sans-serif;
+}
+
+
+/*자료별 해석======================================================*/
+
+.feedback-details {
+  margin: 2em;
+  padding: 1em;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.feedback-detail-item {
+  display: flex;
+  padding-left: 2em;
+  margin-bottom: 1em;
+  justify-content: space-between;
+  border-bottom: 1px solid rgb(194, 194, 194);
+
+}
+
+.feedback-detail-text {
+  display: flex;
+  flex: 3;
+}
+
+.feedback-detail-header {
+  display: flex;
+  flex-direction: column;
+  margin-right: 4em;
+}
+
+.feedback-detail-title {
+  font-family: 'Paperlogy5', sans-serif;
+  font-size: 1em;
+  margin-bottom: 2em;
+}
+
+.feedback-detail-score {
+  font-family: 'Paperlogy6', sans-serif;
+  font-size: 2em;
+  color: #666eff;
+}
+
+.feedback-detail-description {
+  font-family: 'Paperlogy4', sans-serif;
+  font-size: 0.9em;
+  flex: 1;
+  color: #666666;
+  display: flex;
+  align-items: center;
+  line-height: 1.8; /* 기본 값은 1.5, 숫자가 클수록 간격 증가 */
+}
+
+.feedback-bar-chart {
+  flex: 1;
+  margin-top: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 60%;
+  height: 6em;
+}
+
+.feedback-bar-chart canvas {
+  max-width: 60%;
+  max-height: 6em;
+}
+.score-low {
+  color: red;
+  font-weight: bold;
+}
