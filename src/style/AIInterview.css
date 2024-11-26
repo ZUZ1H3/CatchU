@@ -186,33 +186,33 @@
 }
 /* 모의면접 화면 */
 .recording-screen {
-  display: flex; /* Flexbox 활성화 */
-  flex-direction: column; /* 세로 방향 정렬 */
-  justify-content: center; /* 화면 중앙에 배치 */
-  align-items: center; /* 화면 세로축 중앙에 배치 */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 .countdown-timer {
-  align-self: flex-end; /* 타이머를 화면 오른쪽으로 정렬 */
+  align-self: flex-end;
   margin-top: 20px;
-  margin-right: 35px; /* 오른쪽 여백 추가 */
+  margin-right: 35px;
   font-size: 37px;
   font-weight: bold;
   color: #393991;
   margin-bottom: 40px;
 }
 .camera-container {
-  display: flex; /* Flexbox 활성화 */
-  justify-content: center; /* 카메라 화면을 가로로 중앙 정렬 */
-  align-items: center; /* 카메라 화면을 세로로 중앙 정렬 */
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 50%;
   height: 50%;
 }
 video#camera-feed {
-  width: 100%; /* 부모 요소 크기에 맞게 설정 */
+  width: 100%;
   height: 100%;
-  object-fit: cover; /* 비율 유지하며 화면 채우기 */
-  transform: scaleX(-1); /* 가로축 반전 */
-  z-index: 0; /* 영상의 z-index는 기본값 */
+  object-fit: cover;
+  transform: scaleX(-1);
+  z-index: 0;
 }
 .instructions {
   font-size: 22px;
@@ -234,6 +234,34 @@ video#camera-feed {
 .microphone-status img {
   width: 25px;
   height: 30px;
+}
+/* AI 면접 화면 전체 */
+.ai-interview-screen {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* 면접관 동영상 */
+.interviewer-video {
+  width: 100%;
+  height: 100%;
+}
+/* 사용자 카메라 화면 */
+.user-camera-container {
+  position: absolute;
+  bottom: 37px;
+  right: 20px;
+  width: 200px;
+  height: 150px;
+}
+#user-camera {
+  width: 100%;
+  height: 100%;
+  transform: scaleX(-1);
+  object-fit: cover;
 }
 
 /* 반응형 디자인 */
