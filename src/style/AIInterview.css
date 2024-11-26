@@ -184,8 +184,8 @@
   background-color: #F0EDFF;
   color: #393991;
 }
-/* 모의면접 화면 */
-.recording-screen {
+/* 면접 준비 화면 */
+.preparing-screen {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -222,7 +222,7 @@ video#camera-feed {
 }
 .microphone-status {
   position: absolute;
-  bottom: 18.5%;
+  bottom: 24.5%;
   right: 23.5%;
   display: flex;
   flex-direction: column;
@@ -230,12 +230,12 @@ video#camera-feed {
   justify-content: center;
   z-index: 1;
 }
-/* 마이크 이미지 */
+/* 면접 준비 마이크 이미지 */
 .microphone-status img {
   width: 25px;
   height: 30px;
 }
-/* AI 면접 화면 전체 */
+/* 모의면접 화면 전체 */
 .ai-interview-screen {
   position: relative;
   width: 100%;
@@ -243,17 +243,78 @@ video#camera-feed {
   display: flex;
   justify-content: center;
   align-items: center;
+  overflow: hidden;
 }
-/* 면접관 동영상 */
+/* 모의면접 상단 바 */
+.top-bar-container {
+  position: absolute;
+  top: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+.bar-top {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.progress-indicator {
+  width: 400px;
+  height: auto;
+  margin-top: 15px;
+  z-index: 20;
+}
+/* 모의면접 하단 바 */
+.bottom-bar-container {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 10;
+}
+.bar-bottom {
+  width: 100%;
+  height: auto;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+}
+.status-buttons {
+  position: relative;
+  display: flex;
+  gap: 50px;
+  z-index: 20;
+}
+.mic-status {
+  width: 40px;
+  height: 40px;
+  margin-bottom: 7px;
+  cursor: pointer;
+}
+.video-status {
+  width: 35px;
+  height: 30px;
+  margin-top: 3px;
+  cursor: pointer;
+}
+/* 모의면접 면접관 동영상 */
 .interviewer-video {
   width: 100%;
   height: 100%;
+  transform: scale(1.05);
+  object-fit: cover;
 }
-/* 사용자 카메라 화면 */
+/* 모의면접 사용자 카메라 화면 */
 .user-camera-container {
   position: absolute;
-  bottom: 37px;
-  right: 20px;
+  bottom: 75px;
+  right: 15px;
   width: 200px;
   height: 150px;
 }

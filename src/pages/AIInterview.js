@@ -7,10 +7,13 @@ const AIInterview = () => {
   const [selectedJob, setSelectedJob] = useState(""); // 선택된 직무
   const [showConfirmation, setShowConfirmation] = useState(false); // 화면 전환 상태
   const [countdown, setCountdown] = useState(10); // 카운트다운 상태
-  const [showRecordingScreen, setShowRecordingScreen] = useState(false); // 녹화 화면 표시 상태
+  const [showPreparingScreen, setShowPreparingScreen] = useState(false); // 녹화 화면 표시 상태
   const [showAIInterviewScreen, setShowAIInterviewScreen] = useState(false); // AI 면접 화면 상태
-  const [microphoneStatus, setMicrophoneStatus] = useState(""); // 마이크 상태
+  const [micOn, setMicOn] = useState(true); // 마이크 상태
+  const [cameraOn, setCameraOn] = useState(true); // 카메라 상태
   const [microphoneImage, setMicrophoneImage] = useState(""); // 마이크 이미지 경로
+  const [currentStep, setCurrentStep] = useState(1); // 현재 면접 단계
+  const [currentVideoIndex, setCurrentVideoIndex] = useState(0); // 현재 영상 인덱스 (0: 메인, 1: listening)
 
   const industryJobs = {
     // 산업군 및 직무 데이터
@@ -46,22 +49,22 @@ const AIInterview = () => {
   };
 
   const handleStartClick = () => {
-    setShowRecordingScreen(true); // 녹화 화면으로 전환
+    setShowPreparingScreen(true); // 준비 화면으로 전환
   };
 
   useEffect(() => {
-    if (showRecordingScreen && countdown > 0) {
+    if (showPreparingScreen && countdown > 0) {
       const timer = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
       return () => clearTimeout(timer);
     }
     if (countdown === 0) {
-      setShowRecordingScreen(false);
-      setShowAIInterviewScreen(true); // AI 면접 화면으로 전환
+      setShowPreparingScreen(false);
+      setShowAIInterviewScreen(true); // 모의면접 화면으로 전환
     }
-  }, [showRecordingScreen, countdown]);
+  }, [showPreparingScreen, countdown]);
 
   useEffect(() => {
-    if (showRecordingScreen) {
+    if (showPreparingScreen) {
       const videoElement = document.querySelector("#camera-feed");
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices
@@ -77,14 +80,14 @@ const AIInterview = () => {
           });
       }
     }
-  }, [showRecordingScreen]);
+  }, [showPreparingScreen]);
 
   useEffect(() => {
     if (showAIInterviewScreen) {
       const videoElement = document.querySelector("#user-camera");
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices
-          .getUserMedia({ video: true, audio: false }) // 오디오는 끔
+          .getUserMedia({ video: true, audio: true })
           .then((stream) => {
             videoElement.srcObject = stream;
             videoElement.play();
@@ -96,29 +99,99 @@ const AIInterview = () => {
     }
   }, [showAIInterviewScreen]);
 
+  const handleVideoEnd = () => {
+    if (currentStep < 6 && currentVideoIndex === 0) {
+      // 메인 영상 끝 → listening 영상으로 전환
+      setCurrentVideoIndex(1);
+    } else {
+      // listening 영상 끝 or step6 영상 끝 → 다음 단계로 이동
+      setCurrentVideoIndex(0); // 메인 영상으로 초기화
+      if (currentStep < 6) {
+        setCurrentStep((prev) => prev + 1);
+      } else {
+        alert("면접이 완료되었습니다!");
+        setShowAIInterviewScreen(false); // 면접 종료
+      }
+    }
+  };
+
+  const getStepVideo = () => {
+    const steps = [
+      "interviewer_step1.mp4",
+      "interviewer_listening.mp4",
+      "interviewer_step2.mp4",
+      "interviewer_listening.mp4",
+      "interviewer_step3.mp4",
+      "interviewer_listening.mp4",
+      "interviewer_step4.mp4",
+      "interviewer_listening.mp4",
+      "interviewer_step5.mp4",
+      "interviewer_listening.mp4",
+      "interviewer_step6.mp4",
+    ];
+  
+    const stepIndex = (currentStep - 1) * 2; // 단계별 시작 인덱스 계산
+    if (currentStep < 6) {
+      // step1~step5는 step과 listening까지 포함
+      return steps[stepIndex + currentVideoIndex]; // 0: step, 1: listening
+    } else {
+      // step6은 "listening" 없이 해당 영상만 재생
+      return steps[stepIndex];
+    }
+  };  
+
   if (showAIInterviewScreen) {
     return (
       <div className="ai-interview-screen">
+        {/* 맨 위 바 */}
+        <div className="top-bar-container">
+          <img src="../bar_top.png" alt="Top Bar" className="bar-top" />
+          <img
+            src={`../progress_step${currentStep}.png`}
+            alt={`Progress Step ${currentStep}`}
+            className="progress-indicator"
+          />
+        </div>
+  
         {/* 면접관 동영상 */}
         <video
           className="interviewer-video"
-          src="../interviewer_talking.mp4"
+          src={`../${getStepVideo()}`}
           autoPlay
-          loop
+          onEnded={handleVideoEnd}
           controls={false}
         ></video>
-
+  
         {/* 사용자 카메라 화면 */}
         <div className="user-camera-container">
           <video id="user-camera" autoPlay muted></video>
         </div>
+  
+        {/* 맨 아래 바 */}
+        <div className="bottom-bar-container">
+          <img src="../bar_bottom.png" alt="Bottom Bar" className="bar-bottom" />
+          <div className="status-buttons">
+            <img
+              src={micOn ? "../mic.png" : "../mic_no.png"}
+              alt="Mic Status"
+              className="mic-status"
+              onClick={() => setMicOn((prev) => !prev)}
+            />
+            <img
+              src={cameraOn ? "../video.png" : "../video_no.png"}
+              alt="Video Status"
+              className="video-status"
+              onClick={() => setCameraOn((prev) => !prev)}
+            />
+          </div>
+        </div>
       </div>
     );
-  }
+  }  
 
-  if (showRecordingScreen) {
+  if (showPreparingScreen) {
     return (
-      <div className="recording-screen">
+      <div className="preparing-screen">
         <div className="countdown-timer">{countdown}</div>
         <div className="camera-container">
           <video id="camera-feed" autoPlay muted></video>
@@ -130,7 +203,6 @@ const AIInterview = () => {
         </div>
         <div className="microphone-status">
           <img src={microphoneImage} alt="마이크" />
-          <p>{microphoneStatus}</p>
         </div>
       </div>
     );
@@ -174,16 +246,15 @@ const AIInterview = () => {
 
       <div className="ai-interview-container">
         <div className="table-wrapper">
-          <div className="table-divider"></div>
           <div className="table-column industry-column">
             <div className="table-header">산업군</div>
             {Object.keys(industryJobs).map((industry) => (
               <div
                 key={industry}
-                onClick={() => handleIndustryClick(industry)}
                 className={`table-cell ${
                   selectedIndustry === industry ? "selected" : ""
                 }`}
+                onClick={() => handleIndustryClick(industry)}
               >
                 {industry}
               </div>
@@ -195,10 +266,10 @@ const AIInterview = () => {
             {jobs.map((job) => (
               <div
                 key={job}
-                onClick={() => handleJobClick(job)}
                 className={`table-cell ${
                   selectedJob === job ? "selected" : ""
                 }`}
+                onClick={() => handleJobClick(job)}
               >
                 {job}
               </div>
