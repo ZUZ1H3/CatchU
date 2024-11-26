@@ -126,7 +126,7 @@
 }
 /* 확인 화면 텍스트 컨테이너 */
 .confirmation-screen {
-  width: 70%;
+  width: 100%;
   position: absolute;
   top: 53%;
   left: 55%;
@@ -145,7 +145,7 @@
 .button-container2 {
   width: 50%;
   margin-top: 45px;
-  margin-left: 200px;
+  margin-left: 305px;
 }
 /* 이전 버튼 스타일 */
 .back-button {
@@ -184,7 +184,57 @@
   background-color: #F0EDFF;
   color: #393991;
 }
-
+/* 모의면접 화면 */
+.recording-screen {
+  display: flex; /* Flexbox 활성화 */
+  flex-direction: column; /* 세로 방향 정렬 */
+  justify-content: center; /* 화면 중앙에 배치 */
+  align-items: center; /* 화면 세로축 중앙에 배치 */
+}
+.countdown-timer {
+  align-self: flex-end; /* 타이머를 화면 오른쪽으로 정렬 */
+  margin-top: 20px;
+  margin-right: 35px; /* 오른쪽 여백 추가 */
+  font-size: 37px;
+  font-weight: bold;
+  color: #393991;
+  margin-bottom: 40px;
+}
+.camera-container {
+  display: flex; /* Flexbox 활성화 */
+  justify-content: center; /* 카메라 화면을 가로로 중앙 정렬 */
+  align-items: center; /* 카메라 화면을 세로로 중앙 정렬 */
+  width: 50%;
+  height: 50%;
+}
+video#camera-feed {
+  width: 100%; /* 부모 요소 크기에 맞게 설정 */
+  height: 100%;
+  object-fit: cover; /* 비율 유지하며 화면 채우기 */
+  transform: scaleX(-1); /* 가로축 반전 */
+  z-index: 0; /* 영상의 z-index는 기본값 */
+}
+.instructions {
+  font-size: 22px;
+  line-height: 150%;
+  text-align: center;
+  margin-top: 30px;
+}
+.microphone-status {
+  position: absolute;
+  bottom: 18.5%;
+  right: 23.5%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+/* 마이크 이미지 */
+.microphone-status img {
+  width: 25px;
+  height: 30px;
+}
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
