@@ -8,6 +8,7 @@ const AIInterview = () => {
   const [showConfirmation, setShowConfirmation] = useState(false); // 화면 전환 상태
   const [countdown, setCountdown] = useState(10); // 카운트다운 상태
   const [showRecordingScreen, setShowRecordingScreen] = useState(false); // 녹화 화면 표시 상태
+  const [showAIInterviewScreen, setShowAIInterviewScreen] = useState(false); // AI 면접 화면 상태
   const [microphoneStatus, setMicrophoneStatus] = useState(""); // 마이크 상태
   const [microphoneImage, setMicrophoneImage] = useState(""); // 마이크 이미지 경로
 
@@ -54,7 +55,8 @@ const AIInterview = () => {
       return () => clearTimeout(timer);
     }
     if (countdown === 0) {
-      // setShowAIInterviewScreen(true); // 모의면접 화면으로 전환
+      setShowRecordingScreen(false);
+      setShowAIInterviewScreen(true); // AI 면접 화면으로 전환
     }
   }, [showRecordingScreen, countdown]);
 
@@ -77,6 +79,43 @@ const AIInterview = () => {
     }
   }, [showRecordingScreen]);
 
+  useEffect(() => {
+    if (showAIInterviewScreen) {
+      const videoElement = document.querySelector("#user-camera");
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        navigator.mediaDevices
+          .getUserMedia({ video: true, audio: false }) // 오디오는 끔
+          .then((stream) => {
+            videoElement.srcObject = stream;
+            videoElement.play();
+          })
+          .catch((err) => {
+            console.error("카메라를 사용할 수 없습니다:", err);
+          });
+      }
+    }
+  }, [showAIInterviewScreen]);
+
+  if (showAIInterviewScreen) {
+    return (
+      <div className="ai-interview-screen">
+        {/* 면접관 동영상 */}
+        <video
+          className="interviewer-video"
+          src="../interviewer_talking.mp4"
+          autoPlay
+          loop
+          controls={false}
+        ></video>
+
+        {/* 사용자 카메라 화면 */}
+        <div className="user-camera-container">
+          <video id="user-camera" autoPlay muted></video>
+        </div>
+      </div>
+    );
+  }
+
   if (showRecordingScreen) {
     return (
       <div className="recording-screen">
@@ -90,10 +129,7 @@ const AIInterview = () => {
           카메라 및 마이크의 작동 여부를 확인해주세요.
         </div>
         <div className="microphone-status">
-          <img
-            src={microphoneImage}
-            alt="마이크"
-          />
+          <img src={microphoneImage} alt="마이크" />
           <p>{microphoneStatus}</p>
         </div>
       </div>
