@@ -11,6 +11,8 @@ import AIInterview from "./pages/AIInterview";
 import AptitudeTest from "./pages/AptitudeTest.js";
 import JobValueTest from './pages/JobValueTest.js';
 import JobAptitudeTest from './pages/JobAptitudeTest.js';
+import JobPreparationTest from './pages/JobPreparationTest.js';
+import ResultJobAptitudeTest from './pages/ResultJobAptitudeTest.js';
 import FAQ from "./pages/FAQ";
 import FeedbackList from "./pages/FeedbackList";
 import Feedback from "./pages/Feedback";
@@ -66,6 +68,8 @@ const MainContent = () => {
           <Route path="/aptitude-test" element={<AptitudeTest />} />
           <Route path="/job-value-test" element={<JobValueTest />} />
           <Route path="/job-aptitude-test" element={<JobAptitudeTest />} />
+          <Route path="/job-preparation-test" element={<JobPreparationTest />} />
+          <Route path="/result-job-aptitude-test" element={<ResultJobAptitudeTest />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/feedback-list" element={<FeedbackList />} />
           <Route path="/feedback/:id" element={<Feedback />} />

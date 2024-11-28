@@ -56,6 +56,7 @@ const AptitudeTest = () => {
     },
     {
       id: 3,
+      route: '/job-preparation-test',
       value: '취업준비도',
       title: '구직준비도검사',
       description: '성공적인 구직을 위해 어느 정도 준비가 되어 있는지 파악하여, 이를 토대로 적합한 취업지원 서비스를 확인할 수 있습니다.',
@@ -285,11 +286,27 @@ const AptitudeTest = () => {
 
             {/* id가 3인 경우에만 차트 표시 */}
             {selectedTest.id === 3 && renderChart(selectedTest.measure)}
+
             <div className="popup-buttons">
               <button className="popup-cancel" onClick={closePopup}>
                 닫기
               </button>
-              <button className="popup-start">검사 실시</button>
+              <button
+                className="popup-start"
+                onClick={() => {
+                  // id에 따라 페이지 라우팅
+                  if (selectedTest.id === 1) {
+                    navigate("/job-value-test");
+                  } else if (selectedTest.id === 2) {
+                    navigate("/job-aptitude-test");
+                  } else if (selectedTest.id === 3) {
+                    navigate("/job-preparation-test");
+                  } else {
+                    alert("추가 예정 검사입니다.");
+                  }
+                }}
+              >
+                검사 실시</button>
             </div>
           </div>
         </div>
