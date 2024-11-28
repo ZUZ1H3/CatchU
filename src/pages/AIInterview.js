@@ -1,6 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../style/AIInterview.css";
 
+const industryJobs = {
+  // 산업군 및 직무 데이터
+  "IT / 데이터": ["소프트웨어 / 웹 / 앱", "빅데이터", "인공지능", "정보보안", "네트워크 / 서버"],
+  "화학 / 에너지 / 환경": ["환경 엔지니어", "화학 연구원", "에너지 컨설턴트"],
+  "목재 / 가구 / 제지": ["목재 디자이너", "가구 제작자", "제지 기술자"],
+  "판매 / 유통 / 영업 / 무역": ["영업 사원", "무역 전문가", "유통 관리사"],
+  "식품": ["식품 연구원", "품질 관리 전문가", "식품 디자이너"],
+  "외국어 면접": ["영어 통역사", "중국어 번역가", "일본어 전문가"],
+  "정치": ["정치 컨설턴트", "정책 분석가", "공공 행정 전문가"],
+};
+
 const AIInterview = () => {
   const [selectedIndustry, setSelectedIndustry] = useState(""); // 선택된 산업군
   const [jobs, setJobs] = useState([]); // 선택된 직무 리스트
@@ -17,21 +28,12 @@ const AIInterview = () => {
   const [listeningTimer, setListeningTimer] = useState(0); // listening 영상 타이머 상태
   const [isRecording, setIsRecording] = useState(false); // 녹화 상태 추적
   const [isPrematureEnd, setIsPrematureEnd] = useState(false); // 중도 종료 여부 관리
+  const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
+  const [filteredIndustryJobs, setFilteredIndustryJobs] = useState(industryJobs); // 필터링된 데이터 상태
 
   const cameraStreamRef = useRef(null); // 카메라 스트림
   const mediaRecorderRef = useRef(null); // MediaRecorder 참조
   const recordedChunksRef = useRef([]); // 녹화된 데이터 저장
-
-  const industryJobs = {
-    // 산업군 및 직무 데이터
-    "IT / 데이터": ["소프트웨어 / 웹 / 앱", "빅데이터", "인공지능", "정보보안", "네트워크 / 서버"],
-    "화학 / 에너지 / 환경": ["환경 엔지니어", "화학 연구원", "에너지 컨설턴트"],
-    "목재 / 가구 / 제지": ["목재 디자이너", "가구 제작자", "제지 기술자"],
-    "판매 / 유통 / 영업 / 무역": ["영업 사원", "무역 전문가", "유통 관리사"],
-    "식품": ["식품 연구원", "품질 관리 전문가", "식품 디자이너"],
-    "외국어 면접": ["영어 통역사", "중국어 번역가", "일본어 전문가"],
-    "정치": ["정치 컨설턴트", "정책 분석가", "공공 행정 전문가"],
-  };
 
   const handleIndustryClick = (industry) => {
     setSelectedIndustry(industry);
@@ -41,6 +43,54 @@ const AIInterview = () => {
 
   const handleJobClick = (job) => {
     setSelectedJob(job); // 선택된 직무 업데이트
+  };
+
+  // 검색
+  const handleSearch = (e) => {
+    const value = e.target.value.toLowerCase();
+    setSearchTerm(value);
+  
+    if (!value) {
+      // 검색어가 없으면 원래 데이터로 복원
+      setFilteredIndustryJobs(industryJobs);
+      setSelectedIndustry(""); // 선택 초기화
+      setSelectedJob("");
+      return;
+    }
+  
+    // 검색어로 직무 필터링
+    const matchingEntry = Object.entries(industryJobs).find(([industry, jobs]) =>
+      jobs.some((job) => job.toLowerCase().includes(value))
+    );
+  
+    if (matchingEntry) {
+      const [industry, jobs] = matchingEntry;
+      const matchingJob = jobs.find((job) => job.toLowerCase().includes(value));
+  
+      setSelectedIndustry(industry); // 첫 번째 일치하는 산업군 선택
+      setSelectedJob(matchingJob); // 해당 직무 선택
+      setFilteredIndustryJobs({ [industry]: jobs }); // 선택된 산업군만 표시
+    } else {
+      // 검색 결과가 없을 때 초기화
+      setFilteredIndustryJobs({ "검색 결과 없음": [] });
+      setSelectedIndustry("");
+      setSelectedJob("");
+    }
+  };  
+
+  // Enter 키 이벤트 처리
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" && searchTerm) {
+      const firstMatch = Object.entries(filteredIndustryJobs).find(
+        ([, jobs]) => jobs.length > 0
+      );
+      if (firstMatch) {
+        const [firstIndustry, jobs] = firstMatch;
+        const firstJob = jobs[0];
+        handleIndustryClick(firstIndustry); // 첫 번째 산업군 선택
+        handleJobClick(firstJob); // 첫 번째 직무 선택
+      }
+    }
   };
 
   const handleConfirmClick = () => {
@@ -369,59 +419,62 @@ const AIInterview = () => {
 
   return (
     <div>
-      {/* 검색 및 선택 화면 */}
-      <div className="search-container">
-        <label htmlFor="search" className="search-label">
-          직무를 선택해주세요.
-        </label>
-        <input
-          type="text"
-          id="search"
-          className="search-input"
-          placeholder="직무 키워드를 검색해 보세요"
-        />
-      </div>
+    {/* 검색 및 선택 화면 */}
+    <div className="search-container">
+      <label htmlFor="search" className="search-label">
+        직무를 선택해주세요.
+      </label>
+      <input
+        type="text"
+        id="search"
+        className="search-input"
+        placeholder="직무 키워드를 검색해 보세요"
+        value={searchTerm}
+        onChange={handleSearch} // 검색어 변경 이벤트
+        onKeyDown={handleKeyDown} // Enter 키 이벤트
+      />
+    </div>
 
-      <div className="ai-interview-container">
-        <div className="table-wrapper">
-          <div className="table-column industry-column">
-            <div className="table-header">산업군</div>
-            {Object.keys(industryJobs).map((industry) => (
-              <div
-                key={industry}
-                className={`table-cell ${
-                  selectedIndustry === industry ? "selected" : ""
-                }`}
-                onClick={() => handleIndustryClick(industry)}
-              >
-                {industry}
-              </div>
-            ))}
-          </div>
+    <div className="ai-interview-container">
+      <div className="table-wrapper">
+        <div className="table-column industry-column">
+          <div className="table-header">산업군</div>
+          {Object.keys(filteredIndustryJobs).map((industry) => (
+            <div
+              key={industry}
+              className={`table-cell ${
+                selectedIndustry === industry ? "selected" : ""
+              }`}
+              onClick={() => handleIndustryClick(industry)}
+            >
+              {industry}
+            </div>
+          ))}
+        </div>
 
-          <div className="table-column job-column">
-            <div className="table-header">직무</div>
-            {jobs.map((job) => (
-              <div
-                key={job}
-                className={`table-cell ${
-                  selectedJob === job ? "selected" : ""
-                }`}
-                onClick={() => handleJobClick(job)}
-              >
-                {job}
-              </div>
-            ))}
-          </div>
+        <div className="table-column job-column">
+          <div className="table-header">직무</div>
+          {(filteredIndustryJobs[selectedIndustry] || []).map((job) => (
+            <div
+              key={job}
+              className={`table-cell ${
+                selectedJob === job ? "selected" : ""
+              }`}
+              onClick={() => handleJobClick(job)}
+            >
+              {job}
+            </div>
+          ))}
         </div>
       </div>
-
-      <div className="button-container">
-        <button className="confirm-button" onClick={handleConfirmClick}>
-          확인
-        </button>
-      </div>
     </div>
+
+    <div className="button-container">
+      <button className="confirm-button" onClick={handleConfirmClick}>
+        확인
+      </button>
+    </div>
+  </div>
   );
 };
 
