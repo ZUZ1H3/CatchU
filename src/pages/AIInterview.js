@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../style/AIInterview.css";
 
 const AIInterview = () => {
@@ -7,13 +7,20 @@ const AIInterview = () => {
   const [selectedJob, setSelectedJob] = useState(""); // 선택된 직무
   const [showConfirmation, setShowConfirmation] = useState(false); // 화면 전환 상태
   const [countdown, setCountdown] = useState(10); // 카운트다운 상태
-  const [showPreparingScreen, setShowPreparingScreen] = useState(false); // 녹화 화면 표시 상태
+  const [showPreparingScreen, setShowPreparingScreen] = useState(false); // 준비 화면 표시 상태
   const [showAIInterviewScreen, setShowAIInterviewScreen] = useState(false); // AI 면접 화면 상태
   const [micOn, setMicOn] = useState(true); // 마이크 상태
   const [cameraOn, setCameraOn] = useState(true); // 카메라 상태
   const [microphoneImage, setMicrophoneImage] = useState(""); // 마이크 이미지 경로
   const [currentStep, setCurrentStep] = useState(1); // 현재 면접 단계
   const [currentVideoIndex, setCurrentVideoIndex] = useState(0); // 현재 영상 인덱스 (0: 메인, 1: listening)
+  const [listeningTimer, setListeningTimer] = useState(0); // listening 영상 타이머 상태
+  const [isRecording, setIsRecording] = useState(false); // 녹화 상태 추적
+  const [isPrematureEnd, setIsPrematureEnd] = useState(false); // 중도 종료 여부 관리
+
+  const cameraStreamRef = useRef(null); // 카메라 스트림
+  const mediaRecorderRef = useRef(null); // MediaRecorder 참조
+  const recordedChunksRef = useRef([]); // 녹화된 데이터 저장
 
   const industryJobs = {
     // 산업군 및 직무 데이터
@@ -89,44 +96,149 @@ const AIInterview = () => {
         navigator.mediaDevices
           .getUserMedia({ video: true, audio: true })
           .then((stream) => {
+            cameraStreamRef.current = stream;
             videoElement.srcObject = stream;
             videoElement.play();
-          })
-          .catch((err) => {
-            console.error("카메라를 사용할 수 없습니다:", err);
-          });
+
+           // MediaRecorder로 녹화 시작
+           const mediaRecorder = new MediaRecorder(stream);
+           mediaRecorderRef.current = mediaRecorder;
+
+           mediaRecorder.ondataavailable = (event) => {
+             if (event.data.size > 0) {
+               recordedChunksRef.current.push(event.data); // 데이터 저장
+             }
+           };
+
+           mediaRecorder.start(); // 녹화 시작
+           setIsRecording(true); // 녹화 상태를 true로 설정
+
+          mediaRecorder.onstop = () => {
+            setIsRecording(false); // 녹화 종료 시 false로 설정
+          };
+        })
+        .catch((err) => {
+          console.error("카메라를 사용할 수 없습니다:", err);
+        });
       }
     }
+
+    // 컴포넌트가 unmount될 때 스트림과 MediaRecorder 정리
+    return () => {
+      if (cameraStreamRef.current) {
+        cameraStreamRef.current.getTracks().forEach((track) => track.stop());
+      }
+      if (mediaRecorderRef.current) {
+        mediaRecorderRef.current.stop();
+      }
+    };
   }, [showAIInterviewScreen]);
 
+  useEffect(() => {
+    if (currentVideoIndex === 1) {
+      setListeningTimer(0);
+      const interval = setInterval(() => {
+        setListeningTimer((prev) => prev + 1);
+      }, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [currentVideoIndex]);
+
   const handleVideoEnd = () => {
-    if (currentStep < 6 && currentVideoIndex === 0) {
+    if (currentVideoIndex === 1) {
+      // listening 영상일 때
+      const videoElement = document.querySelector(".interviewer-video");
+      videoElement.currentTime = 0; // 영상 재생 위치 초기화
+      videoElement.play(); // 무한 반복 재생
+    } else if (currentStep < 6 && currentVideoIndex === 0) {
       // 메인 영상 끝 → listening 영상으로 전환
       setCurrentVideoIndex(1);
     } else {
-      // listening 영상 끝 or step6 영상 끝 → 다음 단계로 이동
-      setCurrentVideoIndex(0); // 메인 영상으로 초기화
-      if (currentStep < 6) {
-        setCurrentStep((prev) => prev + 1);
-      } else {
-        alert("면접이 완료되었습니다!");
-        setShowAIInterviewScreen(false); // 면접 종료
-      }
+      // step6 메인 영상 끝 → 다음 단계로 이동
+      handleNextStep();
     }
   };
+
+  const handleNextStep = () => {
+    setCurrentVideoIndex(0); // 메인 영상으로 초기화
+    if (currentStep < 6) {
+      setCurrentStep((prev) => prev + 1);
+    } else {
+      setIsPrematureEnd(false); // 정상 종료로 설정
+      handleEndInterview(); // 면접 종료 처리 호출
+      alert("면접이 완료되었습니다!");
+      setSelectedIndustry(false); // 면접 종료
+    }
+  };
+
+  const handleEndInterviewConfirmation = () => {
+    // 종료 버튼 클릭 시 팝업 창 표시
+    const userConfirmed = window.confirm("모의면접을 진행 중입니다. 지금 종료하시면 진행 과정이 저장되지 않습니다. 그래도 종료하시겠습니까?");
+    if (userConfirmed) {
+      setIsPrematureEnd(true); // 중도 종료로 설정
+      handleEndInterview(); // 면접 종료 처리
+    }
+  };
+
+  const handleEndInterview = () => {
+    setShowAIInterviewScreen(false);
+  
+    // MediaRecorder 중지 및 참조 해제
+    if (mediaRecorderRef.current) {
+      mediaRecorderRef.current.stop();
+      mediaRecorderRef.current = null;
+    }
+  
+    // 카메라 스트림 중지 및 비디오 화면 초기화
+    if (cameraStreamRef.current) {
+      cameraStreamRef.current.getTracks().forEach((track) => {
+        if (track.readyState === "live") {
+          track.stop();
+        }
+      });
+      cameraStreamRef.current = null;
+    }
+  
+    const videoElement = document.querySelector("#user-camera");
+    if (videoElement) {
+      videoElement.srcObject = null;
+    }
+  
+    // 중도 종료 시 녹화 데이터 저장 건너뜀
+    if (!isPrematureEnd) {
+      if (recordedChunksRef.current.length > 0) {
+        const blob = new Blob(recordedChunksRef.current, { type: "video/webm" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.style.display = "none";
+        a.href = url;
+        a.download = "interview_recording.webm";
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+      }
+    }
+  
+    // 녹화 데이터 초기화
+    recordedChunksRef.current = [];
+  
+    // 새로고침을 위해 상태 저장
+    setShowConfirmation(false);
+    window.location.reload();
+  };  
 
   const getStepVideo = () => {
     const steps = [
       "interviewer_step1.mp4",
-      "interviewer_listening.mp4",
+      "interviewer_listening_mute.mp4",
       "interviewer_step2.mp4",
-      "interviewer_listening.mp4",
+      "interviewer_listening_mute.mp4",
       "interviewer_step3.mp4",
-      "interviewer_listening.mp4",
+      "interviewer_listening_mute.mp4",
       "interviewer_step4.mp4",
-      "interviewer_listening.mp4",
+      "interviewer_listening_mute.mp4",
       "interviewer_step5.mp4",
-      "interviewer_listening.mp4",
+      "interviewer_listening_mute.mp4",
       "interviewer_step6.mp4",
     ];
   
@@ -138,7 +250,7 @@ const AIInterview = () => {
       // step6은 "listening" 없이 해당 영상만 재생
       return steps[stepIndex];
     }
-  };  
+  };
 
   if (showAIInterviewScreen) {
     return (
@@ -151,6 +263,9 @@ const AIInterview = () => {
             alt={`Progress Step ${currentStep}`}
             className="progress-indicator"
           />
+          {currentVideoIndex === 1 && (
+            <div className="listening-timer">{listeningTimer}</div>
+          )}
         </div>
   
         {/* 면접관 동영상 */}
@@ -166,6 +281,23 @@ const AIInterview = () => {
         <div className="user-camera-container">
           <video id="user-camera" autoPlay muted></video>
         </div>
+
+          {/* 녹화중 텍스트 */}
+          {isRecording && (
+            <div className="recording-status">
+              <p>녹화중</p>
+            </div>
+          )}
+
+          {/* "다음" 버튼 */}
+          {currentVideoIndex === 1 && (
+            <button
+              className="next-step-button"
+              onClick={handleNextStep}
+            >
+              다음
+            </button>
+          )}
   
         {/* 맨 아래 바 */}
         <div className="bottom-bar-container">
@@ -183,6 +315,12 @@ const AIInterview = () => {
               className="video-status"
               onClick={() => setCameraOn((prev) => !prev)}
             />
+            <button
+              className="end-interview-button"
+              onClick={handleEndInterviewConfirmation} // 팝업 창 처리 함수 호출
+            >
+              종료
+            </button>
           </div>
         </div>
       </div>
