@@ -324,6 +324,42 @@ video#camera-feed {
   transform: scaleX(-1);
   object-fit: cover;
 }
+/* 종료 버튼 */
+.end-interview-button {
+  position: absolute;
+  top: 4px;
+  left: 530px;
+  width: 60px;
+  height: 30px;
+  background-color: #d70c0c;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: 'Paperlogy5', sans-serif;
+  cursor: pointer;
+}
+.listening-timer {
+  position: absolute;
+  left: 95%;
+  color: white;
+  font-size: 30px;
+}
+.next-step-button {
+  position: absolute;
+  top: 621px;
+  left: 30px;
+  width: 60px;
+  height: 30px;
+  background-color: #0acd4f;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 15px;
+  font-family: 'Paperlogy5', sans-serif;
+  cursor: pointer;
+  z-index: 20;
+}
 
 /* 반응형 디자인 */
 @media (max-width: 768px) {
