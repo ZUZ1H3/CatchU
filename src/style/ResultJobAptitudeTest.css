@@ -1,0 +1,103 @@
+.resultaptitude-container {
+  width: 100%;
+  /* 가로 전체 크기 */
+  background: #F8F7FD;
+  padding-top: 2em;
+}
+
+.resultaptitude-header {
+  display: flex;
+  background-color: #758bfa;
+  justify-content: space-between;
+  /* 양쪽 끝으로 배치 */
+  border-radius: 10px;
+  align-items: center;
+  color: white;
+  margin-left: 2em;
+  margin-right: 2em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding-left: 2em;
+  padding-right: 1em;
+  padding-top: 1em;
+  padding-bottom: 1em;
+  font-size: 1.1em;
+  margin-bottom: 1em;
+   /* 제목 크기 */
+   font-family: 'Paperlogy5', sans-serif;
+}
+
+.resultaptitude-main {
+  display: block;
+  align-items: center;
+  /* 수직 정렬 */
+  background: #ffffff;
+  border-radius: 10px;
+  /* 모서리를 둥글게 */
+  padding: 1em;
+  margin: 2em;
+  margin-top: 0.8em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  align-items: center;
+}
+
+.resultaptitude-main p {
+  margin-top: 20px;
+  font-family: 'Paperlogy6', sans-serif;
+}
+
+.resultaptitude-graph2 {
+  margin: 0 auto; /* 중앙 정렬 */
+  text-align: center;
+  max-width: 100%; /* 최대 넓이를 100%로 */
+  height: 400px; /* 그래프 높이 */
+}
+
+.resultaptitude-graph {
+  margin: 0 auto; /* 중앙 정렬 */
+  text-align: center;
+  width: calc(100% - 4em); /* 테이블과 동일한 마진 조정 */
+  max-width: 100%; /* 최대 넓이를 100%로 */
+  height: 300px; /* 그래프 높이 */
+}
+
+.resultaptitude-table {
+  overflow-x: auto;
+  margin-bottom: 10px;
+}
+
+.resultaptitude-table table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+.resultaptitude-table th,
+.resultaptitude-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  text-align: center;
+}
+
+.resultaptitude-table th {
+  background-color: #f5f5f5;
+  font-weight: normal;
+}
+
+.resultaptitude-table td {
+  background-color: #fff;
+}
+
+.resultaptitude-details-header {
+  display: flex;
+  background-color: #E6E6F9;
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  margin-left: 2em;
+  margin-right: 2em;
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding-left: 1em;
+  font-size: 1em;
+  font-family: 'Paperlogy5', sans-serif;
+}
