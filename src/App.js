@@ -72,8 +72,8 @@ const MainContent = () => {
           <Route path="/result-job-aptitude-test" element={<ResultJobAptitudeTest />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/feedback-list" element={<FeedbackList />} />
-          <Route path="/feedback/:id" element={<Feedback />} />
-        </Routes>
+          <Route path="/feedback/:type/:id" element={<Feedback />} />
+          </Routes>
       </div>
 
       {isDashboard && <Profile profileData={profileData} onUpdate={handleProfileUpdate} />}

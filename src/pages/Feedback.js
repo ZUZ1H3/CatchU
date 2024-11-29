@@ -2,7 +2,8 @@ import React from 'react';
 import { useParams } from "react-router-dom";
 import '../style/Feedback.css';
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import { feedbackData } from "../data/FeedbackData.js";
+import { feedbackData } from "../data/FeedbackData_Interview.js";
+import { practiceData } from "../data/FeedbackData_Practice.js"; // 면접 연습 데이터
 import profileData from "../data/ProfileData.js";
 import { Radar, Bar } from "react-chartjs-2";
 import { Chart as ChartJS } from "chart.js";
@@ -75,8 +76,11 @@ const exportToPDF = (feedback, userName) => {
 
 
 const Feedback = () => {
-  const { id } = useParams(); // URL에서 날짜(ID)를 가져옴
-  const feedback = feedbackData[id]; // 해당 날짜의 피드백 데이터 가져오기
+  const { type, id } = useParams(); // URL에서 타입과 ID 가져오기
+
+  // 데이터 선택
+  const dataSource = type === "mockInterview" ? feedbackData : practiceData;
+  const feedback = dataSource[id]; // 해당 ID의 데이터를 가져옴
 
   if (!feedback) {
     return <p>피드백을 찾을 수 없습니다.</p>; // 데이터가 없을 때 처리
@@ -84,6 +88,13 @@ const Feedback = () => {
 
   const { summary, radarChart, feedbackDetails } = feedback;
   const userName = profileData.name; // 프로필 데이터에서 이름 가져오기
+
+    // 제목 설정
+    const title =
+    type === "mockInterview"
+      ? `${userName}님의 모의 면접 분석 결과`
+      : `${userName}님의 면접 연습 분석 결과`;
+
 
   // 동적으로 점수 및 등급 계산
   const averageScore = calculateAverage(radarChart);
@@ -154,8 +165,8 @@ const Feedback = () => {
       </div>
       <div className="feedback-container" id="feedback-container">
         <div className="feedback-header">
-          <div>{userName}님의 모의 면접 분석 결과</div>
-          <p className="feedback-date">{formatDateTime(feedback.dateTime)}</p>
+          <div>{title}</div>
+          <p>{`분석 날짜: ${id}`}</p>
         </div>
 
         <div className="feedback-main">

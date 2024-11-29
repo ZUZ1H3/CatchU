@@ -3,8 +3,8 @@ import React, { useState, useEffect, useRef } from "react";
 import { Bar } from "react-chartjs-2";
 import { useNavigate } from "react-router-dom"; // React Router for navigation
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import { feedbackData } from "../data/FeedbackData.js"; // feedbackData 가져오기
-
+import { feedbackData } from "../data/FeedbackData_Interview.js"; // feedbackData 가져오기
+import { practiceData } from "../data/FeedbackData_Practice.js"; // practiceData 가져오기
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -53,32 +53,44 @@ const FeedbackList = () => {
         };
     };
 
-    // 모의 면접 데이터 동적 생성
-    const mockInterviewData = createChartData(feedbackData);
 
-    // 면접 연습 데이터-> 동적 생성 X 아마 리스트로 바꿀 예정
-    const practiceData = {
-        labels: ["14일", "16일", "18일"],
-        datasets: [
-            {
-                label: "면접 연습",
-                data: [25, 79, 100],
-                backgroundColor: [
-                    ...[25, 79, 100].map((value) => {
-                        if (value >= 80) return "#FF6384";
-                        else if (value >= 60) return "#FF85A1"; 
-                        else if (value >= 40) return "#FFB2C9";
-                        else return "#FFE4E9";
-                    }),
-                ],
-                borderWidth: 0,
-                borderRadius: 8, // 막대 모서리를 둥글게
-                barThickness: 20, // 막대 두께 고정
-            },
-        ],
+    const createPracticeChartData = (dataSource) => {
+        const labels = Object.keys(dataSource); // 날짜 목록
+        const scores = labels.map((date) => {
+            const radarChart = dataSource[date].radarChart;
+            // radarChart의 평균 점수를 계산
+            const total = Object.values(radarChart).reduce((sum, value) => sum + value, 0);
+            return Math.round(total / Object.keys(radarChart).length);
+        });
+    
+        const backgroundColor = scores.map((score) => {
+            if (score >= 80) return "#FF6384"; // 80 이상
+            else if (score >= 60) return "#FF85A1"; // 60 이상
+            else if (score >= 40) return "#FFB2C9"; // 40 이상
+            return "#FFE4E9"; // 그 이하
+        });
+    
+        return {
+            labels,
+            datasets: [
+                {
+                    label: "면접 연습 점수",
+                    data: scores,
+                    backgroundColor,
+                    borderWidth: 0,
+                    borderRadius: 8, // 막대 모서리를 둥글게
+                    barThickness: 20, // 막대 두께 고정
+                },
+            ],
+        };
     };
+    
+        //동적 생성
+        const mockInterviewData = createChartData(feedbackData);
+        const practiceChartData = createPracticeChartData(practiceData);
+    
 
-    const data = activeTab === "mockInterview" ? mockInterviewData : practiceData;
+    const data = activeTab === "mockInterview" ? mockInterviewData : practiceChartData;
 
     const options = {
         responsive: true,
@@ -114,7 +126,8 @@ const FeedbackList = () => {
             if (elements.length > 0) {
                 const index = elements[0].index; // 클릭한 막대의 인덱스
                 const label = data.labels[index]; // 클릭한 막대의 레이블
-                navigate(`/feedback/${label}`); // 해당 레이블로 피드백 페이지로 이동
+                const type = activeTab; // 현재 활성화된 탭 (mockInterview 또는 practice)
+                navigate(`/feedback/${type}/${label}`); // 타입과 레이블로 이동
             }
         },
     };

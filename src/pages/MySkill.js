@@ -1,7 +1,7 @@
 // RadarChart.js
 import React from "react";
 import { Radar } from "react-chartjs-2";
-import { feedbackData } from "../data/FeedbackData.js";
+import { feedbackData } from "../data/FeedbackData_Interview.js";
 import {
     Chart as ChartJS,
     RadialLinearScale,
