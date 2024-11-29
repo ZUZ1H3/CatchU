@@ -12,6 +12,38 @@ const industryJobs = {
   "정치": ["정치 컨설턴트", "정책 분석가", "공공 행정 전문가"],
 };
 
+// 다이얼로그 컴포넌트
+const Dialog = ({ open, message, onClose }) => {
+  if (!open) return null; // 다이얼로그가 닫혀 있으면 렌더링하지 않음
+  return (
+    <div className="dialog-overlay">
+      <div className="dialog">
+        <p>{message}</p>
+        <button onClick={onClose}>확인</button>
+      </div>
+    </div>
+  );
+};
+
+const ConfirmationDialog = ({ open, message, onConfirm, onCancel }) => {
+  if (!open) return null;
+  return (
+    <div className="dialog-overlay">
+      <div className="dialog-box">
+        <p>{message}</p>
+        <div className="dialog-buttons">
+          <button className="dialog-button" onClick={onConfirm}>
+            확인
+          </button>
+          <button className="dialog-button" onClick={onCancel}>
+            취소
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const AIInterview = () => {
   const [selectedIndustry, setSelectedIndustry] = useState(""); // 선택된 산업군
   const [jobs, setJobs] = useState([]); // 선택된 직무 리스트
@@ -30,6 +62,10 @@ const AIInterview = () => {
   const [isPrematureEnd, setIsPrematureEnd] = useState(false); // 중도 종료 여부 관리
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
   const [filteredIndustryJobs, setFilteredIndustryJobs] = useState(industryJobs); // 필터링된 데이터 상태
+  const [alertDialog, setAlertDialog] = useState({ open: false, message: "" });
+  const [confirmDialog, setConfirmDialog] = useState({ open: false, message: "", onConfirm: null });
+  const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
+  const [confirmDialogMessage, setConfirmDialogMessage] = useState("");
 
   const cameraStreamRef = useRef(null); // 카메라 스트림
   const mediaRecorderRef = useRef(null); // MediaRecorder 참조
@@ -97,7 +133,10 @@ const AIInterview = () => {
     if (selectedIndustry && selectedJob) {
       setShowConfirmation(true); // 화면 전환
     } else {
-      alert("산업군과 직무를 모두 선택해주세요!");
+      setAlertDialog({
+        open: true,
+        message: "산업군과 직무를 모두 선택해주세요!",
+      });
     }
   };
 
@@ -107,6 +146,20 @@ const AIInterview = () => {
 
   const handleStartClick = () => {
     setShowPreparingScreen(true); // 준비 화면으로 전환
+  };
+
+  const handleDialogClose = () => {
+    setAlertDialog({ open: false, message: "" });
+  };
+
+  const handleConfirm = () => {
+    setIsPrematureEnd(true); // 중도 종료로 설정
+    handleEndInterview(); // 면접 종료 처리
+    setConfirmDialogOpen(false); // 다이얼로그 닫기
+  };
+
+  const handleCancel = () => {
+    setConfirmDialogOpen(false); // 다이얼로그 닫기
   };
 
   useEffect(() => {
@@ -141,6 +194,13 @@ const AIInterview = () => {
 
   useEffect(() => {
     if (showAIInterviewScreen) {
+      // 상태 초기화
+      setIsPrematureEnd(false);
+      setShowConfirmation(false);
+      setAlertDialog({ open: false, message: "" });
+      setConfirmDialogOpen(false);
+      setConfirmDialogMessage("");
+
       const videoElement = document.querySelector("#user-camera");
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices
@@ -216,30 +276,37 @@ const AIInterview = () => {
     } else {
       setIsPrematureEnd(false); // 정상 종료로 설정
       handleEndInterview(); // 면접 종료 처리 호출
-      alert("면접이 완료되었습니다!");
       setSelectedIndustry(false); // 면접 종료
     }
   };
 
   const handleEndInterviewConfirmation = () => {
-    // 종료 버튼 클릭 시 팝업 창 표시
-    const userConfirmed = window.confirm("모의면접을 진행 중입니다. 지금 종료하시면 진행 과정이 저장되지 않습니다. 그래도 종료하시겠습니까?");
-    if (userConfirmed) {
-      setIsPrematureEnd(true); // 중도 종료로 설정
-      handleEndInterview(); // 면접 종료 처리
-    }
-  };
-
-  const handleEndInterview = () => {
-    setShowAIInterviewScreen(false);
+    setConfirmDialogOpen(true);
+    setConfirmDialogMessage(
+      "모의면접을 진행 중입니다. 지금 종료하시면 진행 과정이 저장되지 않습니다! 그래도 종료하시겠습니까?"
+    );
   
-    // MediaRecorder 중지 및 참조 해제
+    setConfirmDialog({
+      open: true,
+      message: confirmDialogMessage,
+      onConfirm: () => {
+        console.log("onConfirm triggered for premature end");
+        setConfirmDialogOpen(false);
+        handleEndInterview(true); // 중도 종료로 호출
+      },
+      onCancel: () => {
+        console.log("onCancel triggered, closing dialog");
+        setConfirmDialogOpen(false);
+      },
+    });
+  };
+  
+  const handleEndInterview = (prematureEnd = false) => {
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
       mediaRecorderRef.current = null;
     }
-  
-    // 카메라 스트림 중지 및 비디오 화면 초기화
+
     if (cameraStreamRef.current) {
       cameraStreamRef.current.getTracks().forEach((track) => {
         if (track.readyState === "live") {
@@ -248,48 +315,58 @@ const AIInterview = () => {
       });
       cameraStreamRef.current = null;
     }
-  
+
     const videoElement = document.querySelector("#user-camera");
     if (videoElement) {
       videoElement.srcObject = null;
     }
-  
-    // 중도 종료 시 녹화 데이터 저장 건너뜀
-    if (!isPrematureEnd) {
-      if (recordedChunksRef.current.length > 0) {
-        const blob = new Blob(recordedChunksRef.current, { type: "video/webm" });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement("a");
-        a.style.display = "none";
-        a.href = url;
-        a.download = "interview_recording.webm";
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-      }
+
+    // 중도 종료 처리
+    if (prematureEnd) {
+      console.log("Premature end detected");
+      setShowConfirmation(false);
+      return;
     }
-  
-    // 녹화 데이터 초기화
+
+    console.log("Normal end processing");
+    if (recordedChunksRef.current.length > 0) {
+      const blob = new Blob(recordedChunksRef.current, { type: "video/webm" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = "interview_recording.webm";
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    }
+
     recordedChunksRef.current = [];
-  
-    // 새로고침을 위해 상태 저장
-    setShowConfirmation(false);
-    window.location.reload();
-  };  
+
+    setAlertDialog({
+      open: true,
+      message: "수고하셨습니다! 면접이 종료되었습니다. 피드백 페이지로 이동 중입니다...",
+    });
+
+    setTimeout(() => {
+      window.location.href = "../Feedback.js";
+    }, 2500);
+  };
+
 
   const getStepVideo = () => {
     const steps = [
-      "interviewer_step1.mp4",
+      "interviewer_step1_cc.mp4",
       "interviewer_listening_mute.mp4",
-      "interviewer_step2.mp4",
+      "interviewer_step2_cc.mp4",
       "interviewer_listening_mute.mp4",
-      "interviewer_step3.mp4",
+      "interviewer_step3_cc.mp4",
       "interviewer_listening_mute.mp4",
-      "interviewer_step4.mp4",
+      "interviewer_step4_cc.mp4",
       "interviewer_listening_mute.mp4",
-      "interviewer_step5.mp4",
+      "interviewer_step5_cc.mp4",
       "interviewer_listening_mute.mp4",
-      "interviewer_step6.mp4",
+      "interviewer_step6_cc.mp4",
     ];
   
     const stepIndex = (currentStep - 1) * 2; // 단계별 시작 인덱스 계산
@@ -302,9 +379,43 @@ const AIInterview = () => {
     }
   };
 
+  // 마이크 제어 함수
+  const toggleMic = () => {
+    if (cameraStreamRef.current) {
+      const audioTrack = cameraStreamRef.current.getAudioTracks()[0];
+      if (audioTrack) {
+        audioTrack.enabled = !audioTrack.enabled; // 마이크 끄기/켜기
+        setMicOn(audioTrack.enabled); // 상태 갱신
+      }
+    }
+  };
+
+  // 카메라 제어 함수
+  const toggleCamera = () => {
+    if (cameraStreamRef.current) {
+      const videoTrack = cameraStreamRef.current.getVideoTracks()[0];
+      if (videoTrack) {
+        videoTrack.enabled = !videoTrack.enabled; // 카메라 끄기/켜기
+        setCameraOn(videoTrack.enabled); // 상태 갱신
+      }
+    }
+  };
+
   if (showAIInterviewScreen) {
     return (
       <div className="ai-interview-screen">
+        {/* ConfirmationDialog 다이얼로그 렌더링 */}
+        <ConfirmationDialog
+          open={confirmDialogOpen}
+          message={confirmDialogMessage}
+          onConfirm={handleConfirm}  // 확인 클릭 시 면접 종료 처리
+          onCancel={handleCancel}  // 취소 클릭 시 다이얼로그 닫기
+        />
+        <Dialog
+          open={alertDialog.open}
+          message={alertDialog.message}
+          onClose={handleDialogClose}
+        />
         {/* 맨 위 바 */}
         <div className="top-bar-container">
           <img src="../bar_top.png" alt="Top Bar" className="bar-top" />
@@ -357,14 +468,14 @@ const AIInterview = () => {
               src={micOn ? "../mic.png" : "../mic_no.png"}
               alt="Mic Status"
               className="mic-status"
-              onClick={() => setMicOn((prev) => !prev)}
-            />
+              onClick={toggleMic} // 마이크 상태 변경
+              />
             <img
               src={cameraOn ? "../video.png" : "../video_no.png"}
               alt="Video Status"
               className="video-status"
-              onClick={() => setCameraOn((prev) => !prev)}
-            />
+              onClick={toggleCamera} // 비디오 상태 변경
+              />
             <button
               className="end-interview-button"
               onClick={handleEndInterviewConfirmation} // 팝업 창 처리 함수 호출
@@ -419,63 +530,70 @@ const AIInterview = () => {
 
   return (
     <div>
-    {/* 검색 및 선택 화면 */}
-    <div className="search-container">
-      <label htmlFor="search" className="search-label">
-        직무를 선택해주세요.
-      </label>
-      <input
-        type="text"
-        id="search"
-        className="search-input"
-        placeholder="직무 키워드를 검색해 보세요"
-        value={searchTerm}
-        onChange={handleSearch} // 검색어 변경 이벤트
-        onKeyDown={handleKeyDown} // Enter 키 이벤트
+      {/* 다이얼로그 */}
+      <Dialog
+        open={alertDialog.open}
+        message={alertDialog.message}
+        onClose={handleDialogClose}
       />
-    </div>
-
-    <div className="ai-interview-container">
-      <div className="table-wrapper">
-        <div className="table-column industry-column">
-          <div className="table-header">산업군</div>
-          {Object.keys(filteredIndustryJobs).map((industry) => (
-            <div
-              key={industry}
-              className={`table-cell ${
-                selectedIndustry === industry ? "selected" : ""
-              }`}
-              onClick={() => handleIndustryClick(industry)}
-            >
-              {industry}
-            </div>
-          ))}
-        </div>
-
-        <div className="table-column job-column">
-          <div className="table-header">직무</div>
-          {(filteredIndustryJobs[selectedIndustry] || []).map((job) => (
-            <div
-              key={job}
-              className={`table-cell ${
-                selectedJob === job ? "selected" : ""
-              }`}
-              onClick={() => handleJobClick(job)}
-            >
-              {job}
-            </div>
-          ))}
+  
+      {/* 검색 및 선택 화면 */}
+      <div className="search-container">
+        <label htmlFor="search" className="search-label">
+          직무를 선택해주세요.
+        </label>
+        <input
+          type="text"
+          id="search"
+          className="search-input"
+          placeholder="직무 키워드를 검색해 보세요"
+          value={searchTerm}
+          onChange={handleSearch} // 검색어 변경 이벤트
+          onKeyDown={handleKeyDown} // Enter 키 이벤트
+        />
+      </div>
+  
+      <div className="ai-interview-container">
+        <div className="table-wrapper">
+          <div className="table-column industry-column">
+            <div className="table-header">산업군</div>
+            {Object.keys(filteredIndustryJobs).map((industry) => (
+              <div
+                key={industry}
+                className={`table-cell ${
+                  selectedIndustry === industry ? "selected" : ""
+                }`}
+                onClick={() => handleIndustryClick(industry)}
+              >
+                {industry}
+              </div>
+            ))}
+          </div>
+  
+          <div className="table-column job-column">
+            <div className="table-header">직무</div>
+            {(filteredIndustryJobs[selectedIndustry] || []).map((job) => (
+              <div
+                key={job}
+                className={`table-cell ${
+                  selectedJob === job ? "selected" : ""
+                }`}
+                onClick={() => handleJobClick(job)}
+              >
+                {job}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
+  
+      <div className="button-container">
+        <button className="confirm-button" onClick={handleConfirmClick}>
+          확인
+        </button>
+      </div>
     </div>
-
-    <div className="button-container">
-      <button className="confirm-button" onClick={handleConfirmClick}>
-        확인
-      </button>
-    </div>
-  </div>
-  );
+  );  
 };
 
 export default AIInterview;
