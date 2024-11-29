@@ -256,14 +256,17 @@ video#camera-feed {
   z-index: 10;
 }
 .bar-top {
-  width: 100%;
-  height: auto;
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
+  width: 100%;
+  height: 9%;
 }
 .progress-indicator {
-  width: 400px;
+  position: fixed;
+  top: 0;
+  left: 33%;
+  width: 35%;
   height: auto;
   margin-top: 15px;
   z-index: 20;
@@ -279,14 +282,18 @@ video#camera-feed {
   z-index: 10;
 }
 .bar-bottom {
+  position: fixed;
+  top: 91%;
+  left: 0;
   width: 100%;
-  height: auto;
-  position: absolute;
+  height: 9%;
   bottom: 0;
   left: 0;
 }
 .status-buttons {
-  position: relative;
+  position: fixed;
+  top: 92.5%;
+  left: 45%;
   display: flex;
   gap: 50px;
   z-index: 20;
@@ -305,6 +312,9 @@ video#camera-feed {
 }
 /* 모의면접 면접관 동영상 */
 .interviewer-video {
+  position: fixed;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
   transform: scale(1.05);
@@ -326,9 +336,9 @@ video#camera-feed {
 }
 /* 종료 버튼 */
 .end-interview-button {
-  position: absolute;
-  top: 4px;
-  left: 530px;
+  position: fixed;
+  top: 93%;
+  left: 92%;
   width: 60px;
   height: 30px;
   background-color: #d70c0c;
@@ -340,15 +350,16 @@ video#camera-feed {
   cursor: pointer;
 }
 .listening-timer {
-  position: absolute;
-  left: 95%;
+  position: fixed;
+  top: 2%;
+  left: 93%;
   color: white;
   font-size: 30px;
 }
 .next-step-button {
-  position: absolute;
-  top: 621px;
-  left: 30px;
+  position: fixed;
+  top: 93%;
+  left: 3%;
   width: 60px;
   height: 30px;
   background-color: #0acd4f;
@@ -359,6 +370,110 @@ video#camera-feed {
   font-family: 'Paperlogy5', sans-serif;
   cursor: pointer;
   z-index: 20;
+}
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #00000080;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.dialog {
+  background: white;
+  width: 500px;
+  height: 150px;
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-shadow: 0 4px 10px #00000040;
+}
+.dialog {
+  margin-top: 15px;
+}
+.dialog p {
+  margin-top: 40px;
+  font-size: 17px;
+  line-height: 150%;
+}
+.dialog button {
+  margin-top: 12px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+.dialog button {
+  font-family: 'Paperlogy5', sans-serif;
+  font-size: 16px;
+  background-color: #bf8ddf ;
+  color: white;
+}
+.dialog button:hover {
+  background-color: #e4ccee;
+  color: #6a3782;
+  transition: background-color 0.2s ease;
+}
+/* dialog-overlay */
+.dialog-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #00000080;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+/* dialog-box */
+.dialog-box {
+  background-color: white;
+  padding: 20px;
+  border-radius: 18px;
+  width: 450px;
+  text-align: center;
+  box-shadow: 0 4px 10px #00000033;
+}
+.dialog-box p {
+  font-size: 20px;
+  font-family: 'Paperlogy5', sans-serif;
+  line-height: 130%;
+  margin-bottom: 30px;
+}
+/* dialog-buttons: 버튼 컨테이너 스타일 */
+.dialog-buttons {
+  display: flex;
+  justify-content: space-between;
+}
+/* 각 버튼 스타일 */
+.dialog-button {
+  background-color: #5489ca;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  font-size: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Paperlogy5', sans-serif;
+  transition: background-color 0.3s ease;
+}
+.dialog-button:hover {
+  background-color: #b2cef0;
+  color: #2d4766;
+}
+/* 취소 버튼 */
+.dialog-button:nth-child(2) {
+  background-color: #d73646;
+}
+.dialog-button:nth-child(2):hover {
+  background-color: #ee8c96;
+  color: #713434;
 }
 
 /* 반응형 디자인 */
