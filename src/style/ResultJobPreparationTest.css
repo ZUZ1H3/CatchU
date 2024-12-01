@@ -1,0 +1,50 @@
+.preparation-table {
+    border-collapse: collapse;
+    text-align: center;
+    width: 98%;
+    margin: 0 auto;
+}
+
+.preparation-table th,
+.preparation-table td {
+    border: 1px solid #ddd;
+    padding: 15px;
+}
+
+.preparation-table th {
+    background-color: #f4f4f4;
+    font-weight: normal;
+    min-width: 400px; /* 최소 넓이 지정 */
+    white-space: nowrap; /* 텍스트가 한 줄로 유지되도록 설정 */
+}
+
+.preparation-table td {
+    font-family: 'Paperlogy4', sans-serif;
+    text-align: left;
+}
+
+.preparation-table-section {
+    margin: 10px;
+}
+
+.export-button {
+    background-color: #758bfa;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Paperlogy4', sans-serif;
+    font-size: 0.5em;
+  }
+  
+  .export-button:hover {
+    background-color: #4850de;
+  }
+  
+  .print-button-container {
+    background: #F8F7FD;
+    text-align: end;
+    margin-top: 1em;
+    margin-right: 2.3em;
+  }

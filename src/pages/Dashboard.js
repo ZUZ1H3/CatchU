@@ -3,6 +3,7 @@ import '../style/Dashboard.css';
 import MyCalendar from "./Calendar.js";
 import MySkill from "./MySkill.js";
 import FeedbackList from "./FeedbackList.js";
+import TestList from './TestList.js';
 import Tip from "./Tip.js";
 const Dashboard = ({ profileData }) => {
   return (
@@ -10,7 +11,7 @@ const Dashboard = ({ profileData }) => {
       <div className="dashboard-title">안녕하세요, {profileData.name}님! 👋</div>
       <div className="top-section">
         <div className="box">
-          <Tip/>
+          <Tip />
         </div>
         <div className="box">
           <MySkill />
@@ -21,9 +22,11 @@ const Dashboard = ({ profileData }) => {
       </div>
       <div className="bottom-section">
         <div className="box">
-        <FeedbackList />
+          <FeedbackList />
         </div>
-        <div className="box">적성 검사</div>
+        <div className="box">
+          <TestList />
+        </div>
       </div>
     </div>
   );

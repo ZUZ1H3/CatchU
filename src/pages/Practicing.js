@@ -1,92 +1,140 @@
 import React, { useEffect, useRef, useState } from "react";
 import "../style/Practicing.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Practicing = () => {
   const videoRef = useRef(null);
   const location = useLocation();
-  const { question } = location.state || { question: "" }; // 전달된 질문 또는 기본값
+  const navigate = useNavigate();
 
-  const [timer, setTimer] = useState(0); // 타이머 상태
-  const [isRecording, setIsRecording] = useState(false); // 녹화 상태
-  const [mediaStream, setMediaStream] = useState(null); // 미디어 스트림 상태
+  const { question } = location.state || { question: "" };
+  const questionsArray = question.split(", ");
 
-  // 카메라 스트림 설정 및 자동 녹화 시작
+  const [currentQidx, setCurrentQidx] = useState(0);
+  const [timer, setTimer] = useState(0);
+  const [isRecording, setIsRecording] = useState(false);
+  const [mediaStream, setMediaStream] = useState(null);
+  const [mediaRecorder, setMediaRecorder] = useState(null);
+  const [highlightChunks, setHighlightChunks] = useState([]);
+  const [videoUrls, setVideoUrls] = useState([]);
+  const [dotVisible, setDotVisible] = useState(true);
+
+  // 카메라 스트림 초기화
   useEffect(() => {
-    const getUserMedia = async () => {
-      try {
-        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
-        setMediaStream(stream); // 스트림을 상태에 저장
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          videoRef.current.style.transform = "scaleX(-1)"; // 카메라 좌우 반전
-        }
-        setIsRecording(true); // 자동으로 녹화 시작
-      } catch (error) {
-        console.error("카메라 접근 오류", error);
-      }
-    };
+    if (isRecording && !mediaStream) {
+      const initializeStream = async () => {
+        try {
+          const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+          setMediaStream(stream);
+          if (videoRef.current) {
+            videoRef.current.srcObject = stream;
+            videoRef.current.style.transform = "scaleX(-1)";
+          }
 
-    getUserMedia();
+          const recorder = new MediaRecorder(stream, { mimeType: "video/webm" });
+          setMediaRecorder(recorder);
+
+          recorder.ondataavailable = (event) => {
+            if (event.data.size > 0) {
+              setHighlightChunks((prev) => [...prev, event.data]);
+            }
+          };
+
+          recorder.start();
+        } catch (error) {
+          console.error("카메라 및 마이크 스트림 초기화 오류:", error);
+          alert("카메라에 접근할 수 없습니다.");
+        }
+      };
+
+      initializeStream();
+    } else if (!isRecording && mediaStream) {
+      if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+      }
+      mediaStream.getTracks().forEach((track) => track.stop());
+      if (videoRef.current) {
+        videoRef.current.srcObject = null;
+      }
+      setMediaStream(null);
+    }
 
     return () => {
-      // 컴포넌트 언마운트 시 스트림 종료
       if (mediaStream) {
         mediaStream.getTracks().forEach((track) => track.stop());
       }
     };
-  }, []); // 한 번만 실행되도록
+  }, [isRecording]);
 
-  // 타이머 관리
+  // 타이머 관리 및 점 깜빡임
   useEffect(() => {
     let interval = null;
-
     if (isRecording) {
       interval = setInterval(() => {
         setTimer((prevTimer) => prevTimer + 1);
+        setDotVisible((prevVisible) => !prevVisible);
       }, 1000);
-    } else if (!isRecording && timer !== 0) {
+    } else {
       clearInterval(interval);
     }
-
     return () => clearInterval(interval);
-  }, [isRecording, timer]);
+  }, [isRecording]);
 
-  // 녹화 상태 토글
-  const toggleRecording = () => {
+  const submitAnswer = () => {
     if (isRecording) {
-      // 녹화 중지 및 카메라 끄기
-      if (mediaStream) {
-        mediaStream.getTracks().forEach((track) => track.stop());
-      }
-      setMediaStream(null); // 스트림 상태 초기화
-    } else {
-      // 녹화 다시 시작 (카메라 재설정)
-      navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-        setMediaStream(stream);
-        if (videoRef.current) {
-          videoRef.current.srcObject = stream;
-          videoRef.current.style.transform = "scaleX(-1)";
-        }
-      });
+      toggleRecording(); // 녹화를 중지
     }
-    setIsRecording(!isRecording); // 녹화 상태 토글
-  };
 
-  const finish = () => {
-    if (mediaStream) {
-      // 미디어 스트림 중지
-      mediaStream.getTracks().forEach((track) => track.stop());
-    }
-    window.history.back(); // 이전 페이지로 이동
+    handleNextQuestion();
   };
 
   const handleNextQuestion = () => {
-    alert("모든 질문이 완료되었습니다.");
-    setTimer(0); // 타이머 초기화
-    setIsRecording(false); // 녹화 상태 초기화
+    try {
+      const highlightBlob = new Blob(highlightChunks, { type: "video/webm" });
+      const videoUrl = URL.createObjectURL(highlightBlob);
+
+      setVideoUrls((prev) => {
+        const updatedVideoUrls = [...prev, videoUrl];
+
+        if (currentQidx < questionsArray.length - 1) {
+          // 다음 질문으로 이동
+          setCurrentQidx(currentQidx + 1);
+          setTimer(0);
+          setHighlightChunks([]); // 다음 질문을 위해 초기화
+        } else {
+          setTimeout(() => {
+            navigate("/end-practice", { state: { videoUrls: updatedVideoUrls } });
+          }, 0);
+        }
+
+        return updatedVideoUrls;
+      });
+    } catch (error) {
+      console.error("비디오 URL 생성 실패:", error);
+      alert("비디오 생성에 실패했습니다. 다시 시도해주세요.");
+    }
   };
 
+  const toggleRecording = () => {
+    if (!isRecording) {
+      setIsRecording(true);
+    } else {
+      if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+      }
+      setIsRecording(false);
+    }
+  };
+
+  const finish = () => {
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+      mediaRecorder.stop();
+    }
+    if (mediaStream) {
+      mediaStream.getTracks().forEach((track) => track.stop());
+    }
+    navigate(-1);
+  };
 
   return (
     <div className="practicing-container">
@@ -98,22 +146,26 @@ const Practicing = () => {
         </button>
       </div>
       <div className="question-box">
-        <p>{question ? question : "질문이 없습니다. 돌아가서 선택해주세요."}</p>
+        <div id="q">
+          질문 {currentQidx + 1} / {questionsArray.length}
+        </div>
+        <p>{questionsArray[currentQidx]}</p>
         <div className="video-container">
           <video ref={videoRef} className="video" autoPlay muted />
           <div className="rec-indicator">
-                <div className="red-circle"></div>
-                <button className="rec-button" onClick={toggleRecording}>
-                  {isRecording ? "STOP" : "REC"}
-                </button>
-            </div>
+            <div
+              className="red-circle"
+              style={{ visibility: dotVisible ? "visible" : "hidden" }}
+            ></div>
+            <button className="rec-button" onClick={toggleRecording}>
+              {isRecording ? "REC" : "STOP"}
+            </button>
+          </div>
           <div className="timer-container">
             <div className="timer">
-              {`${String(Math.floor(timer / 60)).padStart(2, "0")}:${String(
-                timer % 60
-              ).padStart(2, "0")}`}
+              {`${String(Math.floor(timer / 60)).padStart(2, "0")}:${String(timer % 60).padStart(2, "0")}`}
             </div>
-            <button id="submit-button" onClick={handleNextQuestion}>
+            <button id="submit-button" onClick={submitAnswer}>
               답변 제출하기
             </button>
           </div>

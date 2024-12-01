@@ -1,0 +1,43 @@
+/* 전체 컨테이너 스타일 */
+.end-practice-container {
+    padding: 20px;
+    margin-left: 1%;
+}
+
+/* 헤더 영역 스타일 */
+#practice-header-container {
+    display: flex;
+    position: fixed; /* 고정 위치 */
+    top: 0.4em;
+    z-index: 100; /* 다른 요소보다 위에 표시 */
+    align-items: center;
+    justify-content: space-between;
+    width: 84%;
+    height: 20%;
+}
+
+/* 제목 스타일 */
+#practice-title {
+    margin-top: 8%;
+    font-size: clamp(1rem, 1.5vw, 2rem);
+    color: white;
+}
+
+/* 비디오 감싸는 스타일 - 기존 구조 유지, 2열로 배치 */
+.video-wrapper {
+    display: inline-block;
+    width: 48%; 
+    margin-top: 3%;
+    margin-right: 3%; /* 비디오 간의 간격 설정 */
+}
+
+/* 마지막 비디오 오른쪽 여백 없애기 */
+.video-wrapper:nth-child(2n) {
+    margin-right: 0;
+}
+
+/* 비디오 스타일 */
+video {
+    width: 100%;
+    height: auto;
+}
