@@ -13,9 +13,12 @@ import JobValueTest from './pages/JobValueTest.js';
 import JobAptitudeTest from './pages/JobAptitudeTest.js';
 import JobPreparationTest from './pages/JobPreparationTest.js';
 import ResultJobAptitudeTest from './pages/ResultJobAptitudeTest.js';
+import ResultJobValueTest from './pages/ResultJobValueTest.js';
+import ResultJobPreparationTest from './pages/ResultJobPreparationTest.js';
 import FAQ from "./pages/FAQ";
 import FeedbackList from "./pages/FeedbackList";
 import Feedback from "./pages/Feedback";
+import TestList from './pages/TestList.js';
 import profileDataFile from "./data/ProfileData.js"; // 정확한 경로 확인
 //src\data\ProfileData.js
 const App = () => {
@@ -70,9 +73,12 @@ const MainContent = () => {
           <Route path="/job-aptitude-test" element={<JobAptitudeTest />} />
           <Route path="/job-preparation-test" element={<JobPreparationTest />} />
           <Route path="/result-job-aptitude-test" element={<ResultJobAptitudeTest />} />
+          <Route path="/result-job-value-test" element={<ResultJobValueTest />} />
+          <Route path="/result-job-preparation-test" element={<ResultJobPreparationTest />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/feedback-list" element={<FeedbackList />} />
           <Route path="/feedback/:type/:id" element={<Feedback />} />
+          <Route path="/test-list" element={<TestList />} />
           </Routes>
       </div>
 

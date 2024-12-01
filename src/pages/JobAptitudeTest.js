@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../style/JobAptitudeTest.css";
 
 const JobAptitudeTest = () => {
-  const [isStarted, setIsStarted] = useState(false); // 초기화면과 검사화면 전환 상태
+  //const [isStarted, setIsStarted] = useState(false); // 초기화면과 검사화면 전환 상태
   const [currentStep, setCurrentStep] = useState(1); // 현재 단계
   const [answers, setAnswers] = useState(Array(20).fill(null)); // 20문항 답변 상태
   //const [submitted, setSubmitted] = useState(false); // 제출 상태
@@ -181,120 +181,161 @@ const JobAptitudeTest = () => {
     const unanswered = answers
       .map((answer, index) => (answer === null ? index + 1 : null))
       .filter((item) => item !== null);
-  
+
     if (unanswered.length > 0) {
       alert(`아래 문항에 답변하지 않았습니다. 완료해주세요!: \n ${unanswered.join(", ")}`);
-    } else {
-      // 정답과 비교하여 결과 생성
-      const results = questions.map((question, index) => ({
-        question: question.text,
-        selected: answers[index],
-        correct: question.correct,
-        isCorrect: answers[index] === question.correct,
-      }));
-  
-      // 결과 페이지로 이동
-      navigate("/result-job-aptitude-test", { state: { results } });
+      return;
     }
+
+    // 11개의 카테고리와 그에 대한 점수를 설정
+    const selectedLabels = [
+      "언어력",
+      "수리력",
+      "추리력",
+      "공간 지각력",
+      "사물 지각력",
+      "상황 판단력",
+      "기계능력",
+      "집중력",
+      "색채 지각력",
+      "문제 해결능력",
+      "사고 유창력",
+    ];
+
+    // 문제를 11개의 그룹으로 나눔
+    const groupedQuestions = [
+      [0, 1], // 언어력
+      [2, 3], // 수리력
+      [4, 5], // 추리력
+      [6, 7], // 공간 지각력
+      [8, 9], // 사물 지각력
+      [10, 11], // 상황 판단력
+      [12, 13], // 기계능력
+      [14, 15], // 집중력
+      [16], // 색채 지각력
+      [17], // 문제 해결능력
+      [18, 19], // 사고 유창력
+    ];
+
+    // 각 그룹의 점수를 합산 또는 평균화합니다
+    const scores = groupedQuestions.map((group) => {
+      const totalScore = group.reduce((sum, questionIndex) => {
+        const correct = questions[questionIndex]?.correct;
+        return sum + (answers[questionIndex] === correct ? 150 : 80);
+      }, 0);
+      return Math.round(totalScore / group.length); // 평균 점수 계산
+    });
+
+    // 수준(levels) 계산
+    const levels = scores.map((score) => {
+      if (score >= 130) return "최상";
+      if (score >= 110) return "상";
+      if (score >= 90) return "중상";
+      if (score >= 70) return "중하";
+      return "하";
+    });
+
+    // 백분위(percentiles) 계산 (예시: 단순히 정규화된 값 사용)
+    const maxScore = 150; // 최대 점수
+    const percentiles = scores.map((score) => Math.round((score / maxScore) * 100));
+
+    // 결과 생성
+    const results = {
+      title: "직업적성검사 결과",
+      labels: selectedLabels,
+      scores: scores,
+      levels: levels,
+      percentiles: percentiles,
+      date: new Date().toLocaleDateString(),
+    };
+
+    // 결과 페이지로 이동
+    navigate("/result-job-aptitude-test", { state: { results } });
   };
-  
+
   return (
     <div className="JobAptitudeTest-container">
-      {!isStarted ? (
-        // 시작하기 전 화면
-        <div className="JobAptitudeTest-start">
-          <h1>직업적성검사</h1>
-          <p>직업적성검사를 시작하겠습니다.
-            <br />
-            준비가 되셨다면 아래 버튼을 눌러주세요.
-          </p>
-          <button className="JobAptitudeTest-button-start" onClick={() => setIsStarted(true)}>시작하기</button>
+      <>
+        {/* 상단 헤더 */}
+        <div className="JobAptitudeTest-header">
+          <h1>직업적성검사 진행중</h1>
         </div>
-      ) : (
-        // 검사 진행 화면
-        <>
-          {/* 상단 헤더 */}
-          <div className="JobAptitudeTest-header">
-            <h1>직업적성검사 - 진행중</h1>
-          </div>
-  
-          {/* 진행 바 */}
-          <div className="JobAptitudeTest-progress">
-            <div
-              className="JobAptitudeTest-progress-bar"
-              style={{
-                width: `${(currentStep / Math.ceil(questions.length / 5)) * 100}%`,
-              }}
-            />
-          </div>
-  
-          <div className="JobAptitudeTest-questions-info">
-            <p>{stepTopics[currentStep - 1]}</p>
-          </div>
-  
-          {/* 문항 */}
-          <div className="JobAptitudeTest-questions">
-            {getQuestionsForStep(currentStep).map((question, index) => (
-              <div key={index} className="JobAptitudeTest-question">
-                <p>{`${(currentStep - 1) * 5 + index + 1}. ${question.text}`}</p>
-                <div
-                  className={`JobAptitudeTest-options ${
-                    currentStep === 4 ? "JobAptitudeTest-options-single" : ""
+
+        {/* 진행 바 */}
+        <div className="JobAptitudeTest-progress">
+          <div
+            className="JobAptitudeTest-progress-bar"
+            style={{
+              width: `${(currentStep / Math.ceil(questions.length / 5)) * 100}%`,
+            }}
+          />
+        </div>
+
+        <div className="JobAptitudeTest-questions-info">
+          <p>{stepTopics[currentStep - 1]}</p>
+        </div>
+
+        {/* 문항 */}
+        <div className="JobAptitudeTest-questions">
+          {getQuestionsForStep(currentStep).map((question, index) => (
+            <div key={index} className="JobAptitudeTest-question">
+              <p>{`${(currentStep - 1) * 5 + index + 1}. ${question.text}`}</p>
+              <div
+                className={`JobAptitudeTest-options ${currentStep === 4 ? "JobAptitudeTest-options-single" : ""
                   }`}
-                >
-                  {question.options.map((option, optionIndex) => (
-                    <label key={optionIndex} className="JobAptitudeTest-option">
-                      <input
-                        type="radio"
-                        name={`question-${(currentStep - 1) * 5 + index}`}
-                        value={option}
-                        checked={answers[(currentStep - 1) * 5 + index] === option}
-                        onChange={() =>
-                          handleAnswerChange((currentStep - 1) * 5 + index, option)
-                        }
-                      />
-                      {option}
-                    </label>
-                  ))}
-                </div>
+              >
+                {question.options.map((option, optionIndex) => (
+                  <label key={optionIndex} className="JobAptitudeTest-option">
+                    <input
+                      type="radio"
+                      name={`question-${(currentStep - 1) * 5 + index}`}
+                      value={option}
+                      checked={answers[(currentStep - 1) * 5 + index] === option}
+                      onChange={() =>
+                        handleAnswerChange((currentStep - 1) * 5 + index, option)
+                      }
+                    />
+                    {option}
+                  </label>
+                ))}
               </div>
-            ))}
-          </div>
-  
-          {/* 네비게이션 버튼 */}
-          <div className="JobAptitudeTest-navigation">
-            <div>
-              {currentStep > 1 && (
-                <button
-                  className="JobAptitudeTest-button JobAptitudeTest-button-prev"
-                  onClick={handlePreviousStep}
-                >
-                  이전
-                </button>
-              )}
             </div>
-            <div>
-              {currentStep < Math.ceil(questions.length / 5) ? (
-                <button
-                  className="JobAptitudeTest-button JobAptitudeTest-button-next"
-                  onClick={handleNextStep}
-                >
-                  다음
-                </button>
-              ) : (
-                <button
-                  className="JobAptitudeTest-button JobAptitudeTest-button-submit"
-                  onClick={handleSubmit}
-                >
-                  답변 제출
-                </button>
-              )}
-            </div>
+          ))}
+        </div>
+
+        {/* 네비게이션 버튼 */}
+        <div className="JobAptitudeTest-navigation">
+          <div>
+            {currentStep > 1 && (
+              <button
+                className="JobAptitudeTest-button JobAptitudeTest-button-prev"
+                onClick={handlePreviousStep}
+              >
+                이전
+              </button>
+            )}
           </div>
-        </>
-      )}
+          <div>
+            {currentStep < Math.ceil(questions.length / 5) ? (
+              <button
+                className="JobAptitudeTest-button JobAptitudeTest-button-next"
+                onClick={handleNextStep}
+              >
+                다음
+              </button>
+            ) : (
+              <button
+                className="JobAptitudeTest-button JobAptitudeTest-button-submit"
+                onClick={handleSubmit}
+              >
+                답변 제출
+              </button>
+            )}
+          </div>
+        </div>
+      </>
     </div>
-  );  
+  );
 };
 
 export default JobAptitudeTest;

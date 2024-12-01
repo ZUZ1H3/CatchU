@@ -1,8 +1,16 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #F8F7FD; /* 배경색 적용 */
+}
+
 .resultaptitude-container {
   width: 100%;
   /* 가로 전체 크기 */
   background: #F8F7FD;
   padding-top: 2em;
+  overflow: hidden;
 }
 
 .resultaptitude-header {
@@ -16,14 +24,19 @@
   margin-left: 2em;
   margin-right: 2em;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  padding-left: 2em;
+  padding-left: 1em;
   padding-right: 1em;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
   font-size: 1.1em;
-  margin-bottom: 1em;
+  margin-bottom: 0.8em;
    /* 제목 크기 */
    font-family: 'Paperlogy5', sans-serif;
+}
+
+.resultaptitude-header p {
+  font-family: 'Paperlogy5', sans-serif;
+  font-size: 0.9rem;
 }
 
 .resultaptitude-main {
@@ -50,25 +63,29 @@
   text-align: center;
   max-width: 100%; /* 최대 넓이를 100%로 */
   height: 400px; /* 그래프 높이 */
+  width: 100%;
 }
 
 .resultaptitude-graph {
   margin: 0 auto; /* 중앙 정렬 */
   text-align: center;
-  width: calc(100% - 4em); /* 테이블과 동일한 마진 조정 */
+  width: 100%;
   max-width: 100%; /* 최대 넓이를 100%로 */
-  height: 300px; /* 그래프 높이 */
+  height: 400px; /* 그래프 높이 */
 }
 
 .resultaptitude-table {
   overflow-x: auto;
   margin-bottom: 10px;
+  overflow-x: visible;
 }
 
 .resultaptitude-table table {
   width: 100%;
   border-collapse: collapse;
   font-size: 14px;
+  overflow-x: visible; /* 스크롤 대신 열을 모두 표시 */
+  display: table; /* 기본 테이블 레이아웃으로 설정 */
 }
 
 .resultaptitude-table th,
@@ -100,4 +117,26 @@
   padding-left: 1em;
   font-size: 1em;
   font-family: 'Paperlogy5', sans-serif;
+}
+
+.print-button-container {
+  text-align: end;
+  margin-top: 1em;
+  margin-right: 2.3em;
+  background-color: #F8F7FD;
+}
+
+.export-button {
+  background-color: #758bfa;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Paperlogy4', sans-serif;
+  font-size: 0.5em;
+}
+
+.export-button:hover {
+  background-color: #4850de;
 }

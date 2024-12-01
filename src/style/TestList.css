@@ -1,0 +1,42 @@
+.list-container {
+    max-width: 500px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  
+  .list-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  .list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border-top: 1px solid #ddd;
+  }
+  
+  .list-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 10px;
+    border-bottom: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+  }
+  
+  .list-item:hover {
+    background-color: #f9f9f9;
+  }
+  
+  .item-title {
+    font-size: 16px;
+  }
+  
+  .item-date {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  

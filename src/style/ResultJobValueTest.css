@@ -1,0 +1,173 @@
+.result-job-value-container {
+  width: 100%;
+  /* 가로 전체 크기 */
+  background: #F8F7FD;
+  padding-top: 2em;
+}
+
+.result-job-value-header {
+  display: flex;
+  background-color: #758bfa;
+  justify-content: space-between;
+  /* 양쪽 끝으로 배치 */
+  border-radius: 10px;
+  align-items: center;
+  color: white;
+  margin-left: 2em;
+  margin-right: 2em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 0.3em;
+  padding-bottom: 0.3em;
+  font-size: 1.1em;
+  margin-bottom: 0.8em;
+   /* 제목 크기 */
+   font-family: 'Paperlogy5', sans-serif;
+}
+
+.result-job-value-header p {
+  font-family: 'Paperlogy5', sans-serif;
+  font-size: 0.9rem;
+}
+
+.result-job-value-main {
+  display: block;
+  align-items: center;
+  /* 수직 정렬 */
+  background: #ffffff;
+  border-radius: 10px;
+  /* 모서리를 둥글게 */
+  padding: 1em;
+  margin: 2em;
+  margin-top: 0.8em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  align-items: center;
+}
+
+.result-job-value-main p {
+  color: #333;
+  font-size: 16px;
+  margin-top: 10px;
+  font-family: 'Paperlogy5', sans-serif;
+}
+
+.result-job-value-detail-header {
+  display: flex;
+  background-color: #E6E6F9;
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  margin-left: 2em;
+  margin-right: 2em;
+  padding-top: 0.8em;
+  padding-bottom: 0.8em;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding-left: 1em;
+  font-size: 1em;
+  font-family: 'Paperlogy5', sans-serif;
+}
+
+.result-table-section table {
+  width: 98%;
+  margin: 0 auto;
+}
+
+.result-chart-section {
+  width: 100%;
+  height: 400px;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.rank-tables {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 auto;
+}
+
+.rank-table {
+  width: 45%;
+  border-collapse: collapse;
+  text-align: center;
+}
+
+.rank-table th,
+.rank-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+.rank-table th {
+  background-color: #f4f4f4;
+  font-weight: normal;
+}
+
+.recommended-jobs {
+  margin-top: 10px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+}
+
+/* 추천 직업 섹션 스타일 */
+.result-recommendation-section {
+  margin-bottom: 10px;
+}
+
+.result-recommendation-section p {
+  margin-bottom: 20px;
+  font-size: 1rem;
+  color: #333;
+  font-family: 'Paperlogy6', sans-serif;
+}
+
+/* 추천 직업 카드 컨테이너 */
+.recommended-jobs-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 15px;
+}
+
+/* 추천 직업 카드 */
+.job-card {
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  padding: 10px 15px;
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.job-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.job-card-title {
+  font-size: 1rem;
+  font-weight: normal;
+  font-family: 'Paperlogy6', sans-serif;
+  color: #444;
+}
+
+.export-button {
+  background-color: #758bfa;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-family: 'Paperlogy4', sans-serif;
+  font-size: 0.5em;
+}
+
+.export-button:hover {
+  background-color: #4850de;
+}
+
+.print-button-container {
+  background: #F8F7FD;
+  text-align: end;
+  margin-top: 1em;
+  margin-right: 2.3em;
+}
