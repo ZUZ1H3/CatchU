@@ -17,7 +17,7 @@
 }
 
 /* 제목 스타일 */
-h1 {
+#practice-title {
     margin-top: 8%;
     font-size: clamp(1rem, 1.5vw, 2rem);
     color: white;

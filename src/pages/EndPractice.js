@@ -45,7 +45,7 @@ const EndPractice = () => {
           피드백 보러 가기
         </button>
       </div>
-      <h1>연습이 끝났습니다!</h1>
+      <h1 id="practice-title">연습이 끝났습니다!</h1>
       <div>
         {validVideos.length > 0 ? (
           validVideos.map((url, index) => (
