@@ -1,18 +1,103 @@
 import React, { useState, useEffect, useRef } from "react";
 import "../style/AIInterview.css";
 
+// 산업군 - 직무
 const industryJobs = {
-  // 산업군 및 직무 데이터
-  "IT / 데이터": ["소프트웨어 / 웹 / 앱", "빅데이터", "인공지능", "정보보안", "네트워크 / 서버"],
-  "화학 / 에너지 / 환경": ["환경 엔지니어", "화학 연구원", "에너지 컨설턴트"],
-  "목재 / 가구 / 제지": ["목재 디자이너", "가구 제작자", "제지 기술자"],
-  "판매 / 유통 / 영업 / 무역": ["영업 사원", "무역 전문가", "유통 관리사"],
-  "식품": ["식품 연구원", "품질 관리 전문가", "식품 디자이너"],
-  "외국어 면접": ["영어 통역사", "중국어 번역가", "일본어 전문가"],
-  "정치": ["정치 컨설턴트", "정책 분석가", "공공 행정 전문가"],
+  "IT / 데이터": [
+    "소프트웨어 / 웹 / 앱",
+    "빅데이터",
+    "인공지능",
+    "정보보안",
+    "네트워크 / 서버",
+    "클라우드 엔지니어",
+    "데이터 분석가",
+    "머신러닝 엔지니어",
+    "UI/UX 디자이너",
+    "IT 프로젝트 매니저",
+    "블록체인 개발자",
+    "QA 엔지니어",
+    "DevOps 엔지니어",
+  ],
+  "화학 / 에너지 / 환경": [
+    "환경 엔지니어",
+    "화학 연구원",
+    "에너지 컨설턴트",
+    "신재생에너지 전문가",
+    "수질 관리 엔지니어",
+    "대기 환경 엔지니어",
+    "화학 공정 엔지니어",
+    "에너지 효율 전문가",
+    "에너지 거래 분석가",
+    "폐기물 처리 전문가",
+    "재활용 전문가",
+  ],
+  "목재 / 가구 / 제지": [
+    "목재 디자이너",
+    "가구 제작자",
+    "제지 기술자",
+    "가구 CAD 디자이너",
+    "가구 품질 관리 전문가",
+    "목재 가공 기술자",
+    "친환경 소재 전문가",
+    "목공 예술가",
+    "가구 마케팅 전문가",
+    "제지 공정 관리자",
+  ],
+  "판매 / 유통 / 영업 / 무역": [
+    "영업 사원",
+    "무역 전문가",
+    "유통 관리사",
+    "B2B 영업 전문가",
+    "해외 영업 전문가",
+    "물류 관리 전문가",
+    "전자상거래 관리자",
+    "브랜드 매니저",
+    "소매 관리자",
+    "구매 기획자",
+    "시장 분석가",
+    "제품 카테고리 매니저",
+  ],
+  "식품": [
+    "식품 연구원",
+    "품질 관리 전문가",
+    "식품 디자이너",
+    "식품 영양사",
+    "식품 공정 관리자",
+    "HACCP 전문가",
+    "신제품 개발자",
+    "음료 제조 전문가",
+    "농산물 유통 전문가",
+    "푸드 마케팅 전문가",
+    "식품 포장 디자이너",
+  ],
+  "외국어 면접": [
+    "영어 통역사",
+    "중국어 번역가",
+    "일본어 전문가",
+    "프랑스어 번역가",
+    "스페인어 전문가",
+    "독일어 번역가",
+    "다국어 고객지원 전문가",
+    "외국어 강사",
+    "국제회의 통역사",
+    "자막 번역가",
+  ],
+  "정치": [
+    "정치 컨설턴트",
+    "정책 분석가",
+    "공공 행정 전문가",
+    "의회 보좌관",
+    "정치 홍보 전문가",
+    "정책 연구원",
+    "공공 정책 컨설턴트",
+    "정부 관계 전문가",
+    "정책 캠페인 매니저",
+    "국제 관계 전문가",
+    "지역 개발 전문가",
+  ],
 };
 
-// 다이얼로그 컴포넌트
+// 확인 다이얼로그 컴포넌트
 const Dialog = ({ open, message, onClose }) => {
   if (!open) return null; // 다이얼로그가 닫혀 있으면 렌더링하지 않음
   return (
@@ -25,6 +110,7 @@ const Dialog = ({ open, message, onClose }) => {
   );
 };
 
+// 확인+취소 다이얼로그
 const ConfirmationDialog = ({ open, message, onConfirm, onCancel }) => {
   if (!open) return null;
   return (
@@ -71,12 +157,14 @@ const AIInterview = () => {
   const mediaRecorderRef = useRef(null); // MediaRecorder 참조
   const recordedChunksRef = useRef([]); // 녹화된 데이터 저장
 
+  // 산업군 클릿시
   const handleIndustryClick = (industry) => {
     setSelectedIndustry(industry);
     setJobs(industryJobs[industry] || []);
     setSelectedJob(""); // 새로운 산업군을 선택하면 직무 선택 초기화
   };
 
+  // 직무 클릭시
   const handleJobClick = (job) => {
     setSelectedJob(job); // 선택된 직무 업데이트
   };
@@ -89,7 +177,7 @@ const AIInterview = () => {
     if (!value) {
       // 검색어가 없으면 원래 데이터로 복원
       setFilteredIndustryJobs(industryJobs);
-      setSelectedIndustry(""); // 선택 초기화
+      setSelectedIndustry("");
       setSelectedJob("");
       return;
     }
@@ -99,6 +187,7 @@ const AIInterview = () => {
       jobs.some((job) => job.toLowerCase().includes(value))
     );
   
+    // 검색 결과 있을 때
     if (matchingEntry) {
       const [industry, jobs] = matchingEntry;
       const matchingJob = jobs.find((job) => job.toLowerCase().includes(value));
@@ -129,7 +218,9 @@ const AIInterview = () => {
     }
   };
 
+  // 확인 버튼 클릭시
   const handleConfirmClick = () => {
+    // 산업군&직무 다 선택했을 때
     if (selectedIndustry && selectedJob) {
       setShowConfirmation(true); // 화면 전환
     } else {
@@ -140,29 +231,35 @@ const AIInterview = () => {
     }
   };
 
+  // 이전으로 버튼
   const handleGoBack = () => {
     setShowConfirmation(false); // 이전 화면으로 돌아가기
   };
 
+  // 시작하기 버튼
   const handleStartClick = () => {
     setShowPreparingScreen(true); // 준비 화면으로 전환
   };
 
+  // 다이얼로그 닫기
   const handleDialogClose = () => {
     setAlertDialog({ open: false, message: "" });
   };
 
+  // 모의면접 중단 여부 다시 확인
   const handleConfirm = () => {
     setIsPrematureEnd(true); // 중도 종료로 설정
-    handleEndInterview(); // 면접 종료 처리
+    handleEndInterview(currentStep != 6); // 면접 종료 처리
     setConfirmDialogOpen(false); // 다이얼로그 닫기
   };
 
+  // 다이얼로그 취소시
   const handleCancel = () => {
     setConfirmDialogOpen(false); // 다이얼로그 닫기
   };
 
   useEffect(() => {
+    // 면접 준비 화면
     if (showPreparingScreen && countdown > 0) {
       const timer = setTimeout(() => setCountdown((prev) => prev - 1), 1000);
       return () => clearTimeout(timer);
@@ -174,6 +271,7 @@ const AIInterview = () => {
   }, [showPreparingScreen, countdown]);
 
   useEffect(() => {
+    // 면접 준비 화면
     if (showPreparingScreen) {
       const videoElement = document.querySelector("#camera-feed");
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
@@ -193,6 +291,7 @@ const AIInterview = () => {
   }, [showPreparingScreen]);
 
   useEffect(() => {
+    // 모의면접 화면
     if (showAIInterviewScreen) {
       // 상태 초기화
       setIsPrematureEnd(false);
@@ -202,6 +301,7 @@ const AIInterview = () => {
       setConfirmDialogMessage("");
 
       const videoElement = document.querySelector("#user-camera");
+
       if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         navigator.mediaDevices
           .getUserMedia({ video: true, audio: true })
@@ -244,6 +344,7 @@ const AIInterview = () => {
     };
   }, [showAIInterviewScreen]);
 
+  // 현재 비디오 인덱스
   useEffect(() => {
     if (currentVideoIndex === 1) {
       setListeningTimer(0);
@@ -254,6 +355,7 @@ const AIInterview = () => {
     }
   }, [currentVideoIndex]);
 
+  // 비디오가 끝날 때
   const handleVideoEnd = () => {
     if (currentVideoIndex === 1) {
       // listening 영상일 때
@@ -269,6 +371,7 @@ const AIInterview = () => {
     }
   };
 
+  // 다음 단계로 갈 때
   const handleNextStep = () => {
     setCurrentVideoIndex(0); // 메인 영상으로 초기화
     if (currentStep < 6) {
@@ -280,28 +383,31 @@ const AIInterview = () => {
     }
   };
 
+  // 모의면접 중단 확인 시
   const handleEndInterviewConfirmation = () => {
     setConfirmDialogOpen(true);
     setConfirmDialogMessage(
       "모의면접을 진행 중입니다. 지금 종료하시면 진행 과정이 저장되지 않습니다! 그래도 종료하시겠습니까?"
     );
   
+    console.error("test")
     setConfirmDialog({
       open: true,
       message: confirmDialogMessage,
       onConfirm: () => {
-        console.log("onConfirm triggered for premature end");
         setConfirmDialogOpen(false);
-        handleEndInterview(true); // 중도 종료로 호출
       },
       onCancel: () => {
-        console.log("onCancel triggered, closing dialog");
         setConfirmDialogOpen(false);
       },
     });
   };
   
+  // 모의면접 끝날 때
   const handleEndInterview = (prematureEnd = false) => {
+    const selectedDate = "10일"; // 예시로 "10일" 데이터를 참조
+
+    console.error(prematureEnd)
     if (mediaRecorderRef.current) {
       mediaRecorderRef.current.stop();
       mediaRecorderRef.current = null;
@@ -321,15 +427,7 @@ const AIInterview = () => {
       videoElement.srcObject = null;
     }
 
-    // 중도 종료 처리
-    if (prematureEnd) {
-      console.log("Premature end detected");
-      setShowConfirmation(false);
-      return;
-    }
-
-    console.log("Normal end processing");
-    if (recordedChunksRef.current.length > 0) {
+    if (!prematureEnd && recordedChunksRef.current.length > 0) {
       const blob = new Blob(recordedChunksRef.current, { type: "video/webm" });
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
@@ -343,16 +441,19 @@ const AIInterview = () => {
 
     recordedChunksRef.current = [];
 
-    setAlertDialog({
-      open: true,
-      message: "수고하셨습니다! 면접이 종료되었습니다. 피드백 페이지로 이동 중입니다...",
-    });
+    if (!prematureEnd) {
+      setAlertDialog({
+        open: true,
+        message: "수고하셨습니다! 면접이 종료되었습니다. 피드백 페이지로 이동 중입니다...",
+      });
+    }
+    
+    const redirectUrl = prematureEnd ? "/AI-Interview" : `/feedback/mockInterview/${selectedDate}`;
 
     setTimeout(() => {
-      window.location.href = "../Feedback.js";
-    }, 2500);
+      window.location.href = redirectUrl;
+    }, 2000);
   };
-
 
   const getStepVideo = () => {
     const steps = [
@@ -401,6 +502,7 @@ const AIInterview = () => {
     }
   };
 
+  // 모의면접 화면
   if (showAIInterviewScreen) {
     return (
       <div className="ai-interview-screen">
@@ -488,6 +590,7 @@ const AIInterview = () => {
     );
   }  
 
+  // 모의면접 준비 화면
   if (showPreparingScreen) {
     return (
       <div className="preparing-screen">
@@ -507,6 +610,7 @@ const AIInterview = () => {
     );
   }
 
+  // 시작하기 화면
   if (showConfirmation) {
     return (
       <div className="confirmation-screen">
@@ -528,6 +632,7 @@ const AIInterview = () => {
     );
   }
 
+  // 산업군&직무 고르기 화면
   return (
     <div>
       {/* 다이얼로그 */}
@@ -569,7 +674,10 @@ const AIInterview = () => {
               </div>
             ))}
           </div>
-  
+
+          {/* 구분선 */}
+          <div className="table-divider"></div>
+
           <div className="table-column job-column">
             <div className="table-header">직무</div>
             {(filteredIndustryJobs[selectedIndustry] || []).map((job) => (
