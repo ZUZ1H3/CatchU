@@ -47,12 +47,23 @@
   text-align: center;
   width: 90%;
   height: 80%;
+  padding-top: 1em;
+  font-size: clamp(1.2rem, 1.6vw, 3rem);
   position: fixed; /* 화면 바닥에 고정 */
   bottom: 0; /* 화면 바닥과의 간격 0 */
   z-index: 10; /* 헤더보다 낮은 레이어로 설정 */
 }
+#q {
+  background-color: #1A182F; 
+  border-radius: 20px;
+  width: fit-content;
+  margin: 0 auto;
+  align-items: center;
+  font-size: clamp(1rem, 1.2vw, 1.6rem);
+  padding: clamp(0.5em, 1vw, 1em) clamp(1.2em, 1vw, 1.5em);
+}
 .question-box p {
-  margin-top: 8%;
+  margin-top: 3%;
   font-size: clamp(1.2rem, 1.6vw, 3rem);
   max-width: 70%;
   margin-left: auto;
@@ -65,13 +76,13 @@
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  margin-top : 3%;
+  margin-top : 4%;
   margin-left: 4%;
 }
 /* 타이머와 버튼 수직 정렬 */
 .timer-container {
   display: flex; /* 수직 정렬 */
-  margin-left: 20%;
+  margin-left: 18%;
   flex-direction: column; /* 세로 방향 정렬 */
 }
 .video {
@@ -127,7 +138,21 @@
   background: #1A182F;
   color:white;
 }
+#highlight-button {
+  background: #9c9eeb;
+  border: none;
+  border-radius: 20px;
+  padding: 0.8em 1.4em;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-top: 1.5em;
+}
 
+#highlight-button:hover {
+  background: #666eff;
+}
 /* 반응형 디자인 */
 @media (max-width: 1024px) {
   .finish-button {

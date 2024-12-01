@@ -7,6 +7,7 @@ import Dashboard from "./pages/Dashboard";
 import Introduction from "./pages/Introduction";
 import Practice from "./pages/Practice";
 import Practicing from "./pages/Practicing.js";
+import EndPractice from './pages/EndPractice.js';
 import AIInterview from "./pages/AIInterview";
 import AptitudeTest from "./pages/AptitudeTest.js";
 import JobValueTest from './pages/JobValueTest.js';
@@ -40,7 +41,7 @@ const MainContent = () => {
   // 대시보드 또는 적성검사에서 배경색 변경
   const isGrayBackground = location.pathname === '/' || location.pathname === '/aptitude-test' || location.pathname.startsWith('/feedback');
   // 면접 연습 진행 화면에서 배경색 변경
-  const isPracticing = location.pathname === '/practicing';
+  const isPracticing = location.pathname === '/practicing' || location.pathname === '/end-practice';
   const handleProfileUpdate = (updatedData) => {
     setProfileData(updatedData); // 상태 업데이트
   };
@@ -67,6 +68,7 @@ const MainContent = () => {
           <Route path="/introduction" element={<Introduction />} />
           <Route path="/practice" element={<Practice />} />
           <Route path="/practicing" element={<Practicing />} />
+          <Route path="/end-practice" element={<EndPractice />} />
           <Route path="/AI-interview" element={<AIInterview />} />
           <Route path="/aptitude-test" element={<AptitudeTest />} />
           <Route path="/job-value-test" element={<JobValueTest />} />

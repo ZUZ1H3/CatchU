@@ -8,7 +8,7 @@ const Practice = () => {
   const [mode, setMode] = useState('select');
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedQuestions, setSelectedQuestions] = useState([]);
-  const [selectedQuestion, setSelectedQuestion] = useState(null);
+  const [selectedQuestionsList, setSelectedQuestionsList] = useState([]); // 선택된 질문 목록
   const [customQuestion, setCustomQuestion] = useState('');
   const [filteredCategories, setFilteredCategories] = useState(categories);
   const [selectedType, setSelectedType] = useState(null); // 선택된 면접 유형
@@ -22,32 +22,30 @@ const Practice = () => {
     }
   }, [mode]);
 
-  // '직접 선택' 모드일 때 '-' 뒤의 부분만 가져오는 필터링 함수
   const filterCategoriesByDash = (categories) => {
     return categories.filter((cat) => {
       const catName = cat.name;
       if (catName.includes('-')) {
-        const filterPart = catName.split('-')[1]; // '-' 뒤의 부분을 추출
-        return filterPart ? true : false; // '-' 뒤에 내용이 있으면 필터링
+        const filterPart = catName.split('-')[1];
+        return filterPart ? true : false;
       }
-      return true; // '-'가 없으면 해당 카테고리 그대로 표시
+      return true;
     }).map((cat) => {
       const catName = cat.name;
       if (catName.includes('-')) {
-        const filterPart = catName.split('-')[1]; // '-' 뒤의 부분만 추출
-        return { ...cat, name: filterPart }; // '인성-'이나 '직무-'와 같은 접두어를 제거한 뒤, '-' 뒤의 부분만 표시
+        const filterPart = catName.split('-')[1];
+        return { ...cat, name: filterPart };
       }
       return cat;
     });
-  };  
+  };
 
   const handleImageSelect = (type) => {
-    // 이미지가 두 번 클릭되었을 때, 이미 선택된 유형을 다시 클릭하면 모든 카테고리로 복원
     if (selectedType === type) {
       setFilteredCategories(filterCategoriesByDash(categories));
-      setSelectedType(null); // 선택된 유형 초기화
+      setSelectedType(null);
     } else {
-      setSelectedType(type); // 선택된 유형 설정
+      setSelectedType(type);
       let filteredCategories = [];
 
       if (type === '인성면접') {
@@ -55,7 +53,7 @@ const Practice = () => {
           .filter((cat) => cat.name.startsWith('인성-'))
           .map((cat) => ({
             ...cat,
-            name: cat.name.replace('인성-', ''), // "인성-" 제거
+            name: cat.name.replace('인성-', ''),
           }));
       } else if (type === '직무면접') {
         filteredCategories = categories
@@ -69,7 +67,7 @@ const Practice = () => {
           .filter((cat) => cat.name.startsWith('역량-'))
           .map((cat) => ({
             ...cat,
-            name: cat.name.replace('역량-', ''), // "역량-" 제거
+            name: cat.name.replace('역량-', ''),
           }));
       } else if (type === '전공면접') {
         filteredCategories = categories.filter((cat) =>
@@ -91,29 +89,38 @@ const Practice = () => {
     setSelectedQuestions(category ? category.questions : []);
   };
 
+  const handleQuestionSelect = (question) => {
+    if (selectedQuestionsList.includes(question)) {
+      setSelectedQuestionsList(selectedQuestionsList.filter((q) => q !== question));
+    } else if (selectedQuestionsList.length < 3) {
+      setSelectedQuestionsList([...selectedQuestionsList, question]);
+    } else {
+      alert('최대 3개의 질문만 선택할 수 있습니다.');
+    }
+  };
+
   const handleModeChange = (newMode) => {
     setMode(newMode);
     if (newMode === 'select') {
-      // '직접 선택' 모드일 때는 '-' 뒤의 부분만 필터링
       setFilteredCategories(filterCategoriesByDash(categories));
     } else {
-      // 다른 모드로 변경 시, 전체 카테고리 복원
       setFilteredCategories(categories);
     }
-  };  
-  const handleConfirm = () => {
-    if (!selectedQuestion && mode === "select") {
-      alert("질문을 선택해주세요.");
-      return;
-    }
-    if (mode === "create" && (!customQuestion || customQuestion.trim() === "")) {
-      alert("사용자 질문을 입력해주세요.");
-      return;
-    }
-    const questionToPass = mode === "create" ? customQuestion : selectedQuestion; // 선택된 질문 또는 사용자 입력 질문
-    navigate("/practicing", { state: { question: questionToPass } });
   };
-  
+
+  const handleConfirm = () => {
+    if (mode === 'select' && selectedQuestionsList.length === 0) {
+      alert('최소 하나의 질문을 선택해주세요.');
+      return;
+    }
+    if (mode === 'create' && (!customQuestion || customQuestion.trim() === '')) {
+      alert('사용자 질문을 입력해주세요.');
+      return;
+    }
+    const questionToPass =
+      mode === 'create' ? customQuestion : selectedQuestionsList.join(', ');
+    navigate('/practicing', { state: { question: questionToPass } });
+  };
 
   return (
     <div className="practice-container">
@@ -198,9 +205,9 @@ const Practice = () => {
                       <div
                         key={idx}
                         className={`category-name ${
-                          selectedQuestion === question ? 'selected' : ''
+                          selectedQuestionsList.includes(question) ? 'selected' : ''
                         }`}
-                        onClick={() => setSelectedQuestion(question)}
+                        onClick={() => handleQuestionSelect(question)}
                       >
                         {question}
                       </div>
@@ -212,7 +219,10 @@ const Practice = () => {
           </tbody>
         </table>
       </div>
-      <button id='check-button' onClick={handleConfirm}>확인</button>
+      {selectedQuestionsList.length > 0}
+      <button id="check-button" onClick={handleConfirm}>
+        확인
+      </button>
     </div>
   );
 };
