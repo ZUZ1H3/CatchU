@@ -1,0 +1,232 @@
+.setting-practice-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%; 
+  font-family: 'Paperlogy6', sans-serif;
+  color:white;
+  box-sizing: border-box;
+  position: relative; 
+  overflow-x: hidden;
+}
+#body-container {
+  width: 100%;
+  height: 80%;
+}
+/* 안내 문구 스타일 */
+#setting {
+  line-height: 1.5;
+  text-align: center;
+  font-size: clamp(1rem, 1.5vw, 2rem);
+  margin-bottom: 3%;
+}
+#color {
+  font-size: clamp(1rem, 1.5vw, 2rem);
+  color: #666EFF;
+}
+
+/* 비디오와 설정 섹션을 포함하는 컨테이너 */
+.video-and-settings-section {
+  display: flex;
+  flex-direction: column; /* 세로 정렬 */
+  align-items: center;
+  gap: 5%; /* 비디오, 설정 섹션, 오디오 섹션 간격 */
+  width: 100%; /* 부모 요소의 전체 너비 사용 */
+  margin-bottom: 10%;
+}
+/* 비디오 섹션 */
+.video-section {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: 8%; /* 비디오와 상태 박스 간격 */
+  justify-content: center; /* 수평 중앙 정렬 */
+  width: 100%;
+  margin-left: 25%;
+}
+
+/* 비디오 박스 */
+#video-box {
+  width: 50%;
+  aspect-ratio: 4 / 3; /* 비율 고정 */
+  border: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #393E68;
+  overflow: hidden;
+  position: relative;
+}
+/* 테두리가 있는 상태 */
+.video-box-with-border {
+  border: 2px solid white !important;
+}
+
+/* 테두리가 없는 상태 */
+.video-box-no-border {
+  border: none;
+}
+
+#setting-img {
+  position: absolute; /* 비디오 박스 안에서 절대 위치 */
+  bottom: 0; /* 비디오 박스의 아래쪽에 딱 맞게 위치 */
+  left: 50%;
+  transform: translateX(-50%); /* 가로 중앙 정렬 */
+  width: 70%; 
+  object-fit: contain; /* 비율 유지 */
+  z-index: 2; /* 비디오 위에 표시 */
+  pointer-events: none; /* 클릭 이벤트 차단 */
+}
+/* 비디오 피드 */
+.video-feed {
+  width: 100%; /* 부모 요소에 맞게 비디오 크기 조정 */
+  height: 100%;
+  object-fit: cover; /* 비디오 내용을 비율에 맞게 채움 */
+}
+
+/* 인식 상태 섹션 */
+.recognition-status {
+  display: flex;
+  flex-direction: column;
+  gap: 5%;
+  width: 100%;
+  max-width: 100%;
+}
+
+/* 설정 박스 */
+#setting-boxes {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  width: 60%;
+  margin-top: 2%;
+  margin-bottom: 2%;
+  background: #393E68;
+  display: flex;
+  padding: 1%;
+  border-radius: 10px;
+}
+/* 상태 아이콘 */
+#status-setting-img {
+  width: 18%;
+  height: auto;
+  object-fit: contain;
+  margin-left: 3%;
+  margin-right: 10%; /* 텍스트와의 간격 */
+}
+#setting-text-container {
+  display: flex;
+  flex-direction: column; /* 텍스트를 세로로 정렬 */
+  align-items: center; /* 수평 방향으로 가운데 정렬 */
+  justify-content: center; /* 부모 박스의 세로 정중앙에 배치 */
+  text-align: center; /* 텍스트 가운데 정렬 */
+  height: 100%; /* 부모 높이에 맞게 텍스트 배치 */
+}
+#setting-title {
+  font-family: 'Paperlogy6', sans-serif;
+  font-size: clamp(1rem, 1.3vw, 2rem);
+}
+#setting-text {
+  font-family: 'Paperlogy5', sans-serif;
+  font-size: clamp(1rem, 1.3vw, 2rem);
+  text-align: center; /* 텍스트 가운데 정렬 */
+  margin-top: 2%;
+}
+
+/* 오디오 시각화 섹션 */
+.audio-visualizer-section {
+  width: 78%;
+  height: 7%;
+  position: absolute;
+  display: flex;
+  background-color: #C8CCEB;
+  color: #393E68;
+  text-align: center;
+  border-radius: 10px;
+  margin-bottom: 20px; /* 버튼 그룹과 간격 */
+  font-family: 'Paperlogy5', sans-serif;
+  margin-top: 25%;
+  margin-right: 22%;
+}
+/* 오디오 시각화 캔버스 */
+#audio-visualizer {
+  width: 100%;
+}
+.audio-buttons {
+  display: flex;
+  width: 5%;
+  flex-direction: column; 
+  margin-left: auto;
+}
+#btn-audio {
+  background: #393E68;
+  color: white;
+  font-family: 'Paperlogy5', sans-serif;
+  font-size: clamp(1rem, 1vw, 1.2rem);
+}
+
+/* 버튼 스타일 */
+#buttons-group {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    position: absolute;
+    gap: 20px;
+    left: 50%; 
+    transform: translateX(-50%);
+    bottom: 4%;
+}
+#again-button {
+    background: white;
+    border: none;
+    border-radius: 20px;
+    padding: clamp(0.2em, 1vw, 0.4em) clamp(1.2em, 2.8vw, 2.8em);
+    color: black;
+    font-size: clamp(1rem, 1.2vw, 1.5rem);
+    font-family: 'Paperlogy5', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+#start-button {
+    background: #C8CCEB;
+    border: none;
+    border-radius: 20px;
+    padding: clamp(0.2em, 1vw, 0.4em) clamp(1.2em, 2vw, 2em);
+    color: black;
+    font-size: clamp(1rem, 1.2vw, 1.5rem);
+    font-family: 'Paperlogy5', sans-serif;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+}
+#again-button:hover,
+#start-button:hover {
+    color: white;
+    background:#393E68;
+}
+.success-container {
+  display: flex;
+  align-items: center; /* 이미지와 텍스트를 수평 중앙 정렬 */
+  margin-left: 4%;
+}
+#mic-setting-img {
+  width: 60%; /* 이미지 크기 */
+  height: 60%; /* 이미지 크기 */
+  object-fit: contain; /* 이미지 비율 유지 */
+}
+/* 성공 텍스트*/
+#success-text {
+  font-family: 'Paperlogy5', sans-serif;
+  font-size: clamp(1rem, 1.2vw, 1.5rem);
+  color: #393E68;
+  text-align: left;
+  margin-left: 5%;
+  white-space: nowrap; /* 텍스트를 한 줄로 강제 */
+  width: 100%;
+}
+
+#start-button:disabled {
+  cursor: not-allowed; /* 비활성화 시 커서 스타일 */
+}
+

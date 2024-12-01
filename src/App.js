@@ -5,6 +5,7 @@ import Profile from "./components/Profile";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Introduction from "./pages/Introduction";
+import SettingPractice from "./pages/SettingPractice.js";
 import Practice from "./pages/Practice";
 import Practicing from "./pages/Practicing.js";
 import EndPractice from './pages/EndPractice.js';
@@ -41,11 +42,11 @@ const MainContent = () => {
   // 대시보드 또는 적성검사에서 배경색 변경
   const isGrayBackground = location.pathname === '/' || location.pathname === '/aptitude-test' || location.pathname.startsWith('/feedback');
   // 면접 연습 진행 화면에서 배경색 변경
-  const isPracticing = location.pathname === '/practicing' || location.pathname === '/end-practice';
+  const isPracticing = location.pathname === '/setting-practice' || location.pathname === '/practicing' || location.pathname === '/end-practice';
+  const isAIInterview = location.pathname === '/AI-interview';
   const handleProfileUpdate = (updatedData) => {
     setProfileData(updatedData); // 상태 업데이트
   };
-
 
   useEffect(() => {
     if (isPracticing) {
@@ -54,6 +55,14 @@ const MainContent = () => {
       document.body.classList.remove('practicing-mode');
     }
   }, [isPracticing]);
+
+  useEffect(() => {
+    if(isAIInterview) {
+      document.body.classList.add('AIInterview-mode');
+    } else {
+      document.body.classList.remove('AIInterview-mode');
+    }
+  }, [isAIInterview]);
 
   return (
     <div className="app"> {!isPracticing && (
@@ -66,6 +75,7 @@ const MainContent = () => {
         <Routes>
           <Route path="/" element={<Dashboard profileData={profileData} />} />
           <Route path="/introduction" element={<Introduction />} />
+          <Route path="/setting-practice" element={<SettingPractice />} />
           <Route path="/practice" element={<Practice />} />
           <Route path="/practicing" element={<Practicing />} />
           <Route path="/end-practice" element={<EndPractice />} />

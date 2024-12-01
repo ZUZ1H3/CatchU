@@ -448,7 +448,7 @@ const AIInterview = () => {
       });
     }
     
-    const redirectUrl = prematureEnd ? "/AI-Interview" : `/feedback/mockInterview/${selectedDate}`;
+    const redirectUrl = prematureEnd ? "/AI-interview" : `/feedback/mockInterview/${selectedDate}`;
 
     setTimeout(() => {
       window.location.href = redirectUrl;

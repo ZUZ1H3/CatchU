@@ -32,7 +32,14 @@ body, html {
 body.practicing-mode {
   background: #1A182F;
 }
+body.AIInterview-mode {
+  background: transparent;
+}
 body.practicing-mode .app {
+  position: static;
+  transform: none;
+}
+body.AIInterview-mode .app {
   position: static;
   transform: none;
 }

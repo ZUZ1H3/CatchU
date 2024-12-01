@@ -8,7 +8,7 @@ const Practicing = () => {
   const navigate = useNavigate();
 
   const { question } = location.state || { question: "" };
-  const questionsArray = question.split(", ");
+  const questionsArray = question.split("., ");
 
   const [currentQidx, setCurrentQidx] = useState(0);
   const [timer, setTimer] = useState(0);
@@ -19,6 +19,10 @@ const Practicing = () => {
   const [videoUrls, setVideoUrls] = useState([]);
   const [dotVisible, setDotVisible] = useState(true);
 
+  useEffect(() => {
+    setIsRecording(true);
+  }, []);
+  
   // 카메라 스트림 초기화
   useEffect(() => {
     if (isRecording && !mediaStream) {
@@ -39,7 +43,6 @@ const Practicing = () => {
               setHighlightChunks((prev) => [...prev, event.data]);
             }
           };
-
           recorder.start();
         } catch (error) {
           console.error("카메라 및 마이크 스트림 초기화 오류:", error);
@@ -103,7 +106,7 @@ const Practicing = () => {
           setHighlightChunks([]); // 다음 질문을 위해 초기화
         } else {
           setTimeout(() => {
-            navigate("/end-practice", { state: { videoUrls: updatedVideoUrls } });
+            navigate("/end-practice", { state: { videoUrls: updatedVideoUrls }, replace: true });
           }, 0);
         }
 

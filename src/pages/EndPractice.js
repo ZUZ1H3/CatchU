@@ -29,8 +29,15 @@ const EndPractice = () => {
   }, [videoUrls]);
 
   const goToFeedback = () => {
-    navigate("/feedback/practice/18일"); // 피드백 데이터 화면으로 이동
+    // 이동 가능한 날짜들
+    const days = [10, 12, 14, 16, 18];
+    
+    const randomDay = days[Math.floor(Math.random() * days.length)];
+    
+    // 랜덤으로 선택된 날짜로 피드백 화면으로 이동
+    navigate(`/feedback/practice/${randomDay}일`, {state:{replace: true}});
   };
+  
 
   return (
     <div className="end-practice-container">

@@ -5,7 +5,6 @@
   justify-content: center;
   height: 100%; 
   color: white;
-  font-size: 20px;
   font-weight: 600;
   position: relative; 
 }
@@ -33,7 +32,7 @@
   padding: clamp(0.2em, 1vw, 0.4em) clamp(1.2em, 2vw, 2em);
   color: white;
   font-size: clamp(1rem, 1.2vw, 1.5rem);
-  font-weight: 600;
+  font-family: 'Paperlogy6', sans-serif;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
 }

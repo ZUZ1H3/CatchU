@@ -9,7 +9,7 @@
 /* 제목 스타일 */
 .heading {
   align-self: flex-start;
-  font-size: clamp(0.8rem, 1rem, 1.2rem);  /* 화면 크기에 따라 조정 */
+  font-size: clamp(1rem, 1.2rem, 1.5rem);  /* 화면 크기에 따라 조정 */
   font-weight: 600;
   margin-top: 4em;
   margin-bottom: 2em;
@@ -57,7 +57,7 @@
   border-collapse: collapse;
 }
 .table td {
-  font-size: clamp(0.7rem, 0.9rem, 1.2rem); /* 화면 크기에 따라 조정 */
+  font-size: clamp(0.9rem, 1rem, 1.2rem); /* 화면 크기에 따라 조정 */
   border: 1px solid #d2d2d2;
   text-align: left;
   vertical-align: top;
@@ -80,7 +80,7 @@
 }
 
 .mode-option {
-  font-size: clamp(0.7rem, 0.9rem, 1.2rem); /* 화면 크기에 따라 조정 */
+  font-size: clamp(0.9rem, 1rem, 1.2rem); /* 화면 크기에 따라 조정 */
   font-weight: 400;
   padding: 0.5em;
   cursor: pointer;
@@ -98,7 +98,7 @@
 }
 
 .category-name {
-  font-size: clamp(0.7rem, 0.9rem, 1.2rem);   /* 화면 크기에 따라 조정 */
+  font-size: clamp(0.9rem, 1rem, 1.2rem); /* 화면 크기에 따라 조정 */
   font-weight: 400;
   padding: 0.5em;
   cursor: pointer;
@@ -111,19 +111,19 @@
 }
 
 .questions-list {
-  max-height: 250px;
+  max-height: 300px;
   overflow-y: auto;
   overflow-x: hidden;
 }
 
 .input-area {
-  max-height: 125px;
+  max-height: 200px;
   overflow-y: auto;
   overflow-x: hidden;
-  width: 100%;
-  height: 125px;
+  width: 314%;
+  height: 200px;
   padding: 0.5em;
-  font-size: 0.9rem;
+  font-size: clamp(0.9rem, 1.1rem, 1.4rem);
   font-weight: 500;
   border: 1px solid #d2d2d2;
   resize: none;
@@ -143,7 +143,7 @@
   padding: 0.3em 1.8em;
   align-self: flex-end;
   margin-right: 4em;
-  transition: background 0.3s ease, color 0.3s ease; /* 부드러운 전환 */
+  transition: all 0.3s ease-in-out; /* 부드러운 전환 */
 }
 
 #check-button:hover {
