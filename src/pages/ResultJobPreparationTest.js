@@ -4,9 +4,8 @@ import { Bar } from "react-chartjs-2";
 import "../style/ResultJobPreparationTest.css";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import profileData from "../data/ProfileData.js";
 
-const ResultJobPreparationTest = () => {
+const ResultJobPreparationTest = ({ profileData }) => {
   const userName = profileData.name;
   const location = useLocation();
   const categoryScores =

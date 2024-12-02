@@ -1,12 +1,11 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
 import GraphComponent from "./GraphComponent";
-import profileData from "../data/ProfileData.js";
 import "../style/ResultJobAptitudeTest.css";
 import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 
-const ResultJobAptitudeTest = () => {
+const ResultJobAptitudeTest = ({ profileData }) => {
   const location = useLocation();
   const userName = profileData.name;
   //const pdfRef = useRef(); // PDF로 변환할 영역의 참조
