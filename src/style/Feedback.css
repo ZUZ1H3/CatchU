@@ -39,7 +39,10 @@
   background: #ffffff;
   border-radius: 10px;
   /* 모서리를 둥글게 */
-  padding: 1em;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding-top: 4vh;
+  padding-bottom: 4vh;
   margin: 2em;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
@@ -54,14 +57,14 @@
 .average-time {
   padding-top: 2em;
   padding-bottom: 2em;
-  padding-left: 2em;
-  padding-right: 2em;
+  padding-left: 4vh;
+  padding-right: 4vh;
   border-right: 1px solid rgb(194, 194, 194);
 }
 
 
 .radar-chart {
-  padding-left: 1em;
+  padding-left: 4vh;
   width: 14em;
   height: 13em;
 }

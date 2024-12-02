@@ -26,11 +26,12 @@ const Profile = ({ profileData, onUpdate }) => {
                 수정
             </button>
 
-            <div className="profile-header">'배달의 민족' 면접일까지</div>
+            <div className="profile-header">'{profileData.headerText}' 면접일까지</div>
 
             <div className="d-day-box">
+                
                 {[...profileData.dDay].map((char, index) => (
-                    <div key={index} className="d-day-char">
+                   <div key={index} className="d-day-char">
                         {char}
                     </div>
                 ))}

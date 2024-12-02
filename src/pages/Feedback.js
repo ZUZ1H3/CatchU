@@ -31,7 +31,7 @@ const getScoreLabel = (score) => {
   if (score >= 80) return "우수";
   if (score >= 60) return "양호";
   if (score >= 40) return "보통";
-  return "부족";
+  return "미흡";
 };
 const formatDateTime = (dateTime) => {
   const { date, time } = dateTime;
@@ -166,8 +166,8 @@ const Feedback = () => {
       <div className="feedback-container" id="feedback-container">
         <div className="feedback-header">
           <div>{title}</div>
-          <p>{`분석 날짜: ${id}`}</p>
-        </div>
+          <p>{`${formatDateTime(feedback.dateTime)}`}</p> 
+          </div>
 
         <div className="feedback-main">
           <div className="feedback-summary">
@@ -221,7 +221,7 @@ const Feedback = () => {
             const myScore = radarChart[detail.category] || 0; // radarChart에서 내 점수 가져오기
             const scoreLabel = getScoreLabel(myScore);
 
-            const scoreStyle = scoreLabel === "부족" ? { color: "red", fontWeight: "bold" } : {};
+            const scoreStyle = scoreLabel === "미흡" ? { color: "red", fontWeight: "bold" } : {};
 
 
             // 막대 그래프 데이터

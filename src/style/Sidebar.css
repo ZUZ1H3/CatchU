@@ -11,8 +11,8 @@
 
 /* 로고 스타일 */
 .sidebar img {
-  width: 50%;
-  max-width: 120px; /* 최대 너비 120px로 설정 */
+  width: 55%;
+  max-width: 20vh; /* 최대 너비 120px로 설정 */
   height: auto; /* 비율에 맞게 높이 자동 조정 */
   margin-top: 2rem;
   margin-bottom: 7rem; /* 로고와 탭들 사이에 여백 추가 */
@@ -21,8 +21,8 @@
 /* 탭 기본 스타일 */
 .tab {
   padding: 9px 24px; /* 탭의 내부 여백 */
-  margin-bottom: 2rem; /* 탭 간의 여백 */
-  font-size: 14px; /* 기본 글씨 크기 */
+  margin-bottom: 5vh; /* 탭 간의 여백 */
+  font-size: 1.8vh; /* 기본 글씨 크기 */
   color: #555;
   cursor: pointer;
   border-radius: 8px; /* 둥근 모서리 */
@@ -43,51 +43,4 @@
   font-weight: bold;
 }
 
-/* 반응형 디자인 */
-@media (max-width: 1200px) {
-  .sidebar {
-    padding: 1rem; /* 중간 크기 화면에서는 여백을 약간 줄임 */
-  }
 
-  .sidebar img {
-    width: 70%; /* 로고 크기 줄임 */
-    max-width: 100px; /* 로고의 최대 크기 줄임 */
-  }
-
-  .tab {
-    font-size: 14px; /* 작은 화면에서는 탭 글씨 크기 줄임 */
-    padding: 10px 15px; /* 탭 내부 여백 줄이기 */
-  }
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-    padding: 1rem; /* 모바일 화면에서는 여백을 더 줄임 */
-  }
-
-  .sidebar img {
-    width: 60%; /* 로고를 더 작게 조정 */
-    max-width: 80px; /* 모바일 화면에서는 로고의 최대 크기를 80px로 설정 */
-  }
-
-  .tab {
-    font-size: 12px; /* 모바일에서는 글씨 크기를 더 줄임 */
-    padding: 8px 12px; /* 탭 내부 여백을 더 줄임 */
-  }
-}
-
-@media (max-width: 480px) {
-  .sidebar {
-    padding: 0.5rem; /* 더 작은 화면에서는 여백을 최소화 */
-  }
-
-  .sidebar img {
-    width: 50%; /* 로고 크기를 더욱 줄임 */
-    max-width: 60px; /* 로고의 최대 크기도 더욱 줄임 */
-  }
-
-  .tab {
-    font-size: 10px; /* 더 작은 글씨 크기 */
-    padding: 6px 10px; /* 더 작은 탭 내부 여백 */
-  }
-}

@@ -1,5 +1,6 @@
 // src/data/profileData.js
 const profileData = {
+    headerText:"배달의민족",
     dDay: "D-15",
     name: "김신입",
     email: "zuzihe@hansung.ac.kr",
