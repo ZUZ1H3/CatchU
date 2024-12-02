@@ -42,12 +42,14 @@ const JobPreparationTest = () => {
   const handleNextPage = () => {
     if (currentPage < Math.ceil(questions.length / 5) - 1) {
       setCurrentPage(currentPage + 1);
+      setCurrentStep(currentStep + 1); // 단계 증가
     }
   };
-
+  
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
+      setCurrentStep(currentStep - 1); // 단계 감소
     }
   };
 
@@ -91,9 +93,9 @@ const JobPreparationTest = () => {
 
   return (
     <div className="preparation-test-container">
-      
+
       <div className="job-value-header">
-        <h1>직업가치관검사 진행중</h1>
+        <h1>구직준비도검사 진행중</h1>
         {/* 진행 바 */}
         <div className="job-value-progress">
           <div

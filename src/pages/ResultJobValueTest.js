@@ -107,7 +107,7 @@ const ResultJobValueTest = () => {
       <div className="print-button-container">
         <button onClick={exportToPDF} className="export-button">
           PDF로 저장
-        </button>
+        </button>   
       </div>
       <div className="result-job-value-container" id="result-container">
         <div className="result-job-value-header">

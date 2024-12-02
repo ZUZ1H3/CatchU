@@ -168,6 +168,7 @@
 .print-button-container {
   background: #F8F7FD;
   text-align: end;
-  margin-top: 1em;
+  padding-top: 1em;
   margin-right: 2.3em;
+  width: 100%;
 }

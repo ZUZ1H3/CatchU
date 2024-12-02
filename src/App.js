@@ -40,7 +40,7 @@ const MainContent = () => {
   const isDashboard = location.pathname === '/';
 
   // 대시보드 또는 적성검사에서 배경색 변경
-  const isGrayBackground = location.pathname === '/' || location.pathname === '/aptitude-test' || location.pathname.startsWith('/feedback');
+  const isGrayBackground = location.pathname === '/' || location.pathname === '/aptitude-test' || location.pathname === '/result-job-value-test' || location.pathname === '/result-job-aptitude-test' || location.pathname === '/result-job-preparation-test' || location.pathname.startsWith('/feedback');
   // 면접 연습 진행 화면에서 배경색 변경
   const isPracticing = location.pathname === '/setting-practice' || location.pathname === '/practicing' || location.pathname === '/end-practice';
   const isAIInterview = location.pathname === '/AI-interview';

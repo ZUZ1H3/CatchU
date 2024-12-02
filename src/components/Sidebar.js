@@ -10,7 +10,6 @@ const Sidebar = () => {
     { name: "모의면접", path: "/AI-interview" },
     { name: "면접연습", path: "/practice" },
     { name: "적성검사", path: "/aptitude-test" },
-    { name: "FAQ", path: "/FAQ" },
   ];
 
   return (

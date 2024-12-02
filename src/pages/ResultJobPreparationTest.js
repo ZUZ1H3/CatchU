@@ -115,7 +115,7 @@ const ResultJobPreparationTest = () => {
 
       <div className="result-job-value-container" id="result-container">
         <div className="result-job-value-header">
-          <div>{userName}님의 직업 가치관 검사 결과</div>
+          <div>{userName}님의 구직준비도 검사 결과</div>
           <p>검사 날짜: {currentDate}</p>
         </div>
 

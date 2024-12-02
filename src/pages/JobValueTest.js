@@ -44,12 +44,14 @@ const JobValueTest = () => {
   const handleNextPage = () => {
     if (currentPage < Math.ceil(questions.length / 5) - 1) {
       setCurrentPage(currentPage + 1);
+      setCurrentStep(currentStep + 1); // 단계 증가
     }
   };
-
+  
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
+      setCurrentStep(currentStep - 1); // 단계 감소
     }
   };
 
