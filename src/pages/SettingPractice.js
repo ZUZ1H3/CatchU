@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import "../style/SettingPractice.css";
 import { useLocation, useNavigate } from "react-router-dom";
 
@@ -18,7 +18,8 @@ const SettingPractice = () => {
   const [faceRecognitionStatus, setFaceRecognitionStatus] = useState("default"); // 얼굴 인식 상태
   const [micRecognitionStatus, setMicRecognitionStatus] = useState("default"); // 마이크 인식 상태
   const [buttonText, setButtonText] = useState("시작하기"); // 버튼 텍스트 관리
-  const [visualizationType, setVisualizationType] = useState("bar"); // 시각화 타입 선택 상태
+  const [visualizationType, setVisualizationType] = useState("bars"); // 기본값: 막대
+  const [volumeLevel, setVolumeLevel] = useState(0); // 0부터 10까지의 볼륨 레벨
 
   // 카메라 켜기 및 끄기
   const toggleCamera = async () => {
@@ -57,12 +58,92 @@ const SettingPractice = () => {
     }
   };
 
+  // 오디오 초기화 및 처리
+  const initAudio = async () => {
+    let audioContext;
+    let analyser;
+    let microphone;
+    let dataArray;
+    let animationId;
+    let silenceTimer = null;
+
+  const stopAudioProcessing = () => {
+    if (audioContext && audioContext.state !== "closed") {
+      // AudioContext가 이미 종료된 경우를 방지
+      audioContext.close();
+      audioContext = null;
+    }
+    if (animationId) {
+      cancelAnimationFrame(animationId);
+      animationId = null;
+    }
+  };
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+    audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    analyser = audioContext.createAnalyser();
+    microphone = audioContext.createMediaStreamSource(stream);
+
+    analyser.fftSize = 256;
+    dataArray = new Uint8Array(analyser.frequencyBinCount);
+
+    microphone.connect(analyser);
+
+    const updateVolume = () => {
+      if (micRecognitionStatus === "success") {
+        // 성공 상태면 오디오 처리 중단
+        stopAudioProcessing();
+        return;
+      }
+
+      analyser.getByteFrequencyData(dataArray);
+      const avgVolume = dataArray.reduce((sum, val) => sum + val, 0) / dataArray.length;
+      const level = Math.floor((Math.sqrt(avgVolume / 255) * 10));
+      setVolumeLevel(level);
+
+      if (level > 3) {
+        // 임계값 초과 후 3초 동안 유지되면 성공으로 설정
+        if (!silenceTimer) {
+          silenceTimer = setTimeout(() => {
+            setMicRecognitionStatus("success");
+            stopAudioProcessing(); // 성공 상태에서 중단
+          }, 3000); // 3초 유지
+        }
+      }
+
+      animationId = requestAnimationFrame(updateVolume);
+    };
+
+    updateVolume();
+  } catch (err) {
+    console.error("오디오 스트림을 가져오는 데 실패했습니다.", err);
+  }
+};
+
+// 버튼 클릭 시 호출
+const handleStartAudio = () => {
+  if (micRecognitionStatus === "success") {
+    // 성공 상태라면 초기화하지 않음
+    return;
+  }
+
+  initAudio(); // 오디오 초기화 시작
+};
+
+// 초기화 정리 함수
+const handleStopAudio = () => {
+  setMicRecognitionStatus("default");
+  setVolumeLevel(0);
+};
+
   // 오디오 시각화
-  const startAudioVisualization = (stream, type = "bar") => {
+  const startAudioVisualization = (stream) => {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const analyser = audioContext.createAnalyser();
     const source = audioContext.createMediaStreamSource(stream);
-  
+    const type = visualizationType; // 상태에서 바로 가져오기
+
     analyser.fftSize = 256; // 분석 크기 설정
     const bufferLength = analyser.frequencyBinCount;
     const dataArray = new Uint8Array(bufferLength);
@@ -83,37 +164,7 @@ const SettingPractice = () => {
       analyser.getByteFrequencyData(dataArray);
       canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
   
-      if (type === "bar") {
-        // 막대그래프 스타일
-        const barWidth = (canvas.width / bufferLength) * 2.5;
-        let barHeight;
-        let x = 0;
-        audioDetected = false; // 기본적으로 음량 없음
-
-        for (let i = 0; i < bufferLength; i++) {
-          barHeight = dataArray[i] / 2;
-  
-          if (barHeight > 10) {
-            // 음량이 일정 수준 이상이면 감지됨
-            audioDetected = true;
-          }
-
-        // 음량에 따라 색상과 투명도 조정
-        const opacity = Math.min(1, barHeight / 128);
-        canvasCtx.fillStyle = `rgba(57, 62, 104, ${opacity})`;
-        
-        const yOffset = 20; // 위로 이동할 픽셀 수
-        canvasCtx.fillRect(
-          x,
-          canvas.height - barHeight - yOffset, // 바닥에서 위로 약간 띄움
-          barWidth,
-          barHeight
-        );
-    
-        x += barWidth + 1;  
-        }
-        
-      } else if (type === "wave") {
+      if (type === "wave") {
         // 파동 스타일
         analyser.getByteTimeDomainData(dataArray);
   
@@ -158,7 +209,6 @@ const SettingPractice = () => {
         }, 3000); // 3초 동안 지속되면 성공으로 간주
       } else {
         clearTimeout(silenceTimer);
-        setMicRecognitionStatus("default");
       }
     };
 
@@ -166,6 +216,7 @@ const SettingPractice = () => {
     audioContextRef.current = audioContext;
     analyserRef.current = analyser;
   };
+
   // 오디오 시각화 중지
   const stopAudioVisualization = () => {
     if (audioContextRef.current) {
@@ -212,7 +263,8 @@ const SettingPractice = () => {
       setIsImageVisible(false); // 설정 이미지 숨기기
       setHasBorder(true); // 테두리 표시
       setButtonText("다시하기");
-      
+      handleStartAudio();
+
     } else {
       // 다시하기 버튼 클릭 시
       setButtonText("시작하기");
@@ -220,9 +272,9 @@ const SettingPractice = () => {
       setHasBorder(false); // 테두리 제거
       setFaceRecognitionStatus("default"); // 얼굴 인식 상태 기본
       setMicRecognitionStatus("default"); // 마이크 인식 상태 기본
-  
       // 오디오 시각화 정지 및 캔버스 초기화
       stopAudioVisualization();
+      handleStopAudio();
     }
   };
 
@@ -261,6 +313,23 @@ const SettingPractice = () => {
         읽어주세요.
       </h3>
 
+      {visualizationType === "bars" && (
+      <div className="visualizer-containers">
+      <div className="bars">
+      {Array.from({ length: 10 }, (_, i) => (
+          <div
+            key={i}
+            className="bar"
+            style={{
+              backgroundColor: i < volumeLevel ? "#C8CCEB" : "#393E68",
+              opacity: i < volumeLevel ? 1 : 0.3, // 볼륨 범위에 따른 투명도
+              transition: "height 0.2s, background-color 0.2s",
+            }}
+          />
+        ))}
+        </div>
+      </div>
+      )}
       <div className="video-and-settings-section">
       <div className="video-section">
         <div id="video-box" className={hasBorder ? "video-box-with-border" : "video-box-no-border"}
@@ -326,10 +395,16 @@ const SettingPractice = () => {
               <canvas ref={canvasRef} id="audio-visualizer" />
             )}
             <div className="audio-buttons">
-              <button id="btn-audio" onClick={() => setVisualizationType("bar")}>
+              <button id="btn-audio" onClick={() => {
+                stopAudioVisualization();
+                setVisualizationType("bars")
+              }}>
                 막대
               </button>
-              <button id="btn-audio" onClick={() => setVisualizationType("wave")}>
+              <button id="btn-audio" onClick={() => {
+                stopAudioVisualization();
+                setVisualizationType("wave")
+              } }>
                 파형
               </button>
             </div>
@@ -341,7 +416,7 @@ const SettingPractice = () => {
               {buttonText}
             </button>
             <button id="start-button" onClick={goToPracting}
-              disabled={faceRecognitionStatus !== "success" || micRecognitionStatus !== "success"}>              면접 시작하기
+              disabled={faceRecognitionStatus !== "success" || micRecognitionStatus !== "success"}> 면접 시작하기
             </button>
           </div>
         </div>
