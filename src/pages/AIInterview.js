@@ -135,7 +135,7 @@ const AIInterview = () => {
   const [jobs, setJobs] = useState([]); // 선택된 직무 리스트
   const [selectedJob, setSelectedJob] = useState(""); // 선택된 직무
   const [showConfirmation, setShowConfirmation] = useState(false); // 화면 전환 상태
-  const [countdown, setCountdown] = useState(10); // 카운트다운 상태
+  const [countdown, setCountdown] = useState(5); // 카운트다운 상태
   const [showPreparingScreen, setShowPreparingScreen] = useState(false); // 준비 화면 표시 상태
   const [showAIInterviewScreen, setShowAIInterviewScreen] = useState(false); // AI 면접 화면 상태
   const [micOn, setMicOn] = useState(true); // 마이크 상태
@@ -153,6 +153,7 @@ const AIInterview = () => {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [confirmDialogMessage, setConfirmDialogMessage] = useState("");
 
+  const videoRef = useRef(null);
   const cameraStreamRef = useRef(null); // 카메라 스트림
   const mediaRecorderRef = useRef(null); // MediaRecorder 참조
   const recordedChunksRef = useRef([]); // 녹화된 데이터 저장
@@ -355,33 +356,22 @@ const AIInterview = () => {
     }
   }, [currentVideoIndex]);
 
-  // 비디오가 끝날 때
-  const handleVideoEnd = () => {
-    if (currentVideoIndex === 1) {
-      // listening 영상일 때
-      const videoElement = document.querySelector(".interviewer-video");
-      videoElement.currentTime = 0; // 영상 재생 위치 초기화
-      videoElement.play(); // 무한 반복 재생
-    } else if (currentStep < 6 && currentVideoIndex === 0) {
-      // 메인 영상 끝 → listening 영상으로 전환
-      setCurrentVideoIndex(1);
-    } else {
-      // step6 메인 영상 끝 → 다음 단계로 이동
-      handleNextStep();
+  // 다음 단계로 갈 때
+  const handleNextStep = () => {
+    if (currentStep < 6 && videoRef.current) {
+      // 현재 단계의 타임스탬프로 이동
+      videoRef.current.currentTime = timestamps[currentStep - 1];
+      setCurrentStep((prev) => prev + 1); // 다음 단계로 이동
     }
   };
 
-  // 다음 단계로 갈 때
-  const handleNextStep = () => {
-    setCurrentVideoIndex(0); // 메인 영상으로 초기화
-    if (currentStep < 6) {
-      setCurrentStep((prev) => prev + 1);
-    } else {
-      setIsPrematureEnd(false); // 정상 종료로 설정
-      handleEndInterview(); // 면접 종료 처리 호출
-      setSelectedIndustry(false); // 면접 종료
-    }
-  };
+  const timestamps = [
+    59.06, // step2 시작
+    114.66, // step3 시작 (1:54.66)
+    170.73, // step4 시작 (2:50.73)
+    224.93, // step5 시작 (3:44.93)
+    279.30, // step6 시작 (4:39.30)
+  ];
 
   // 모의면접 중단 확인 시
   const handleEndInterviewConfirmation = () => {
@@ -455,31 +445,6 @@ const AIInterview = () => {
     }, 2000);
   };
 
-  const getStepVideo = () => {
-    const steps = [
-      "interviewer_step1_cc.mp4",
-      "interviewer_listening_mute.mp4",
-      "interviewer_step2_cc.mp4",
-      "interviewer_listening_mute.mp4",
-      "interviewer_step3_cc.mp4",
-      "interviewer_listening_mute.mp4",
-      "interviewer_step4_cc.mp4",
-      "interviewer_listening_mute.mp4",
-      "interviewer_step5_cc.mp4",
-      "interviewer_listening_mute.mp4",
-      "interviewer_step6_cc.mp4",
-    ];
-  
-    const stepIndex = (currentStep - 1) * 2; // 단계별 시작 인덱스 계산
-    if (currentStep < 6) {
-      // step1~step5는 step과 listening까지 포함
-      return steps[stepIndex + currentVideoIndex]; // 0: step, 1: listening
-    } else {
-      // step6은 "listening" 없이 해당 영상만 재생
-      return steps[stepIndex];
-    }
-  };
-
   // 마이크 제어 함수
   const toggleMic = () => {
     if (cameraStreamRef.current) {
@@ -533,11 +498,12 @@ const AIInterview = () => {
   
         {/* 면접관 동영상 */}
         <video
+          ref={videoRef}
           className="interviewer-video"
-          src={`../${getStepVideo()}`}
+          src="/interviewer.mp4"
           autoPlay
-          onEnded={handleVideoEnd}
           controls={false}
+          onEnded={() => handleEndInterview()}
         ></video>
   
         {/* 사용자 카메라 화면 */}
@@ -553,7 +519,7 @@ const AIInterview = () => {
           )}
 
           {/* "다음" 버튼 */}
-          {currentVideoIndex === 1 && (
+          {currentStep < 6 && (
             <button
               className="next-step-button"
               onClick={handleNextStep}

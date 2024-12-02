@@ -85,7 +85,7 @@
   flex-direction: column; /* 세로 방향 정렬 */
 }
 .video {
-  width: 44%;
+  width: 40%;
   aspect-ratio: 4 / 3; /* 비율 고정 */
   background: #1A182F; /* 비디오가 로드되지 않았을 때 색상 */
   position: relative; /* 동영상 안에 요소 배치를 위한 기준 */
@@ -115,7 +115,7 @@
   font-weight: 600;
 }
 .timer {
-  font-size: clamp(4rem, 5vw, 5rem);
+  font-size: clamp(4.5rem, 5vw, 5rem);
   font-weight: 700;
   letter-spacing: 0.15em;
   transition: all 0.2s ease-in-out;
@@ -125,7 +125,7 @@
     background: white;
     border: none;
     border-radius: 20px;
-    padding: 0.8em 1.4em;
+    padding: clamp(0.8em, 1vw, 1.5em) clamp(1.5em, 2vw, 2.5em);
     margin-top: 4em;
     color: black;
     font-size: clamp(1rem, 1.2vw, 1.6rem);
