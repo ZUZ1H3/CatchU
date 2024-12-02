@@ -7,42 +7,79 @@ import html2canvas from "html2canvas";
 
 const ResultJobValueTest = ({ profileData }) => {
   const location = useLocation();
-  const categoryScores =
-    location.state?.categoryScores || [
-      // 기본 데이터 (예시)
-      { category: "사회적 공헌", score: 8.7 },
-      { category: "변화지향", score: 8.2 },
-      { category: "성취", score: 8.1 },
-      { category: "경제적 보상", score: 6.5 },
-      { category: "자기개발", score: 6.1 },
-      { category: "일과 삶의 균형", score: 5.3 },
-      { category: "사회적 인정", score: 4.1 },
-      { category: "자율성", score: 3.5 },
-      { category: "직업안정", score: 2.1 },
-    ]; // 기본값으로 빈 배열 또는 샘플 데이터를 사용
 
-  // 현재 날짜 가져오기
+  // 1. 데이터 우선 순위: `results` -> 테스트에서 전달된 `categoryScores` -> 기본값
+  const results = location.state?.results || {};
+  const categoryScores = location.state?.categoryScores || [];
+  const dataDate = results.date;
+
+  // 2. 현재 날짜 가져오기
   const currentDate = new Date().toLocaleDateString();
+  const displayDate = dataDate || (categoryScores[0]?.date || currentDate);
 
-  // 카테고리와 점수 분리
-  const selectedCategories = categoryScores.map((item) => item.category);
-  const selectedScores = categoryScores.map((item) => item.score);
+  const userName = profileData?.name || "사용자";
 
-  // 표준점수와 수준 계산
-  const standardScores = selectedScores.map((score) => Math.round(score * 15)); // 예시: 15을 곱해 표준화
-  const levels = standardScores.map((score) => {
-    if (score >= 60) return "최상";
-    if (score >= 50) return "상";
-    if (score >= 40) return "중";
-    if (score >= 30) return "하";
-    return "최하";
-  });
+  // 3. 데이터 병합: `results` 우선, 없으면 `categoryScores`, 기본값 사용
+  const selectedCategories =
+    results.labels ||
+    categoryScores.map((item) => item.category) || [
+      "사회적 공헌",
+      "변화지향",
+      "성취",
+      "경제적 보상",
+      "자기개발",
+      "일과 삶의 균형",
+      "사회적 인정",
+      "자율성",
+      "직업안정",
+    ];
 
-  // 상위 및 하위 3순위 계산
-  const rankData = categoryScores.sort((a, b) => b.score - a.score);
-  // 점수 기준 내림차순 정렬
-  const topRank = rankData.slice(0, 3); // 상위 3순위
-  const lowRank = rankData.slice(-3).reverse(); // 하위 3순위
+  const selectedScores =
+    results.scores ||
+    categoryScores.map((item) => item.score) || [4.7, 4.2, 4.1, 3.5, 3.1, 2.3, 2.1, 1.5, 1.1];
+
+  const standardScores =
+    results.standardScores ||
+    selectedScores.map((score) => Math.round(score * 15));
+
+  const levels =
+    results.levels ||
+    standardScores.map((score) => {
+      if (score >= 60) return "최상";
+      if (score >= 50) return "상";
+      if (score >= 40) return "중";
+      if (score >= 30) return "하";
+      return "최하";
+    });
+
+  // 4. 점수 기반으로 상위/하위 3위 계산
+  const scoredCategories = selectedCategories.map((category, index) => ({
+    category,
+    score: selectedScores[index],
+  }));
+
+  const calculatedTopRank = [...scoredCategories]
+    .sort((a, b) => b.score - a.score)
+    .slice(0, 3);
+
+  const calculatedLowRank = [...scoredCategories]
+    .sort((a, b) => a.score - b.score)
+    .slice(0, 3);
+
+  const topRank = results.topRank || calculatedTopRank;
+  const lowRank = results.lowRank || calculatedLowRank;
+
+  const recommendedJobs =
+    results.recommendedJobs || [
+      "감사 사무원",
+      "감정평가사",
+      "경영 기획 사무원",
+      "고객 상담원",
+      "관세사",
+      "광고·홍보·마케팅 사무원",
+      "행사기획자",
+      "회계사",
+    ];
 
   const chartData = {
     labels: selectedCategories,
@@ -73,18 +110,6 @@ const ResultJobValueTest = ({ profileData }) => {
     },
   };
 
-  const recommendedJobs = [
-    "감사 사무원",
-    "감정평가사",
-    "경영 기획 사무원",
-    "고객 상담원",
-    "관세사",
-    "광고·홍보·마케팅 사무원",
-    "행사기획자",
-    "회계사",
-  ];
-  const userName = profileData.name;
-
   const exportToPDF = () => {
     const element = document.getElementById("result-container");
     if (!element) return;
@@ -106,12 +131,12 @@ const ResultJobValueTest = ({ profileData }) => {
       <div className="print-button-container">
         <button onClick={exportToPDF} className="export-button">
           PDF로 저장
-        </button>   
+        </button>
       </div>
       <div className="result-job-value-container" id="result-container">
         <div className="result-job-value-header">
           <div>{userName}님의 직업 가치관 검사 결과</div>
-          <p>검사 날짜: {currentDate}</p>
+          <p>검사 날짜: {displayDate}</p>
         </div>
 
         <div className="result-job-value-detail-header">

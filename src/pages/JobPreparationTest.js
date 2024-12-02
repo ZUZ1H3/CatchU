@@ -45,7 +45,7 @@ const JobPreparationTest = () => {
       setCurrentStep(currentStep + 1); // 단계 증가
     }
   };
-  
+
   const handlePreviousPage = () => {
     if (currentPage > 0) {
       setCurrentPage(currentPage - 1);
@@ -59,7 +59,6 @@ const JobPreparationTest = () => {
       return;
     }
 
-    // 점수 계산
     const categories = [
       { name: "경제적 취약성 적응도", questions: [0, 1, 2, 6] },
       { name: "사회적 취약성 적응도", questions: [3, 7, 8] },
@@ -85,7 +84,6 @@ const JobPreparationTest = () => {
       ),
     }));
 
-    // 결과 페이지로 이동
     navigate("/result-job-preparation-test", { state: { categoryScores } });
   };
 

@@ -188,7 +188,7 @@ const JobAptitudeTest = () => {
     }
 
     // 11개의 카테고리와 그에 대한 점수를 설정
-    const selectedLabels = [
+    const labels = [
       "언어력",
       "수리력",
       "추리력",
@@ -217,39 +217,22 @@ const JobAptitudeTest = () => {
       [18, 19], // 사고 유창력
     ];
 
-    // 각 그룹의 점수를 합산 또는 평균화합니다
-    const scores = groupedQuestions.map((group) => {
-      const totalScore = group.reduce((sum, questionIndex) => {
-        const correct = questions[questionIndex]?.correct;
-        return sum + (answers[questionIndex] === correct ? 150 : 80);
-      }, 0);
-      return Math.round(totalScore / group.length); // 평균 점수 계산
-    });
-
-    // 수준(levels) 계산
-    const levels = scores.map((score) => {
-      if (score >= 130) return "최상";
-      if (score >= 110) return "상";
-      if (score >= 90) return "중상";
-      if (score >= 70) return "중하";
-      return "하";
-    });
-
-    // 백분위(percentiles) 계산 (예시: 단순히 정규화된 값 사용)
-    const maxScore = 150; // 최대 점수
-    const percentiles = scores.map((score) => Math.round((score / maxScore) * 100));
-
-    // 결과 생성
+    const scores = groupedQuestions.map((group) =>
+      Math.round(
+        group.reduce((sum, questionIndex) => {
+          const correct = questions[questionIndex]?.correct;
+          return sum + (answers[questionIndex] === correct ? 150 : 80);
+        }, 0) / group.length
+      )
+    );
+  
     const results = {
       title: "직업적성검사 결과",
-      labels: selectedLabels,
-      scores: scores,
-      levels: levels,
-      percentiles: percentiles,
+      labels,
+      scores,
       date: new Date().toLocaleDateString(),
     };
-
-    // 결과 페이지로 이동
+  
     navigate("/result-job-aptitude-test", { state: { results } });
   };
 

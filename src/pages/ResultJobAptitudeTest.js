@@ -11,6 +11,7 @@ const ResultJobAptitudeTest = ({ profileData }) => {
   //const pdfRef = useRef(); // PDF로 변환할 영역의 참조
   const currentDate = new Date().toLocaleDateString(); // 현재 날짜 선언
 
+  // 테스트 데이터를 받거나 기본값 설정
   const results = location.state?.results || {
     title: "기본 검사 결과",
     labels: [
@@ -26,13 +27,28 @@ const ResultJobAptitudeTest = ({ profileData }) => {
       "문제 해결능력",
       "사고 유창력",
     ],
-    scores: [114, 127, 123, 123, 110, 98, 106, 117, 117, 85, 109], // 기본값
-    levels: ["상", "최상", "최상", "최상", "중상", "중하", "중상", "상", "상", "하", "중상"], // 수준 데이터
-    percentiles: [82, 96, 94, 93, 74, 44, 66, 86, 87, 15, 73], // 백분위 데이터
-    date: "날짜 없음",
+    scores: [100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 100], // 기본 점수
+    recommendedJobs: [], // 기본 추천 직업
+    date: currentDate,
   };
 
-  const data1 = {
+  // 점수 기반 계산: 수준(Level)과 백분위(Percentiles) 동적 생성
+  const levels =
+    results.levels ||
+    results.scores.map((score) => {
+      if (score >= 130) return "최상";
+      if (score >= 110) return "상";
+      if (score >= 90) return "중상";
+      if (score >= 70) return "중하";
+      return "하";
+    });
+
+  const percentiles =
+    results.percentiles ||
+    results.scores.map((score) => Math.round((score / 150) * 100)); // 최대 점수 기준 정규화
+
+  // 그래프 데이터
+  const graphData = {
     labels: results.labels,
     datasets: [
       {
@@ -46,12 +62,10 @@ const ResultJobAptitudeTest = ({ profileData }) => {
     ],
   };
 
-  const options1 = {
+  const graphOptions = {
     responsive: true,
     maintainAspectRatio: false,
-    plugins: {
-      legend: { display: true, position: "top" },
-    },
+    plugins: { legend: { display: true, position: "top" } },
     scales: {
       y: {
         title: { display: true, text: "점수" },
@@ -60,15 +74,10 @@ const ResultJobAptitudeTest = ({ profileData }) => {
       },
       x: {
         title: { display: true, text: "적성 요인" },
-        ticks: {
-          autoSkip: false, // 모든 레이블 표시
-          maxRotation: 45, // 레이블 회전
-          minRotation: 0,
-        },
+        ticks: { autoSkip: false, maxRotation: 45, minRotation: 0 },
       },
     },
   };
-
 
   const data2 = {
     labels: results.labels,
@@ -76,7 +85,7 @@ const ResultJobAptitudeTest = ({ profileData }) => {
       {
         type: "line",
         label: "나",
-        data: [114, 127, 123, 123, 110, 98, 106, 117, 117, 85, 109],
+        data: results.scores,
         borderColor: "#4CAF50",
         backgroundColor: "#4CAF50",
         tension: 0.4,
@@ -157,7 +166,7 @@ const ResultJobAptitudeTest = ({ profileData }) => {
       const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
       pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`${userName}님의 직업적성검사결과_${currentDate}.pdf`);
+      pdf.save(`${userName}님의 직업적성검사결과_${results.date || currentDate}.pdf`);
     });
   };
 
@@ -174,7 +183,7 @@ const ResultJobAptitudeTest = ({ profileData }) => {
         {/* 첫 번째 그래프 */}
         <div className="resultaptitude-header">
           <div>{userName}님의 {results.title}</div>
-          <p>검사 날짜: {results.date}</p>
+          <p>검사 날짜: {results.date || currentDate}</p>
         </div>
 
         <div className="resultaptitude-details-header">
@@ -183,7 +192,7 @@ const ResultJobAptitudeTest = ({ profileData }) => {
 
         <div className="resultaptitude-main">
           <div className="resultaptitude-graph">
-            <GraphComponent data={data1} options={options1} />
+            <GraphComponent data={graphData} options={graphOptions} />
           </div>
           <div className="resultaptitude-table">
             <table>
@@ -198,7 +207,7 @@ const ResultJobAptitudeTest = ({ profileData }) => {
               <tbody>
                 <tr>
                   <th>수준</th>
-                  {results.levels.map((level, index) => (
+                  {levels.map((level, index) => (
                     <td key={index}>{level}</td>
                   ))}
                 </tr>
@@ -210,7 +219,7 @@ const ResultJobAptitudeTest = ({ profileData }) => {
                 </tr>
                 <tr>
                   <th>백분위</th>
-                  {results.percentiles.map((percentile, index) => (
+                  {percentiles.map((percentile, index) => (
                     <td key={index}>{percentile}</td>
                   ))}
                 </tr>
@@ -265,7 +274,7 @@ const ResultJobAptitudeTest = ({ profileData }) => {
               <tbody>
                 <tr>
                   <th>{userName}님</th>
-                  {data2.datasets[0].data.map((score, index) => (
+                  {results.scores.map((score, index) => (
                     <td key={index}>{score}</td>
                   ))}
                 </tr>
