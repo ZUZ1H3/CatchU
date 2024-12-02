@@ -1,70 +1,60 @@
-# Getting Started with Create React App
+# CatchU - AI 모의면접 플랫폼
+2024년 3학년 2학기 웹프레임워크 프로젝트입니다.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 프로젝트 개요
 
-## Available Scripts
+CatchU는 **AI 기술을 활용해 실제 면접과 유사한 환경을 제공하는 웹 플랫폼**이다. 
+<br>
+취업 준비생과 커리어 전환자들이 실전 감각을 키울 수 있도록 지원하며, AI가 제공하는 맞춤형 피드백으로 강점과 보완점을 명확히 파악할 수 있다. 또한, 적성 검사 기능을 통해 자신의 직무 적합도를 테스트하여 체계적인 면접 준비를 할 수 있다.
+<br>
+CatchU는 면접 경험이 부족한 사용자에게 자신감을 부여하고, 성공적인 면접 결과를 이끌어내는 종합적인 솔루션을 제공한다.
 
-In the project directory, you can run:
+## 적용 기술
 
-### `npm start`
+**사용 언어** : React JavaScript
+<br>
+**개발 도구** : VS Code
+<br>
+**주요 라이브러리**
+- `react`: 18.3.1
+- `react-router-dom`: 6.28.0 -  페이지 간의 라우팅 처리
+- `chart.js`: 4.4.6 - 차트를 그릴 수 있는 라이브러리
+- `react-chartjs-2`: 5.2.0 - React에서 Chart.js를 사용하기 위한 래퍼 라이브러리
+- `html2pdf.js`: 0.10.2 - HTML을 PDF로 변환하는 라이브러리
+- `jspdf`: 2.5.2 - JavaScript로 PDF 문서를 생성하고 수정하는 라이브러리
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+## 실행 방법
+- `npm install`
+- `npm start`
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 프로젝트 기능
+**대시보드**
+- 난이도 있는 질문을 랜덤으로 제공
+- 레이더 차트를 통해 자신의 평균 스킬 시각화
+- 캘린더와 메모 기능을 통해 일정을 기록하고 관리
+- 막대 그래프를 클릭하여 면접 피드백 조회 및 인쇄 
+- 적성 검사 기록을 클릭하여 결과 조회 및 인쇄
+- 프로필 "수정" 버튼을 클릭하여 정보 수정 <br>
 
-### `npm test`
+**모의 면접**
+- 모의 면접을 진행 할 직무 선택
+- AI가 해당 직무에 대한 질문을 생성하여 제공
+- 유저의 답변과 비언어적 태도를 분석하여 피드백 제공 <br>
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+**면접연습**
+- 사전 준비된 질문을 선택하거나 사용자가 직접 원하는 질문 직접 생성
+- 면접 전, 마이크와 카메라를 점검할 수 있어 최적화된 면접 환경 조성
+- REC 버튼을 누른 후 녹화 시작
+- STOP 버튼을 누른 후 제출, 녹화 된 영상 확인
+- 유저의 답변과 비언어적 태도를 분석하여 피드백 제공 <br>
 
-### `npm run build`
+**적성 검사**
+- 다양한 유형의 직업 적성 검사 제공
+- 검사 결과에 따라 적합한 직무와 여러 통계 제공
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## 팀원
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+| [송희](https://github.com/felizsong) | [주지혜](https://github.com/ZUZ1H3) | [이주현](https://github.com/hana03030) | [김민서](https://github.com/sunmay12)|
+| ------------ | ------------- | ------------- | ------------- |
+| <img src="https://github.com/user-attachments/assets/d989d0ae-8829-4759-9aa6-1889206cdb6c" width="200" />|<img src="https://github.com/user-attachments/assets/20b39c67-2781-4bf0-9a11-5481fc4a43a7" width="200" />|<img src="https://github.com/user-attachments/assets/6cf9b675-ee5c-4679-ad50-1cf5d62016c4" width="200" />|
+| <div align="center">역할</div> | <div align="center">역할</div> | <div align="center">역할</div> | <div align="center">역할</div> |
