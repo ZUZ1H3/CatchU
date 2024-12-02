@@ -5,7 +5,7 @@ import Profile from "./components/Profile";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 import Dashboard from "./pages/Dashboard";
 import Introduction from "./pages/Introduction";
-import SettingPractice from "./pages/SettingPractice.js";
+import Setting from "./pages/Setting.js";
 import Practice from "./pages/Practice";
 import Practicing from "./pages/Practicing.js";
 import EndPractice from './pages/EndPractice.js';
@@ -17,7 +17,6 @@ import JobPreparationTest from './pages/JobPreparationTest.js';
 import ResultJobAptitudeTest from './pages/ResultJobAptitudeTest.js';
 import ResultJobValueTest from './pages/ResultJobValueTest.js';
 import ResultJobPreparationTest from './pages/ResultJobPreparationTest.js';
-import FAQ from "./pages/FAQ";
 import FeedbackList from "./pages/FeedbackList";
 import Feedback from "./pages/Feedback";
 import TestList from './pages/TestList.js';
@@ -42,7 +41,7 @@ const MainContent = () => {
   // 대시보드 또는 적성검사에서 배경색 변경
   const isGrayBackground = location.pathname === '/' || location.pathname === '/aptitude-test' || location.pathname === '/result-job-value-test' || location.pathname === '/result-job-aptitude-test' || location.pathname === '/result-job-preparation-test' || location.pathname.startsWith('/feedback');
   // 면접 연습 진행 화면에서 배경색 변경
-  const isPracticing = location.pathname === '/setting-practice' || location.pathname === '/practicing' || location.pathname === '/end-practice';
+  const isPracticing = location.pathname === '/setting' || location.pathname === '/practicing' || location.pathname === '/end-practice';
   const isAIInterview = location.pathname === '/AI-interview';
   const handleProfileUpdate = (updatedData) => {
     setProfileData(updatedData); // 상태 업데이트
@@ -75,7 +74,7 @@ const MainContent = () => {
         <Routes>
           <Route path="/" element={<Dashboard profileData={profileData} />} />
           <Route path="/introduction" element={<Introduction />} />
-          <Route path="/setting-practice" element={<SettingPractice />} />
+          <Route path="/setting" element={<Setting />} />
           <Route path="/practice" element={<Practice />} />
           <Route path="/practicing" element={<Practicing />} />
           <Route path="/end-practice" element={<EndPractice />} />
@@ -87,7 +86,6 @@ const MainContent = () => {
           <Route path="/result-job-aptitude-test" element={<ResultJobAptitudeTest  profileData={profileData} />} />
           <Route path="/result-job-value-test" element={<ResultJobValueTest  profileData={profileData} />} />
           <Route path="/result-job-preparation-test" element={<ResultJobPreparationTest  profileData={profileData} />} />
-          <Route path="/faq" element={<FAQ />} />
           <Route path="/feedback-list" element={<FeedbackList />} />
           <Route path="/feedback/:type/:id" element={<Feedback profileData={profileData} />} />
           <Route path="/test-list" element={<TestList />} />

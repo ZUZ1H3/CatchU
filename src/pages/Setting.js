@@ -1,25 +1,25 @@
-import React, { useEffect, useRef, useState } from "react";
-import "../style/SettingPractice.css";
-import { useLocation, useNavigate } from "react-router-dom";
+import React, { useRef, useState } from "react";
+import "../style/Setting.css";
+import { useNavigate } from "react-router-dom";
 
-const SettingPractice = () => {
+const Setting = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const videoRef = useRef(null); // 비디오 태그 참조
-  const canvasRef = useRef(null); // 캔버스 태그 참조 (오디오 시각화)
+  const videoRef = useRef(null);        // 비디오 태그 참조
+  const canvasRef = useRef(null);       // 캔버스 태그 참조 (오디오 시각화)
   const audioContextRef = useRef(null); // Web Audio API AudioContext
-  const analyserRef = useRef(null); // AnalyserNode
-  const animationRef = useRef(null); // 애니메이션 프레임 ID
-  const { question } = location.state || { question: "" }; // 전에 선택한 질문
+  const analyserRef = useRef(null);     // AnalyserNode
+  const animationRef = useRef(null);    // 애니메이션 프레임 ID
 
-  const [isImageVisible, setIsImageVisible] = useState(true); // 이미지 표시 여부 관리
-  const [isCameraOn, setIsCameraOn] = useState(false); // 카메라 상태 관리
-  const [hasBorder, setHasBorder] = useState(false); // 테두리 상태 관리
+  const [isImageVisible, setIsImageVisible] = useState(true); // 비디오 세팅 이미지 표시 여부 관리
+  const [isCameraOn, setIsCameraOn] = useState(false);        // 카메라 상태 관리
+  const [hasBorder, setHasBorder] = useState(false);          // 테두리 상태 관리
+  const [isBarsVisible, setIsBarsVisible] = useState(false);  // 막대바 가시성 상태
+  const [isDialogVisible, setIsDialogVisible] = useState(false); // 다이얼로그 가시성 상태
   const [faceRecognitionStatus, setFaceRecognitionStatus] = useState("default"); // 얼굴 인식 상태
-  const [micRecognitionStatus, setMicRecognitionStatus] = useState("default"); // 마이크 인식 상태
-  const [buttonText, setButtonText] = useState("시작하기"); // 버튼 텍스트 관리
+  const [micRecognitionStatus, setMicRecognitionStatus] = useState("default");   // 마이크 인식 상태
+  const [buttonText, setButtonText] = useState("시작하기");             // 버튼 텍스트 관리
   const [visualizationType, setVisualizationType] = useState("bars"); // 기본값: 막대
-  const [volumeLevel, setVolumeLevel] = useState(0); // 0부터 10까지의 볼륨 레벨
+  const [volumeLevel, setVolumeLevel] = useState(0);                  // 0부터 10까지의 볼륨 레벨
 
   // 카메라 켜기 및 끄기
   const toggleCamera = async () => {
@@ -54,6 +54,9 @@ const SettingPractice = () => {
         console.error("웹캠과 마이크 권한을 허용해주세요:", err);
         setFaceRecognitionStatus("failure");
         setMicRecognitionStatus("failure");
+        setIsImageVisible(true);
+        setIsDialogVisible(true);
+        setIsBarsVisible(false); // 막대바 제거
       }
     }
   };
@@ -263,13 +266,15 @@ const handleStopAudio = () => {
       setIsImageVisible(false); // 설정 이미지 숨기기
       setHasBorder(true); // 테두리 표시
       setButtonText("다시하기");
-      handleStartAudio();
+      setIsBarsVisible(true); // 막대바 표시
+      handleStartAudio(); // 오디오 시작
 
     } else {
       // 다시하기 버튼 클릭 시
-      setButtonText("시작하기");
-      setIsImageVisible(true);
-      setHasBorder(false); // 테두리 제거
+      setButtonText("시작하기"); 
+      setIsImageVisible(true); // 설정 이미지 표시
+      setHasBorder(false);     // 테두리 제거
+      setIsBarsVisible(false); // 막대바 제거
       setFaceRecognitionStatus("default"); // 얼굴 인식 상태 기본
       setMicRecognitionStatus("default"); // 마이크 인식 상태 기본
       // 오디오 시각화 정지 및 캔버스 초기화
@@ -288,8 +293,11 @@ const handleStopAudio = () => {
       }
       videoRef.current.srcObject = null;
   
+      const paths = ["/practice", "/AI-interview"]; // 경로 목록
+      const randomPath = paths[Math.floor(Math.random() * paths.length)]; 
+
       // 다음 화면으로 이동
-      navigate("/practicing", { state: { question }, replace: true });
+      navigate(randomPath, { replace: true });
     }
   };
   
@@ -298,7 +306,6 @@ const handleStopAudio = () => {
     <div className="setting-practice-container">
       <div id="header-container">
         <img src="/logo2.png" className="logo" alt="Logo" />
-        <img src="/progress1.png" className="step" alt="Progress" />
         <button id="finish-button" onClick={finish}>
           끝내기
         </button>
@@ -313,7 +320,7 @@ const handleStopAudio = () => {
         읽어주세요.
       </h3>
 
-      {visualizationType === "bars" && (
+      {visualizationType === "bars" && isBarsVisible && (
       <div className="visualizer-containers">
       <div className="bars">
       {Array.from({ length: 10 }, (_, i) => (
@@ -339,6 +346,16 @@ const handleStopAudio = () => {
         )}
           <video ref={videoRef} className="video-feed" autoPlay muted />
         </div>
+
+        {/* 다이얼로그 */}
+        {isDialogVisible && (
+          <div id="alert-dialog">
+            <div id="alert-content">
+              <p>웹캠과 마이크 권한을 허용해주세요.</p>
+              <button onClick={() => setIsDialogVisible(false)}>확인</button>
+            </div>
+          </div>
+        )}
 
         <div className="recognition-status">
           {/* 얼굴 인식 상태 박스 */}
@@ -426,4 +443,4 @@ const handleStopAudio = () => {
   );
 };
 
-export default SettingPractice;
+export default Setting;

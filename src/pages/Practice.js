@@ -119,7 +119,7 @@ const Practice = () => {
     }
     const questionToPass =
       mode === 'create' ? customQuestion : selectedQuestionsList.join(', ');
-    navigate('/setting-practice', { state: { question: questionToPass } });
+    navigate('/practicing', { state: { question: questionToPass } });
   };
 
   return (

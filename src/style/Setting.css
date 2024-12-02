@@ -255,3 +255,35 @@
   border-radius: 5px; /* 막대 둥글기 */
   transition: background-color 0.3s, opacity 0.3s; /* 색상 전환 효과 */
 }
+
+/* 다이얼로그 */
+#alert-dialog {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000; /* 상단에 위치 */
+}
+#alert-content {
+  background: #393E68;
+  padding: clamp(1.5rem, 1.8vw, 2rem);
+  border-radius: 10px;
+  text-align: center;
+  font-size: clamp(1rem, 1.2vw, 1.5rem);
+  font-family: 'Paperlogy6', sans-serif;
+}
+#alert-content button {
+  padding: clamp(0.7rem, 0.7vw, 1rem) clamp(1.5rem, 1.5vw, 2rem);
+  font-size: clamp(0.8rem, 1vw, 1.2rem);
+  font-family: 'Paperlogy5', sans-serif;
+  background: #C8CCEB;
+  color: black;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
