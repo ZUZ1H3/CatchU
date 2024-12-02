@@ -1,12 +1,23 @@
-.container {
-    display: flex;
-    justify-content: center; /* 가로 중앙 정렬 */
-    align-items: center; /* 세로 중앙 정렬 */
-  }
-  
-  .intro-image {
-    width: 100%; /* 이미지가 컨테이너의 가로 길이에 맞춰서 늘어남 */
-    height: 100%;
-    margin-top: 3em;
-  }
-  
+.scroll-container {
+  margin-top: 3em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.photo {
+  width: 100%;
+  opacity: 0;
+  transform: translateY(50px);
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.photo img {
+  width: 100%;
+  height: 100%;
+}
+
+.photo.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
