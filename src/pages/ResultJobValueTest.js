@@ -4,9 +4,8 @@ import { Bar } from "react-chartjs-2";
 import "../style/ResultJobValueTest.css";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-import profileData from "../data/ProfileData.js";
 
-const ResultJobValueTest = () => {
+const ResultJobValueTest = ({ profileData }) => {
   const location = useLocation();
   const categoryScores =
     location.state?.categoryScores || [

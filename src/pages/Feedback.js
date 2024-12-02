@@ -75,7 +75,7 @@ const exportToPDF = (feedback, userName) => {
 };
 
 
-const Feedback = () => {
+const Feedback = ({ profileData }) => {
   const { type, id } = useParams(); // URL에서 타입과 ID 가져오기
 
   // 데이터 선택

@@ -84,12 +84,12 @@ const MainContent = () => {
           <Route path="/job-value-test" element={<JobValueTest />} />
           <Route path="/job-aptitude-test" element={<JobAptitudeTest />} />
           <Route path="/job-preparation-test" element={<JobPreparationTest />} />
-          <Route path="/result-job-aptitude-test" element={<ResultJobAptitudeTest />} />
-          <Route path="/result-job-value-test" element={<ResultJobValueTest />} />
-          <Route path="/result-job-preparation-test" element={<ResultJobPreparationTest />} />
+          <Route path="/result-job-aptitude-test" element={<ResultJobAptitudeTest  profileData={profileData} />} />
+          <Route path="/result-job-value-test" element={<ResultJobValueTest  profileData={profileData} />} />
+          <Route path="/result-job-preparation-test" element={<ResultJobPreparationTest  profileData={profileData} />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/feedback-list" element={<FeedbackList />} />
-          <Route path="/feedback/:type/:id" element={<Feedback />} />
+          <Route path="/feedback/:type/:id" element={<Feedback profileData={profileData} />} />
           <Route path="/test-list" element={<TestList />} />
           </Routes>
       </div>
