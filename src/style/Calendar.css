@@ -193,3 +193,41 @@
 .close-button:hover {
     background-color: #4d4eb3;
 }
+
+/* 내비게이션 버튼 스타일 */
+.nav-button {
+    background-color: #ffffff;
+    border: 2px solid #cccccc;
+    border-radius: 50%;
+    color: #cccccc;
+    font-size: 2vh;
+    width: 4vh;
+    height: 4vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* 호버 효과 */
+.nav-button:hover {
+    background-color: #f0f0f0;
+    /* 호버 시 배경색 변경 */
+}
+
+/* 클릭 효과 */
+.nav-button:active {
+    background-color: #e0e0e0;
+    /* 클릭 시 배경색 변경 */
+}
+
+/* 일요일 숫자 색상 */
+.day-number.sunday {
+    color: rgb(210, 76, 76);
+}
+
+/* 토요일 숫자 색상 */
+.day-number.saturday {
+    color: rgb(49, 44, 194);
+}

@@ -113,9 +113,9 @@ const Feedback = ({ profileData }) => {
   // 피드백 메시지
   let feedbackMessage = "평균 답변 시간이 대체로 적절합니다.";
   if (averageTimeInSeconds > maxTimeInSeconds) {
-    feedbackMessage = "평균 답변 시간이 초과되었습니다. 더 간결하게 답변해보세요.";
+    feedbackMessage = "평균 답변 시간이 초과되었습니다.";
   } else if (averageTimeInSeconds < idealTimeInSeconds * 0.5) {
-    feedbackMessage = "평균 답변 시간이 너무 짧습니다. 조금 더 상세히 답변해보세요.";
+    feedbackMessage = "평균 답변 시간이 너무 짧습니다.";
   }
   // 레이더 차트 데이터 구성
   const radarData = {
@@ -174,7 +174,6 @@ const Feedback = ({ profileData }) => {
             <div className="total-score">
               <div className='feedback-title'>종합 평가 점수</div>
               <div id='score'>{Math.round(averageScore)}점, {grade}</div>
-              <div className="feedback-body">전체 응시자 기준 상위 20%에 속합니다.</div>
             </div>
 
             {/* 응시 개요 */}

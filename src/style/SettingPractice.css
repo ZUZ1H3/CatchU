@@ -156,11 +156,12 @@
 }
 .audio-buttons {
   display: flex;
-  width: 5%;
+  width: 6%;
   flex-direction: column; 
   margin-left: auto;
 }
 #btn-audio {
+  height: 100%;
   background: #393E68;
   color: white;
   font-family: 'Paperlogy5', sans-serif;
@@ -230,3 +231,27 @@
   cursor: not-allowed; /* 비활성화 시 커서 스타일 */
 }
 
+.visualizer-containers {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  background: #393E68;
+  height: 44%;
+  width: 4%;
+}
+.bars {
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: space-between;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.bar {
+  height: 10%; /* 고정된 높이 */
+  width: 100%; /* 막대 너비 */
+  border-radius: 5px; /* 막대 둥글기 */
+  transition: background-color 0.3s, opacity 0.3s; /* 색상 전환 효과 */
+}

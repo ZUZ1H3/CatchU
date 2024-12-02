@@ -3,25 +3,25 @@ import "../style/Calendar.css";
 
 const MyCalendar = () => {
     const [selectedDate, setSelectedDate] = useState(new Date().toDateString());
-    const [memos, setMemos] = useState({}); // 날짜별 메모를 저장하는 상태
-    const [isModalOpen, setIsModalOpen] = useState(false); // 모달 창 상태
+    const [memos, setMemos] = useState({});
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [currentWeekStart, setCurrentWeekStart] = useState(getStartOfWeek(new Date()));
 
     const today = new Date();
     today.setHours(0, 0, 0, 0);
 
-    // 현재 주의 시작 날짜 계산
-    const startOfWeek = new Date(
-        today.getFullYear(),
-        today.getMonth(),
-        today.getDate() - today.getDay()
-    );
+    function getStartOfWeek(date) {
+        const start = new Date(date);
+        start.setDate(start.getDate() - start.getDay());
+        start.setHours(0, 0, 0, 0);
+        return start;
+    }
 
-    // 주간 날짜 배열 생성
     const getWeekDates = () => {
         const dates = [];
         for (let i = 0; i < 7; i++) {
-            const date = new Date(startOfWeek);
-            date.setDate(startOfWeek.getDate() + i);
+            const date = new Date(currentWeekStart);
+            date.setDate(currentWeekStart.getDate() + i);
             dates.push(date);
         }
         return dates;
@@ -29,14 +29,24 @@ const MyCalendar = () => {
 
     const weekDates = getWeekDates();
 
-    // 날짜 클릭 핸들러
+    const goToPreviousWeek = () => {
+        const newStart = new Date(currentWeekStart);
+        newStart.setDate(currentWeekStart.getDate() - 7);
+        setCurrentWeekStart(newStart);
+    };
+
+    const goToNextWeek = () => {
+        const newStart = new Date(currentWeekStart);
+        newStart.setDate(currentWeekStart.getDate() + 7);
+        setCurrentWeekStart(newStart);
+    };
+
     const handleDateClick = (date) => {
         setSelectedDate(date.toDateString());
     };
 
-    // 메모 추가 핸들러
     const handleAddMemo = (memoText) => {
-        if (!memoText.trim()) return; // 빈 입력 방지
+        if (!memoText.trim()) return;
         setMemos((prevMemos) => ({
             ...prevMemos,
             [selectedDate]: [...(prevMemos[selectedDate] || []), memoText],
@@ -45,11 +55,12 @@ const MyCalendar = () => {
 
     return (
         <div className="custom-calendar">
-            {/* 캘린더 헤더 */}
             <div className="calendar-header">
+                <button className="nav-button" onClick={goToPreviousWeek}>&lt;</button>
                 <h4>
-                    {`${today.getMonth() + 1}.${today.getDate() }`}
+                    {`${today.getMonth() + 1}.${today.getDate()}`}
                 </h4>
+                <button className="nav-button" onClick={goToNextWeek}>&gt;</button>
                 <button
                     className="expand-button"
                     onClick={() => setIsModalOpen(true)}>
@@ -57,35 +68,29 @@ const MyCalendar = () => {
                 </button>
             </div>
 
-            {/* 캘린더 본체 */}
             <div className="calendar-grid">
                 {weekDates.map((date) => {
-                    const isSunday = date.getDay() === 0; // 일요일 여부
-                    const isSaturday = date.getDay() === 6; // 토요일 여부
-                    const isToday = date.toDateString() === today.toDateString(); // 오늘 날짜 여부
-                    const isSelected = selectedDate === date.toDateString(); // 선택된 날짜 여부
+                    const isSunday = date.getDay() === 0;
+                    const isSaturday = date.getDay() === 6;
+                    const isToday = date.toDateString() === today.toDateString();
+                    const isSelected = selectedDate === date.toDateString();
 
                     return (
                         <div
                             key={date.toDateString()}
                             className={`calendar-day ${isSelected ? "selected" : ""} ${isToday ? "today" : ""}`}
                             onClick={() => handleDateClick(date)}>
-                            {/* 요일 텍스트 */}
                             <span className={`day-label ${isSunday ? "sunday" : isSaturday ? "saturday" : ""}`}>
                                 {["일", "월", "화", "수", "목", "금", "토"][date.getDay()]}
                             </span>
-
-                            {/* 날짜 */}
                             <span className={`day-number ${isSunday ? "sunday" : isSaturday ? "saturday" : ""}`}>
-                                {date.getDate()}
+                            {date.getDate()}
                             </span>
                         </div>
                     );
                 })}
             </div>
 
-
-            {/* 메모 섹션 */}
             <div className="memo-section">
                 <ul className="memo-list">
                     {(memos[selectedDate] || []).map((memo, index) => (
