@@ -135,15 +135,13 @@ const AIInterview = () => {
   const [jobs, setJobs] = useState([]); // 선택된 직무 리스트
   const [selectedJob, setSelectedJob] = useState(""); // 선택된 직무
   const [showConfirmation, setShowConfirmation] = useState(false); // 화면 전환 상태
-  const [countdown, setCountdown] = useState(5); // 카운트다운 상태
+  const [countdown, setCountdown] = useState(7); // 카운트다운 상태
   const [showPreparingScreen, setShowPreparingScreen] = useState(false); // 준비 화면 표시 상태
   const [showAIInterviewScreen, setShowAIInterviewScreen] = useState(false); // AI 면접 화면 상태
   const [micOn, setMicOn] = useState(true); // 마이크 상태
   const [cameraOn, setCameraOn] = useState(true); // 카메라 상태
   const [microphoneImage, setMicrophoneImage] = useState(""); // 마이크 이미지 경로
   const [currentStep, setCurrentStep] = useState(1); // 현재 면접 단계
-  const [currentVideoIndex, setCurrentVideoIndex] = useState(0); // 현재 영상 인덱스 (0: 메인, 1: listening)
-  const [listeningTimer, setListeningTimer] = useState(0); // listening 영상 타이머 상태
   const [isRecording, setIsRecording] = useState(false); // 녹화 상태 추적
   const [isPrematureEnd, setIsPrematureEnd] = useState(false); // 중도 종료 여부 관리
   const [searchTerm, setSearchTerm] = useState(""); // 검색어 상태
@@ -152,11 +150,15 @@ const AIInterview = () => {
   const [confirmDialog, setConfirmDialog] = useState({ open: false, message: "", onConfirm: null });
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [confirmDialogMessage, setConfirmDialogMessage] = useState("");
+  const [isNextEnabled, setIsNextEnabled] = useState(false); // "다음" 버튼 활성화 상태
+  const [elapsedTime, setElapsedTime] = useState(0); // 반복 구간의 경과 시간
+  const [repeatStartTime, setRepeatStartTime] = useState(null); // 반복 시작 시간
 
   const videoRef = useRef(null);
   const cameraStreamRef = useRef(null); // 카메라 스트림
   const mediaRecorderRef = useRef(null); // MediaRecorder 참조
   const recordedChunksRef = useRef([]); // 녹화된 데이터 저장
+  const intervalRef = useRef(null); // 타이머 interval 참조
 
   // 산업군 클릿시
   const handleIndustryClick = (industry) => {
@@ -300,6 +302,9 @@ const AIInterview = () => {
       setAlertDialog({ open: false, message: "" });
       setConfirmDialogOpen(false);
       setConfirmDialogMessage("");
+      setElapsedTime(0); // 타이머 초기화
+      setRepeatStartTime(null); // 반복 시작 시간 초기화
+      clearInterval(intervalRef.current); // 타이머 정리
 
       const videoElement = document.querySelector("#user-camera");
 
@@ -342,35 +347,64 @@ const AIInterview = () => {
       if (mediaRecorderRef.current) {
         mediaRecorderRef.current.stop();
       }
+      clearInterval(intervalRef.current); // 타이머 정리
     };
   }, [showAIInterviewScreen]);
 
-  // 현재 비디오 인덱스
-  useEffect(() => {
-    if (currentVideoIndex === 1) {
-      setListeningTimer(0);
-      const interval = setInterval(() => {
-        setListeningTimer((prev) => prev + 1);
-      }, 1000);
-      return () => clearInterval(interval);
-    }
-  }, [currentVideoIndex]);
+  const handleVideoTimeUpdate = () => {
+    const currentTime = videoRef.current.currentTime;
+    const stepStart = timestamps[currentStep * 2 - 2]; // 현재 단계 멘트 시작
+    const stepEnd = timestamps[currentStep * 2 - 1]; // 현재 단계 멘트 끝
+    const nextStepStart = timestamps[currentStep * 2]; // 다음 단계 멘트 시작
 
-  // 다음 단계로 갈 때
+    // 멘트 시작~멘트 끝 구간은 그대로 재생
+    if (currentTime < stepEnd) {
+      clearInterval(intervalRef.current); // 반복 구간이 아니므로 타이머 중단
+      setElapsedTime(0);
+      setRepeatStartTime(null);
+      return;
+    }
+
+    // 무한 반복 구간 (멘트 끝~다음 단계 멘트 시작)
+    if (repeatStartTime === null) {
+      setRepeatStartTime(Date.now()); // 반복 시작 시간 설정
+      intervalRef.current = setInterval(() => {
+        setElapsedTime((prev) => prev + 1); // 초 증가
+      }, 1000);
+    }
+
+    // 멘트 끝~다음 단계 멘트 시작 구간 반복
+    if (currentTime >= nextStepStart) {
+      videoRef.current.currentTime = stepEnd; // 반복 구간 시작으로 돌아감
+    }
+
+    // "다음" 버튼 활성화 여부 업데이트
+    setIsNextEnabled(currentTime >= stepEnd && currentTime < nextStepStart);
+  };
+
+  // 면접 다음 단계 이동
   const handleNextStep = () => {
-    if (currentStep < 6 && videoRef.current) {
-      // 현재 단계의 타임스탬프로 이동
-      videoRef.current.currentTime = timestamps[currentStep - 1];
+    if (currentStep < timestamps.length / 2) {
       setCurrentStep((prev) => prev + 1); // 다음 단계로 이동
+      videoRef.current.currentTime = timestamps[currentStep * 2]; // 다음 단계 시작 시간으로 이동
+      clearInterval(intervalRef.current); // 기존 타이머 제거
+      setElapsedTime(0); // 경과 시간 초기화
+      setRepeatStartTime(0); // 반복 시작 시간 초기화
     }
   };
 
   const timestamps = [
-    59.06, // step2 시작
-    114.66, // step3 시작 (1:54.66)
-    170.73, // step4 시작 (2:50.73)
-    224.93, // step5 시작 (3:44.93)
-    279.30, // step6 시작 (4:39.30)
+    0.5, // step1 멘트 시작
+    9, // step1 멘트 끝
+    56, // step2 멘트 시작
+    64.06, // step2 멘트 끝
+    114.66, // step3 멘트 시작
+    120.66, // step3 멘트 끝
+    170.73, // step4 멘트 시작
+    174.73, // step4 멘트 끝
+    222.93, // step5 멘트 시작
+    227.93, // step5 멘트 끝
+    279.30, // step6 시작
   ];
 
   // 모의면접 중단 확인 시
@@ -392,10 +426,22 @@ const AIInterview = () => {
       },
     });
   };
+
+  useEffect(() => {
+    if (videoRef.current) {
+      videoRef.current.addEventListener("timeupdate", handleVideoTimeUpdate);
+    }
+
+    return () => {
+      if (videoRef.current) {
+        videoRef.current.removeEventListener("timeupdate", handleVideoTimeUpdate);
+      }
+    };
+  }, [currentStep]);
   
   // 모의면접 끝날 때
   const handleEndInterview = (prematureEnd = false) => {
-    const selectedDate = "10일"; // 예시로 "10일" 데이터를 참조
+    const selectedDate = "10일"; // 예시로 "10일" 데이터 참조
 
     console.error(prematureEnd)
     if (mediaRecorderRef.current) {
@@ -491,11 +537,13 @@ const AIInterview = () => {
             alt={`Progress Step ${currentStep}`}
             className="progress-indicator"
           />
-          {currentVideoIndex === 1 && (
-            <div className="listening-timer">{listeningTimer}</div>
+          {/* 반복 구간 경과 시간 */}
+          {elapsedTime > 0 && (
+          <div className="elapsed-time">
+            {elapsedTime}
+          </div>
           )}
         </div>
-  
         {/* 면접관 동영상 */}
         <video
           ref={videoRef}
@@ -503,6 +551,7 @@ const AIInterview = () => {
           src="/interviewer.mp4"
           autoPlay
           controls={false}
+          onTimeUpdate={handleVideoTimeUpdate}
           onEnded={() => handleEndInterview()}
         ></video>
   
@@ -523,6 +572,7 @@ const AIInterview = () => {
             <button
               className="next-step-button"
               onClick={handleNextStep}
+              disabled={!isNextEnabled}
             >
               다음
             </button>
@@ -563,14 +613,14 @@ const AIInterview = () => {
         <div className="countdown-timer">{countdown}</div>
         <div className="camera-container">
           <video id="camera-feed" autoPlay muted></video>
+          <div className="microphone-status">
+            <img src={microphoneImage} alt="마이크" />
+          </div>
         </div>
         <div className="instructions">
           면접이 {countdown}초 뒤에 시작됩니다.
           <br />
           카메라 및 마이크의 작동 여부를 확인해주세요.
-        </div>
-        <div className="microphone-status">
-          <img src={microphoneImage} alt="마이크" />
         </div>
       </div>
     );
