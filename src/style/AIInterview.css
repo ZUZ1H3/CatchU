@@ -2,32 +2,32 @@
 /* 전체 컨테이너 스타일 */
 .ai-interview-container {
   width: 70%;
-  margin-top: 40px;
-  margin-left: 145px;
+  margin: 0 auto;
 }
 
 /* 검색 영역 */
 .search-container {
-  margin-bottom: 15px;
+  margin-bottom: 5%;
 }
 
 .search-label {
   display: block;
-  font-size: 20px;
-  margin-top: 40px;
-  margin-left: 30px;
-  margin-bottom: 20px;
+  font-size: 2.2vh;
+  font-family: 'Paperlogy6', sans-serif;
+  margin-top: 6vh;
+  margin-left: 8vh;
+  margin-bottom: 4vh;
   color: #000000;
 }
 
 .search-input {
   width: 90%;
-  height: 45px;
-  padding-left: 30px;
-  margin-left: 50px;
+  height: 5vh;
+  padding-left: 3vh;
+  margin-left: 7vh;
   border: 0px solid #F4F4F4;
   border-radius: 30px;
-  font-size: 16px;
+  font-size: 1.8vh;
   box-sizing: border-box;
   font-family: 'Paperlogy5', sans-serif;
   background-color: #F4F4F4;
@@ -74,7 +74,8 @@
 
 /* 테이블 헤더 스타일 */
 .table-header {
-  font-size: 18px;
+  font-size: 2.2vh;
+  font-family: 'Paperlogy6', sans-serif;
   text-align: center;
   padding: 12px 0;
   border-bottom: 1px solid #cccccc;
@@ -86,10 +87,9 @@
 
 /* 테이블 셀 스타일 */
 .table-cell {
-  padding: 16px;
+  padding: 15px;
   background-color: white;
-  margin-bottom: 2px;
-  font-size: 16px;
+  font-size: 2vh;
   text-align: center;
   cursor: pointer;
 }
@@ -129,28 +129,7 @@
 /* 확인 버튼 컨테이너 */
 .button-container {
   display: flex;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-/* 확인 버튼 스타일 */
-.confirm-button {
-  width: 95px;
-  height: 33px;
-  margin-left: 80%;
-  font-size: 18px;
-  color: white;
-  background-color: #9C9EEB;
-  border: none;
-  border-radius: 12px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-  font-family: 'Paperlogy5', sans-serif;
-}
-
-/* 확인 버튼 hover */
-.confirm-button:hover {
-  background-color: #F0EDFF;
+  justify-content: end;
 }
 
 /* 확인 화면 텍스트 컨테이너 */
@@ -185,42 +164,42 @@
 
 /* 이전 버튼 스타일 */
 .back-button {
-  width: 130px;
-  height: 45px;
-  font-size: 25px;
+  width: 17.5vh;
+  height: 5.5vh;
+  font-size: 2.3vh;
   color: white;
   background-color: #9C9EEB;
   border: none;
   border-radius: 16px;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  font-family: 'Paperlogy5', sans-serif;
+  font-family: 'Paperlogy6', sans-serif;
 }
 
 /* 시작 버튼 스타일 */
 .start-button {
-  width: 130px;
-  height: 45px;
-  font-size: 25px;
+  width: 17.5vh;
+  height: 5.5vh;
+  font-size: 2.3vh;
   color: white;
   background-color: #9C9EEB;
   border: none;
   border-radius: 16px;
   cursor: pointer;
   transition: background-color 0.2s ease;
-  font-family: 'Paperlogy5', sans-serif;
+  font-family: 'Paperlogy6', sans-serif;
 }
 
 /* 이전 버튼 hover */
 .back-button:hover {
-  background-color: #F0EDFF;
-  color: #393991;
+  background-color:#393991;
+  color:#F0EDFF;
 }
 
 /* 시작 버튼 hover */
 .start-button:hover {
-  background-color: #F0EDFF;
-  color: #393991;
+  background-color: #393991;
+  color: #F0EDFF;
 }
 
 /* 면접 준비 화면 */
@@ -229,17 +208,6 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-}
-
-/* 타이머 스타일 */
-.countdown-timer {
-  align-self: flex-end;
-  margin-top: 20px;
-  margin-right: 35px;
-  font-size: 37px;
-  font-weight: bold;
-  color: #393991;
-  margin-bottom: 45px;
 }
 
 /* 카메라 컨테이너 */
@@ -254,36 +222,12 @@
   align-items: center;
 }
 
-/* 카메라 스타일 */
-video#camera-feed {
-  width: 100%;
-  height: 100%;
-  object-fit: cover; 
-  transform: scaleX(-1);
-  z-index: 0;
-}
-
 /* 면접 준비 마이크 상태 */
 .microphone-status {
   position: absolute;
   bottom: 10px;
   right: 15px;
   z-index: 1;
-}
-
-/* 면접 준비 마이크 이미지 */
-.microphone-status img {
-  width: 25px;
-  height: 30px;
-  background-color: #9d20ab00;
-}
-
-/* 카메라+마이크 확인하라는 문구 */
-.instructions {
-  font-size: 22px;
-  line-height: 150%;
-  text-align: center;
-  margin-top: 30px;
 }
 
 /* 모의면접 화면 전체 */
@@ -324,7 +268,7 @@ video#camera-feed {
   left: 33%;
   width: 35%;
   height: auto;
-  margin-top: 15px;
+  margin-top: 2vh;
   z-index: 20;
 }
 
@@ -353,26 +297,25 @@ video#camera-feed {
 /* 마이크, 카메라 상태 버튼 */
 .status-buttons {
   position: fixed;
-  top: 92.5%;
+  bottom: 1.5vh;
   left: 45%;
   display: flex;
-  gap: 50px;
+  gap: 15vh;
   z-index: 20;
+  margin: 0 auto;
 }
 
 /* 마이크 */
 .mic-status {
-  width: 40px;
-  height: 40px;
-  margin-bottom: 7px;
+  width: 13%;
+  height: 13%;
   cursor: pointer;
 }
 
-/* 비티오 */
+/* 비디오 */
 .video-status {
-  width: 35px;
-  height: 30px;
-  margin-top: 3px;
+  width: 13%;
+  height: 13%;
   cursor: pointer;
 }
 
@@ -393,8 +336,8 @@ video#camera-feed {
   position: fixed;
   right: 1%;
   bottom: 11%;
-  width: 300px;
-  height: 200px;
+  width: 32vh;
+  height: 24vh;
   background-color: #000000;
 }
 
@@ -410,15 +353,15 @@ video#camera-feed {
 /* 면접 종료 버튼 */
 .end-interview-button {
   position: fixed;
-  top: 93%;
-  left: 92%;
-  width: 60px;
-  height: 30px;
+  top: 93.5vh;
+  right: 3%;
+  width: 8vh;
+  height: 4.3vh;
   background-color: #d70c0c;
   color: white;
   border: none;
   border-radius: 10px;
-  font-size: 15px;
+  font-size: 2vh;
   font-family: 'Paperlogy5', sans-serif;
   cursor: pointer;
 }
@@ -426,24 +369,25 @@ video#camera-feed {
 /* 타이머 */
 .elapsed-time {
   position: fixed;
-  top: 2%;
-  left: 93%;
+  top: 2.2vh;
+  right: 4%;
   color: white;
-  font-size: 30px;
+  font-size: 4.2vh;
+  font-weight: 700;
 }
 
 /* 다음 단계 진행 버튼 */
 .next-step-button {
   position: fixed;
-  top: 93%;
+  top: 93.5vh;
   left: 3%;
-  width: 60px;
-  height: 30px;
+  width: 8vh;
+  height: 4.3vh;
   background-color: #0acd4f;
   color: white;
   border: none;
   border-radius: 10px;
-  font-size: 15px;
+  font-size: 2vh;
   font-family: 'Paperlogy5', sans-serif;
   cursor: pointer;
   z-index: 20;

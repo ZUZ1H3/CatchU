@@ -9,7 +9,7 @@
 /* 제목 스타일 */
 .heading {
   align-self: flex-start;
-  font-size: clamp(1rem, 1.2rem, 1.5rem);  /* 화면 크기에 따라 조정 */
+  font-size: 2.2vh;
   font-weight: 600;
   margin-top: 4em;
   margin-bottom: 2em;
@@ -28,7 +28,7 @@
 
 /* 이미지 스타일 */
 .image {
-  width: 12%;
+  width: 15vh;
   height: auto;
   cursor: pointer;
 }
@@ -57,7 +57,7 @@
   border-collapse: collapse;
 }
 .table td {
-  font-size: clamp(0.9rem, 1rem, 1.2rem); /* 화면 크기에 따라 조정 */
+  font-size: clamp(1rem, 1vw, 1.2rem); /* 화면 크기에 따라 조정 */
   border: 1px solid #d2d2d2;
   text-align: left;
   vertical-align: top;
@@ -70,17 +70,17 @@
 }
 
 .table td:nth-child(2) {
-  width: 25%; /* 두번째 열은 25% 비율 */
+  width: 23%; /* 두번째 열은 23% 비율 */
   vertical-align: top;
 }
 
 .table td:nth-child(3) {
-  width: 55%; /* 마지막은 55% 비율 */
+  width: 57%; /* 마지막은 57% 비율 */
   vertical-align: top;
 }
 
 .mode-option {
-  font-size: clamp(0.9rem, 1rem, 1.2rem); /* 화면 크기에 따라 조정 */
+  font-size: clamp(1rem, 1vw, 1.2rem);  /* 화면 크기에 따라 조정 */
   font-weight: 400;
   padding: 0.5em;
   cursor: pointer;
@@ -98,7 +98,7 @@
 }
 
 .category-name {
-  font-size: clamp(0.9rem, 1rem, 1.2rem); /* 화면 크기에 따라 조정 */
+  font-size: clamp(1rem, 1vw, 1.2rem); /* 화면 크기에 따라 조정 */
   font-weight: 400;
   padding: 0.5em;
   cursor: pointer;
@@ -123,7 +123,7 @@
   width: 314%;
   height: 200px;
   padding: 0.5em;
-  font-size: clamp(0.9rem, 1.1rem, 1.4rem);
+  font-size: clamp(0.9rem, 1.1vw, 1.4rem);
   font-weight: 500;
   border: 1px solid #d2d2d2;
   resize: none;
@@ -133,7 +133,7 @@
 #check-button {
   margin-top: 1.5em;
   margin-bottom: 0.5em;
-  font-size: clamp(0.9rem, 1.2rem, 1.4rem); /* 화면 크기에 따라 조정 */
+  font-size: 2.5vh;
   font-weight: 600;
   background-color: #9C9EEB;
   color: white;
