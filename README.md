@@ -54,5 +54,4 @@ CatchU는 **AI 기술을 활용해 실제 면접과 유사한 환경을 제공�
 
 | [송희](https://github.com/felizsong) | [주지혜](https://github.com/ZUZ1H3) | [이주현](https://github.com/hana03030) | [김민서](https://github.com/sunmay12)|
 | ------------ | ------------- | ------------- | ------------- |
-| <img src="https://github.com/user-attachments/assets/d989d0ae-8829-4759-9aa6-1889206cdb6c" width="200" />|<img src="https://github.com/user-attachments/assets/20b39c67-2781-4bf0-9a11-5481fc4a43a7" width="200" />|<img src="https://github.com/user-attachments/assets/6cf9b675-ee5c-4679-ad50-1cf5d62016c4" width="200" />|
-| <div align="center">역할</div> | <div align="center">역할</div> | <div align="center">역할</div> | <div align="center">역할</div> |
+| <img src="https://github.com/user-attachments/assets/d989d0ae-8829-4759-9aa6-1889206cdb6c" width="200" />|<img src="https://github.com/user-attachments/assets/20b39c67-2781-4bf0-9a11-5481fc4a43a7" width="200" />|<img src="https://github.com/user-attachments/assets/6cf9b675-ee5c-4679-ad50-1cf5d62016c4" width="200" />|<img src="https://github.com/user-attachments/assets/66ba0daf-ce1e-4183-b267-cecc7137e4c4" width="200" />|
