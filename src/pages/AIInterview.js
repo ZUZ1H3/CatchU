@@ -348,11 +348,16 @@ const AIInterview = () => {
     if (stepTimeoutRef.current) {
       clearTimeout(stepTimeoutRef.current);
     }
-
+  
     stepTimeoutRef.current = setTimeout(() => {
       if (currentStep < overstamps.length - 1) {
-        setCurrentStep((prev) => prev + 1); // currentStep 증가
-        videoRef.current.currentTime = overstamps[currentStep + 1]; // 다음 overstamp로 이동
+        setCurrentStep((prev) => {
+          const nextStep = prev + 1;
+  
+          // overstamps의 다음 위치로 이동
+          videoRef.current.currentTime = overstamps[nextStep - 1];
+          return nextStep;
+        });
       }
     }, 7000); // 7초 후 실행
   };
@@ -370,7 +375,9 @@ const AIInterview = () => {
 
     // 특정 위치에서 타이머 시작 (90초 제한)
     if (checkSpecialTimestamps(currentTime)) {
-      startTimer();
+      if (!intervalRef.current) {
+        startTimer(); // 중복 실행 방지
+      }
     }
   };
 
@@ -400,7 +407,7 @@ const AIInterview = () => {
 
   const overstamps = [
     0.5,    // step1 멘트 시작
-    108.08, // step2 멘트 시작
+    108.12, // step2 멘트 시작
     211.05, // step3 멘트 시작
     313.05, // step4 멘트 시작
     416.22,  // step5 멘트 시작
