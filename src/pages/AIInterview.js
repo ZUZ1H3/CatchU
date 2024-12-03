@@ -679,7 +679,7 @@ const AIInterview = () => {
       </div>
   
       <div className="button-container">
-        <button id="check-button" onClick={handleConfirmClick}>
+        <button id="check-button" className="custom-font-button" onClick={handleConfirmClick}>
           확인
         </button>
       </div>

@@ -43,7 +43,7 @@ CatchU는 **AI 기술을 활용해 실제 면접과 유사한 환경을 제공�
 - 사전 준비된 질문을 선택하거나 사용자가 직접 원하는 질문 직접 생성
 - 면접 전, **마이크와 카메라를 점검**할 수 있어 최적화된 면접 환경 조성
 - **REC 버튼을 누른 후 녹화 시작**
-- **STOP 버튼을 누른 후 제출**, 녹화 된 영상 확인
+- 면접 연습 제출 후 **자신이 면접을 진행했던 영상 확인** 가능 
 - 유저의 **답변과 비언어적 태도를 분석**하여 피드백 제공 <br>
 
 **적성 검사**
@@ -54,5 +54,4 @@ CatchU는 **AI 기술을 활용해 실제 면접과 유사한 환경을 제공�
 
 | [송희](https://github.com/felizsong) | [주지혜](https://github.com/ZUZ1H3) | [이주현](https://github.com/hana03030) | [김민서](https://github.com/sunmay12)|
 | ------------ | ------------- | ------------- | ------------- |
-| <img src="https://github.com/user-attachments/assets/d989d0ae-8829-4759-9aa6-1889206cdb6c" width="200" />|<img src="https://github.com/user-attachments/assets/20b39c67-2781-4bf0-9a11-5481fc4a43a7" width="200" />|<img src="https://github.com/user-attachments/assets/6cf9b675-ee5c-4679-ad50-1cf5d62016c4" width="200" />|
-| <div align="center">역할</div> | <div align="center">역할</div> | <div align="center">역할</div> | <div align="center">역할</div> |
+| <img src="https://github.com/user-attachments/assets/d989d0ae-8829-4759-9aa6-1889206cdb6c" width="200" />|<img src="https://github.com/user-attachments/assets/20b39c67-2781-4bf0-9a11-5481fc4a43a7" width="200" />|<img src="https://github.com/user-attachments/assets/6cf9b675-ee5c-4679-ad50-1cf5d62016c4" width="200" />|<img src="https://github.com/user-attachments/assets/66ba0daf-ce1e-4183-b267-cecc7137e4c4" width="200" />|

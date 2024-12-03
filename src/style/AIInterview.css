@@ -7,9 +7,10 @@
 
 /* 검색 영역 */
 .search-container {
-  margin-bottom: 5%;
+  margin-bottom: 3%;
 }
 
+/* 검색 라벨 */
 .search-label {
   display: block;
   font-size: 2.2vh;
@@ -20,6 +21,7 @@
   color: #000000;
 }
 
+/* 검색창 */
 .search-input {
   width: 90%;
   height: 5vh;
@@ -130,6 +132,19 @@
 .button-container {
   display: flex;
   justify-content: end;
+}
+
+/* 확인 버튼 스타일 */
+.custom-font-button {
+  font-size: 5px;
+  padding: 10px 20px;
+  background-color: #9C9EEB;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-family: 'Paperlogy6', sans-serif;
+  transition: background-color 0.3s ease;
 }
 
 /* 확인 화면 텍스트 컨테이너 */

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../style/Practice.css';
-import { categories } from '../questions.js';
+import { categories } from '../data/questions.js';
 import { useNavigate } from 'react-router-dom';
 
 const Practice = () => {
