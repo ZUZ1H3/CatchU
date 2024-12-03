@@ -31,6 +31,10 @@
     margin-right: 3%; /* 비디오 간의 간격 설정 */
 }
 
+.video-wrapper h3 {
+    color: white;
+}
+
 /* 마지막 비디오 오른쪽 여백 없애기 */
 .video-wrapper:nth-child(2n) {
     margin-right: 0;

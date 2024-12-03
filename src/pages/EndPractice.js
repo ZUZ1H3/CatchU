@@ -4,7 +4,7 @@ import "../style/EndPractice.css";
 
 const EndPractice = () => {
   const { state } = useLocation();
-  const { videoUrls } = state || {}; // 이전 화면에서 가져온 videoUrls 배열을 추출합니다.
+  const { videoUrls = [], questions = [] } = state || {};  // 이전 화면에서 가져온 videoUrls 배열을 추출합니다.
   const [showFeedbackButton, setShowFeedbackButton] = useState(false);
   const [validVideos, setValidVideos] = useState([]); // 유효한 비디오 URL만 저장
   const navigate = useNavigate();
@@ -15,7 +15,6 @@ const EndPractice = () => {
     // 유효한 비디오만 필터링
     const filteredUrls = (videoUrls || []).filter((url) => {
       // URL 형식 확인
-      console.log("Checking video URL:", url);
       return url.startsWith("blob:");
     });
 
@@ -31,13 +30,13 @@ const EndPractice = () => {
   const goToFeedback = () => {
     // 이동 가능한 날짜들
     const days = [10, 12, 14, 16, 18];
-    
+
     const randomDay = days[Math.floor(Math.random() * days.length)];
-    
+
     // 랜덤으로 선택된 날짜로 피드백 화면으로 이동
-    navigate(`/feedback/practice/${randomDay}일`, {state:{replace: true}});
+    navigate(`/feedback/practice/${randomDay}일`, { state: { replace: true } });
   };
-  
+
 
   return (
     <div className="end-practice-container">
@@ -57,10 +56,11 @@ const EndPractice = () => {
         {validVideos.length > 0 ? (
           validVideos.map((url, index) => (
             <div className="video-wrapper" key={url}>
+              <h3>질문 {index + 1}: {questions[index]}</h3>
               <video
-                controls
-                autoPlay
-                muted
+                controls  // 재생 컨트롤 활성화
+                autoPlay={true}  // 자동 재생 활성화
+                muted // 소리 없애기
                 playsInline
                 onError={() => console.error(`Failed to load video: ${url}`)}
               >
