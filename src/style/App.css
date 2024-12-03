@@ -28,7 +28,9 @@ body, html {
   justify-content: center;
   font-family: 'Paperlogy5', sans-serif;
   align-items: center;
+  cursor: url('/public/cursor.png') 5 5, auto;
 }
+
 body.practicing-mode {
   background: #1A182F;
 }

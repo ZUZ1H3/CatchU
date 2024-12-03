@@ -84,7 +84,7 @@ const MySkill = () => {
 
     return (
         <div style={{ width: "100%", fontFamily: "Paperlogy6" }}>
-            <div style={{ marginBottom: "1em", fontWeight: "bold", fontSize: "1.2em" }}>
+            <div style={{ marginBottom: "1.2vh", fontWeight: "bold", fontSize: "2.4vh" }}>
                 나의 면접 스킬
             </div>
             <Radar data={data} options={options} />

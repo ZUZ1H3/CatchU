@@ -1,13 +1,11 @@
 .list-container {
-    max-width: 500px;
     width: 100%;
     margin: 0 auto;
   }
   
   .list-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin-bottom: 20px;
+    font-size: 2.4vh;
+    margin-bottom: 2.6vh;
   }
   
   .list {
@@ -21,7 +19,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 10px;
+    padding: 2vh 1.5vh;
     border-bottom: 1px solid #ddd;
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -32,11 +30,11 @@
   }
   
   .item-title {
-    font-size: 16px;
+    font-size: 2.1vh;
   }
   
   .item-date {
-    font-size: 14px;
+    font-size: 2.1vh;
     font-weight: bold;
   }
   
